@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@chakra-ui/icons": "^2.0.11",
     "@chakra-ui/react": "^2.3.2",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -22,25 +23,25 @@
     "date-fns": "2.29.2",
     "framer-motion": "^7.3.1",
     "graphql": "^15.8.0",
+    "prop-types": "^15.8.1",
+    "ramda": "^0.28.0",
+    "ramda-extension": "^0.11.0",
     "react": "^18.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.34.2",
     "react-icons": "^4.4.0",
     "react-router-dom": "6.3.0",
-    "yup": "0.32.11",
-    "ramda": "^0.28.0",
-    "ramda-extension": "^0.11.0",
-    "prop-types": "^15.8.1",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1"
+    "yup": "0.32.11"
   },
   "devDependencies": {
-    "patch-package": "^6.4.7",
-    "prettier": "^2.7.1",
-    "react-scripts": "5.0.1",
     "eslint": "8.22.0",
     "eslint-plugin-react": "^7.31.8",
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "patch-package": "^6.4.7",
+    "prettier": "^2.7.1",
+    "react-scripts": "5.0.1"
   },
   "browserslist": {
     "production": [
