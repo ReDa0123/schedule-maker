@@ -7,18 +7,16 @@ import {
   FormSelect,
   FormSubmitButton,
 } from '../../../shared/react-hook-form/molecules';
-import { AlertDialog, Modal } from '../../../shared/design-system/organisms';
-import { Button } from 'src/shared/design-system';
 import { WithTooltip } from '../../../shared/design-system/molecules';
+import { ModalExample } from '../examples/ModalExample';
+import { AlertDialogExample } from '../examples/AlertDialogExample';
 
 export function AboutTemplate() {
   return (
     <>
       <Box maxW="30rem" mx="auto" my="12">
         <Heading fontSize="3xl">4IT580: Team Project Template</Heading>
-        <WithTooltip label="Test">
-          <Box>Start your project here...</Box>
-        </WithTooltip>
+        <Box>Start your project here...</Box>
         <Form
           onSubmit={(data) => alert(JSON.stringify(data))}
           defaultValues={{
@@ -52,27 +50,12 @@ export function AboutTemplate() {
             Submit
           </FormSubmitButton>
         </Form>
-        <WithTooltip label="Tooltipek" standalone>
-          <AlertDialog
-            onConfirm={() => {
-              console.log('Close');
-            }}
-            confirmButtonText="Ano"
-            cancelButtonText="Ne"
-            openingElement={<Button>OpenAlert</Button>}
-            headerText="Test"
-            bodyText="Testovací text"
-            cancelButtonProps={{ colorScheme: 'blue' }}
-            confirmButtonProps={{ colorScheme: 'red' }}
-          />
+        <WithTooltip label="Tooltipek">
+          <AlertDialogExample />
         </WithTooltip>
-        <Modal
-          onClose={() => alert('CLOSE')}
-          openingElement={<Button>Open Modal</Button>}
-          headerText="Text"
-          modalBody={<Box>BLA BUTTON</Box>}
-          footerButtons={[<Button key="1">Ahoj</Button>]}
-        />
+        <WithTooltip label="Test" standalone>
+          <ModalExample />
+        </WithTooltip>
       </Box>
     </>
   );

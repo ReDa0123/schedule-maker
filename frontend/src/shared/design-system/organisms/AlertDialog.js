@@ -8,13 +8,11 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '../atoms';
-import { useDisclosure } from '../hooks';
-import { useCallback, useRef, cloneElement } from 'react';
+import { useRef } from 'react';
 
 const AlertDialog = ({
-  openingElement,
-  onDialogOpen,
-  onDialogClose,
+  onClose,
+  isOpen,
   onConfirm,
   headerText,
   bodyText,
@@ -29,82 +27,45 @@ const AlertDialog = ({
   confirmButtonProps,
   cancelButtonProps,
 }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const leastDestructiveRef = useRef();
 
-  const onOpenDialog = useCallback(() => {
-    onDialogOpen && onDialogOpen();
-    onOpen();
-  }, [onDialogOpen, onOpen]);
-
-  const onCloseDialog = useCallback(() => {
-    onDialogClose && onDialogClose();
-    onClose();
-  }, [onDialogClose, onClose]);
-
-  const onConfirmDialog = useCallback(() => {
-    onConfirm();
-    onClose();
-  }, [onConfirm, onClose]);
-
-  const OpeningElement = cloneElement(openingElement, {
-    ...openingElement.props,
-    onClick: (e) => {
-      openingElement.props.onClick && openingElement.props.onClick(e);
-      onOpenDialog();
-    },
-    onContextMenu: (e) => {
-      e.preventDefault();
-      openingElement.props.onContextMenu &&
-        openingElement.props.onContextMenu(e);
-      onOpenDialog();
-    },
-  });
-
   return (
-    <>
-      {OpeningElement}
-
-      <ChakraAlertDialog
-        leastDestructiveRef={leastDestructiveRef}
-        isOpen={isOpen}
-        onClose={onCloseDialog}
-        {...dialogProps}
-      >
-        <AlertDialogOverlay {...overlayProps}>
-          <AlertDialogContent {...contentProps}>
-            {headerText && (
-              <AlertDialogHeader {...headerProps}>
-                {headerText}
-              </AlertDialogHeader>
-            )}
-            {bodyText && (
-              <AlertDialogBody {...bodyProps}>{bodyText}</AlertDialogBody>
-            )}
-            <AlertDialogFooter {...footerProps}>
-              <Button
-                ref={leastDestructiveRef}
-                onClick={onCloseDialog}
-                {...cancelButtonProps}
-              >
-                {cancelButtonText}
-              </Button>
-              <Button onClick={onConfirmDialog} ml={3} {...confirmButtonProps}>
-                {confirmButtonText}
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </ChakraAlertDialog>
-    </>
+    <ChakraAlertDialog
+      leastDestructiveRef={leastDestructiveRef}
+      isOpen={isOpen}
+      onClose={onClose}
+      {...dialogProps}
+    >
+      <AlertDialogOverlay {...overlayProps}>
+        <AlertDialogContent {...contentProps}>
+          {headerText && (
+            <AlertDialogHeader {...headerProps}>{headerText}</AlertDialogHeader>
+          )}
+          {bodyText && (
+            <AlertDialogBody {...bodyProps}>{bodyText}</AlertDialogBody>
+          )}
+          <AlertDialogFooter {...footerProps}>
+            <Button
+              ref={leastDestructiveRef}
+              onClick={onClose}
+              {...cancelButtonProps}
+            >
+              {cancelButtonText}
+            </Button>
+            <Button onClick={onConfirm} ml={3} {...confirmButtonProps}>
+              {confirmButtonText}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
+    </ChakraAlertDialog>
   );
 };
 
 AlertDialog.propTypes = {
-  openingElement: PropTypes.node.isRequired,
-  onDialogOpen: PropTypes.func,
-  onDialogClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   headerText: PropTypes.string,
   bodyText: PropTypes.string,
   confirmButtonText: PropTypes.string.isRequired,
