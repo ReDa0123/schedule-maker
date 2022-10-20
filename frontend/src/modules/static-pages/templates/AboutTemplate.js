@@ -61,7 +61,7 @@ export function AboutTemplate() {
             cancelButtonText="Ne"
             openingElement={<Button>OpenAlert</Button>}
             headerText="Test"
-            bodyText="Testovací text..."
+            bodyText="Testovací text"
             cancelButtonProps={{ colorScheme: 'blue' }}
             confirmButtonProps={{ colorScheme: 'red' }}
           />
