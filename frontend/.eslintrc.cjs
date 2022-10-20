@@ -20,7 +20,7 @@ module.exports = {
     'react/no-array-index-key': 'error',
     'react/jsx-key': 'error',
     'react/prop-types': 'error',
-    'react/display-name': 'warn',
+    'react/display-name': 'off',
   },
   settings: {
     react: {
