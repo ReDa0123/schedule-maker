@@ -5,6 +5,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import PropTypes from 'prop-types';
 
 const LOCAL_STORAGE_AUTH_KEY = 'quacker-auth';
 
@@ -19,7 +20,7 @@ const AuthContext = createContext(
     user: initialState.user,
     setState: () =>
       console.error('You are using AuthContext without AuthProvider!'),
-  }),
+  })
 );
 
 export function useAuth() {
@@ -38,6 +39,10 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 function createContextValue({ token, user, setState }) {
   return {
@@ -75,7 +80,9 @@ function getStorageState(defaultState) {
     if (token && user && user.userName && user.id && user.name) {
       return { token, user };
     }
-  } catch {}
+  } catch {
+    console.log('Cannot parse data from local storage');
+  }
 
   return defaultState;
 }

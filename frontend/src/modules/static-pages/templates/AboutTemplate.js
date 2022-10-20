@@ -1,4 +1,4 @@
-import { Box, Heading, Link } from 'src/shared/design-system';
+import { Box, Heading } from 'src/shared/design-system';
 
 export function AboutTemplate() {
   return (

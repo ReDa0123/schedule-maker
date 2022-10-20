@@ -1,0 +1,22 @@
+name: Lint and prettier
+
+on: [pull_request]
+
+jobs:
+  lintAndPrettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install dependencies frontend
+        working-directory: ./frontend
+        run: npm ci
+      - name: Install dependencies backend
+        working-directory: ./backend
+        run: npm ci
+      - name: Run lint
+        run: npm run lint
+      - name: Run prettier
+        run: npm run prettier

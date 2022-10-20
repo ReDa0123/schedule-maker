@@ -13,6 +13,7 @@ import { onError } from '@apollo/client/link/error';
 import { useAuth } from 'src/modules/auth';
 import { config } from 'src/config';
 import { route } from 'src/Routes';
+import PropTypes from 'prop-types';
 
 const UNAUTHENTICATED_CODE = 'UNAUTHENTICATED';
 
@@ -31,7 +32,7 @@ const httpLink = createHttpLink({
   uri: config.GRAPHQL_API,
 });
 
-export function EnhancedApolloProvider({ children }) {
+function EnhancedApolloProvider({ children }) {
   const navigate = useNavigate();
   const { token, signout } = useAuth();
 
@@ -76,3 +77,9 @@ export function EnhancedApolloProvider({ children }) {
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 }
+
+EnhancedApolloProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export { EnhancedApolloProvider };

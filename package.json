@@ -1,9 +1,15 @@
 {
   "private": true,
   "scripts": {
-    "prettier": "prettier --write README.md \"{frontend,backend}/src/**/*.{js,json,css,scss}\" \"{frontend,backend}/README.md\""
+    "pretty": "prettier --write README.md \"{frontend,backend}/src/**/*.{js,json,css,scss}\" \"{frontend,backend}/README.md\"",
+    "install-all": "yarn && yarn --cwd frontend && yarn --cwd backend",
+    "lint": "yarn --cwd frontend lint && yarn --cwd backend lint",
+    "prettier": "yarn --cwd frontend prettier && yarn --cwd backend prettier",
+    "prepare": "husky install"
   },
   "devDependencies": {
-    "prettier": "2.7.1"
+    "husky": "^8.0.0",
+    "prettier": "2.7.1",
+    "pretty-quick": "^3.1.3"
   }
 }

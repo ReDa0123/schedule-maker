@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export function ScrollToTop({ children }) {
+function ScrollToTop({ children }) {
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -13,3 +14,9 @@ export function ScrollToTop({ children }) {
 
   return children || null;
 }
+
+ScrollToTop.propTypes = {
+  children: PropTypes.node,
+};
+
+export { ScrollToTop };
