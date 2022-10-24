@@ -18,6 +18,7 @@ export {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
+  Grid,
   Heading,
   Icon,
   IconButton,
