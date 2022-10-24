@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { calculateDuration } from '../utils/blocks';
-import { Box } from 'src/shared/design-system/atoms';
+import { Box } from 'src/shared/design-system';
 import { useDrag } from 'react-dnd';
 import { BLOCK_DND_NAME, BLOCK_SCALE, MINUTES_IN_BLOCK } from '../constants';
 

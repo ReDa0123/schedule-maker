@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Box, Button } from '../../design-system/atoms';
+import { Box, Button } from '../../design-system';
 import { ErrorTag } from '../atoms';
 import { useSubmitButton } from '../hooks';
 

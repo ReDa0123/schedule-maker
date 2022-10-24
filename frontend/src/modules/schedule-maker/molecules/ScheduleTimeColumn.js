@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { minutesToTime } from '../utils/blocks';
-import { Box } from 'src/shared/design-system/atoms';
+import { Box } from 'src/shared/design-system';
 import { BLOCK_SCALE, MINUTES_IN_BLOCK, TABLE_TOP_PADDING } from '../constants';
 import PropTypes from 'prop-types';
 

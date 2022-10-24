@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo, useRef } from 'react';
 import { useIsInViewport } from '../../../shared/hooks';
-import { Box } from 'src/shared/design-system/atoms';
+import { Box } from 'src/shared/design-system';
 import { BLOCK_SCALE } from '../constants';
 import { useTournamentSchedule } from '../hooks';
 import { calculateEndTime } from '../utils/blocks';

@@ -1,6 +1,6 @@
 import { Form } from 'src/shared/react-hook-form/organisms';
 import { FieldArrayContext } from '../contexts';
-import { Box } from 'src/shared/design-system/atoms';
+import { Box } from 'src/shared/design-system';
 import { useTournamentSchedule } from '../hooks';
 import { Schedule } from './';
 import { AddBlockForm, NotAssignedBlocks } from '../molecules';

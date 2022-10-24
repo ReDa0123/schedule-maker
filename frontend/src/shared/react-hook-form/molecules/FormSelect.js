@@ -4,7 +4,7 @@ import {
   FormHelperText,
   FormLabel,
   Select,
-} from '../../design-system/atoms';
+} from '../../design-system';
 import PropTypes from 'prop-types';
 import { useFormField } from '../hooks';
 

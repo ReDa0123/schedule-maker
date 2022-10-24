@@ -1,7 +1,7 @@
 import { useWatch, Controller } from 'react-hook-form';
 import { BLOCK_DND_NAME, SCHEDULE_FORM_NAME } from '../constants';
 import { useDrop } from 'react-dnd';
-import { Flex } from 'src/shared/design-system/atoms';
+import { Flex } from 'src/shared/design-system';
 import { useFieldArrayProps } from '../hooks';
 import { propEq } from 'ramda';
 import { Block } from '../atoms';

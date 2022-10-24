@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Box } from 'src/shared/design-system/atoms';
+import { Box } from 'src/shared/design-system';
 import { Timeslot } from '../atoms';
 import { useAreaColumn, useEditBlocksInArea } from '../hooks';
 

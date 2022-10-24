@@ -1,5 +1,5 @@
 import { useTournamentSchedule } from '../hooks';
-import { Flex, Heading } from 'src/shared/design-system/atoms';
+import { Flex, Heading } from 'src/shared/design-system';
 import PropTypes from 'prop-types';
 import {
   AreaColumnDetail,

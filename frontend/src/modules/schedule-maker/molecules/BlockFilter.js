@@ -1,11 +1,5 @@
 import { useScheduleDetail } from '../hooks';
-import {
-  Box,
-  Button,
-  FormLabel,
-  Grid,
-  Select,
-} from 'src/shared/design-system/atoms';
+import { Box, Button, FormLabel, Grid, Select } from 'src/shared/design-system';
 
 const BlockFilter = () => {
   const {

@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Box, Button } from 'src/shared/design-system/atoms';
+import { Box, Button } from 'src/shared/design-system';
 import {
   FormInput,
   FormSelect,
