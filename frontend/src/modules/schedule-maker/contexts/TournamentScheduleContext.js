@@ -8,7 +8,8 @@ export const tournamentScheduleContext = createContext(null);
 const TournamentScheduleProvider = tournamentScheduleContext.Provider;
 
 const TournamentScheduleContext = ({ children, tournament }) => {
-  const detailMode = true;
+  //TODO: useParams
+  const detailMode = false;
 
   const blocksOfTournament = useMemo(
     () => blocks.filter(propEq('tournamentId', tournament.tournamentId)),

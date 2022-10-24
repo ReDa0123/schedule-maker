@@ -8,20 +8,18 @@ export const useDetailBlocksInArea = ({ areaId, dayId, startTime }) => {
     (block) => block.areaId === areaId && block.dayId === dayId
   );
 
-  return {
-    blocksInArea: blocksInArea.map((block) => (
-      <Block
-        key={block.blockId}
-        value={block}
-        pointerEvents="none"
-        position="absolute"
-        top={`${
-          ((block.startTime - startTime) * BLOCK_SCALE) / MINUTES_IN_BLOCK +
-          TABLE_TOP_PADDING
-        }px`}
-        left="50%"
-        transform="translateX(-50%)"
-      />
-    )),
-  };
+  return blocksInArea.map((block) => (
+    <Block
+      key={block.blockId}
+      value={block}
+      pointerEvents="none"
+      position="absolute"
+      top={`${
+        ((block.startTime - startTime) * BLOCK_SCALE) / MINUTES_IN_BLOCK +
+        TABLE_TOP_PADDING
+      }px`}
+      left="50%"
+      transform="translateX(-50%)"
+    />
+  ));
 };

@@ -1,31 +1,21 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
-import { MINUTES_IN_BLOCK } from '../constants';
 import { Box } from 'src/shared/design-system/atoms';
 import { Timeslot } from '../atoms';
+import { useAreaColumn, useDetailBlocksInArea } from '../hooks';
 
-const AreaColumn = ({
+const AreaColumnDetail = ({
   area: { areaId, name },
   startTime,
   endTime,
   dayId,
-  useBlocksInArea,
 }) => {
-  const { blocksInArea, startTimesInThisDayAndArena } = useBlocksInArea()({
+  const blocksInArea = useDetailBlocksInArea({
     dayId,
     areaId,
     startTime,
   });
-  const [timeslots, setTimeslots] = useState([]);
 
-  useEffect(() => {
-    const timeslots = [];
-    for (let i = startTime; i < endTime; i += MINUTES_IN_BLOCK) {
-      timeslots.push(i);
-    }
-    setTimeslots(timeslots);
-  }, [startTime, endTime]);
-
+  const timeslots = useAreaColumn({ startTime, endTime });
   return (
     <Box
       minW="220px"
@@ -50,7 +40,6 @@ const AreaColumn = ({
             dayId={dayId}
             areaId={areaId}
             dayEnd={endTime}
-            startTimesInThisDayAndArena={startTimesInThisDayAndArena}
           />
         ))}
       </Box>
@@ -58,12 +47,11 @@ const AreaColumn = ({
   );
 };
 
-AreaColumn.propTypes = {
+AreaColumnDetail.propTypes = {
   area: PropTypes.object.isRequired,
   startTime: PropTypes.number.isRequired,
   endTime: PropTypes.number.isRequired,
   dayId: PropTypes.number.isRequired,
-  useBlocksInArea: PropTypes.func.isRequired,
 };
 
-export default AreaColumn;
+export default AreaColumnDetail;

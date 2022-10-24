@@ -1,3 +1,4 @@
+import { multiply, o, prop } from 'ramda';
 import { MINUTES_IN_BLOCK } from '../constants';
 
 export const minutesToTime = (minutes) => {
@@ -6,8 +7,7 @@ export const minutesToTime = (minutes) => {
   return `${hours < 10 ? '0' : ''}${hours}:${mins < 10 ? '0' : ''}${mins}`;
 };
 
-export const calculateDuration = ({ players }) =>
-  (players * 5) / MINUTES_IN_BLOCK;
+export const calculateDuration = o(multiply(MINUTES_IN_BLOCK), prop('players'));
 
 export const calculateEndTime = ({ startTime, players }) =>
   calculateDuration({ players }) + startTime;

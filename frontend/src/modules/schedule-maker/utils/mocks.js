@@ -2,6 +2,18 @@ import { tournamentStyles } from '../constants';
 
 export const blocks = [
   {
+    blockId: 12,
+    startTime: null,
+    players: 3,
+    dayId: null,
+    areaId: null,
+    style: tournamentStyles.TEST,
+    category: 'Mladší junioři',
+    sex: 'M',
+    sportId: 1,
+    tournamentId: 1,
+  },
+  {
     blockId: 1,
     startTime: 120,
     players: 5,

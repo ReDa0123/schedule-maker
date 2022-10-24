@@ -14,3 +14,7 @@ export const SEXES = keyMirror({
   M: null,
   F: null,
 });
+
+export const SCHEDULE_FORM_NAME = 'schedule';
+
+export const BLOCK_DND_NAME = 'block';

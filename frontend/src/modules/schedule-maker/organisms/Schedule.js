@@ -1,21 +1,20 @@
-import {
-  useEditBlocksInArea,
-  useTournamentSchedule,
-  useDetailBlocksInArea,
-} from '../hooks';
+import { useTournamentSchedule } from '../hooks';
 import { Flex, Heading } from 'src/shared/design-system/atoms';
 import PropTypes from 'prop-types';
-import { AreaColumn, ScheduleTimeColumn } from '../molecules';
+import {
+  AreaColumnDetail,
+  AreaColumnEdit,
+  ScheduleTimeColumn,
+} from '../molecules';
 import { useMemo } from 'react';
 
 const Schedule = ({ dayId, date, description, startTime, endTime }) => {
   const { areas, detailMode } = useTournamentSchedule();
-  const useBlocksInArea = () =>
-    useMemo(
-      () => (detailMode ? useDetailBlocksInArea : useEditBlocksInArea),
-      //eslint-disable-next-line react-hooks/exhaustive-deps
-      [detailMode]
-    );
+  const ColumnToRender = useMemo(
+    () => (detailMode ? AreaColumnDetail : AreaColumnEdit),
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+    [detailMode]
+  );
   return (
     <>
       <Heading>
@@ -32,13 +31,12 @@ const Schedule = ({ dayId, date, description, startTime, endTime }) => {
       >
         <ScheduleTimeColumn startTime={startTime} endTime={endTime} />
         {areas.map((area) => (
-          <AreaColumn
+          <ColumnToRender
             key={area.areaId}
             area={area}
             startTime={startTime}
             endTime={endTime}
             dayId={dayId}
-            useBlocksInArea={useBlocksInArea}
           />
         ))}
       </Flex>

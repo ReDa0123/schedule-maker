@@ -1,5 +1,15 @@
 import BlockFilter from './BlockFilter';
 import ScheduleTimeColumn from './ScheduleTimeColumn';
-import AreaColumn from './AreaColumn';
+import AreaColumnDetail from './AreaColumnDetail';
+import AreaColumnEdit from './AreaColumnEdit';
+import AddBlockForm from './AddBlockForm';
+import NotAssignedBlocks from './NotAssignedBlocks';
 
-export { AreaColumn, BlockFilter, ScheduleTimeColumn };
+export {
+  AddBlockForm,
+  AreaColumnDetail,
+  AreaColumnEdit,
+  BlockFilter,
+  NotAssignedBlocks,
+  ScheduleTimeColumn,
+};

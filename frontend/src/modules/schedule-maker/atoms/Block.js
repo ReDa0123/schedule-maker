@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import { calculateDuration } from '../utils/blocks';
 import { Box } from 'src/shared/design-system/atoms';
 import { useDrag } from 'react-dnd';
-import { BLOCK_SCALE } from '../constants';
+import { BLOCK_DND_NAME, BLOCK_SCALE, MINUTES_IN_BLOCK } from '../constants';
 
 const Block = ({ value, onChange, ...props }) => {
   const [{ isDragging }, drag] = useDrag({
-    type: 'block',
+    type: BLOCK_DND_NAME,
     item: { onChange, value },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
@@ -14,7 +14,7 @@ const Block = ({ value, onChange, ...props }) => {
   });
   return (
     <Box
-      h={calculateDuration(value) * BLOCK_SCALE}
+      h={`${(calculateDuration(value) / MINUTES_IN_BLOCK) * BLOCK_SCALE}px`}
       w="200px"
       borderWidth={1}
       borderColor="black"
