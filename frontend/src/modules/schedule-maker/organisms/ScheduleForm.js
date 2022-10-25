@@ -5,6 +5,7 @@ import { useTournamentSchedule } from '../hooks';
 import { Schedule } from './';
 import { AddBlockForm, NotAssignedBlocks } from '../molecules';
 import { SCHEDULE_FORM_NAME } from '../constants';
+import ContentBox from '../../../shared/design-system/atoms/ContentBox';
 
 const ScheduleForm = () => {
   const { days, blocks } = useTournamentSchedule();
@@ -12,8 +13,10 @@ const ScheduleForm = () => {
     <Form onSubmit={console.log}>
       <FieldArrayContext name={SCHEDULE_FORM_NAME} initialData={blocks}>
         <Box p={2}>
-          <AddBlockForm />
-          <NotAssignedBlocks />
+          <ContentBox>
+            <AddBlockForm />
+            <NotAssignedBlocks />
+          </ContentBox>
           {days.map(({ dayId, date, description, startTime, endTime }) => (
             <Schedule
               key={dayId}

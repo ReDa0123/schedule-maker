@@ -1,5 +1,7 @@
+import ContentBox from '../../../shared/design-system/atoms/ContentBox';
+
 const LoginPage = () => {
-  return <h1>Login stránka</h1>;
+  return <ContentBox>kontent pro login stránku</ContentBox>;
 };
 
 export default LoginPage;
