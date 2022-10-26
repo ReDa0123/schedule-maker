@@ -15,8 +15,8 @@ const ScheduleForm = () => {
         <Box p={2}>
           <ContentBox>
             <AddBlockForm />
-            <NotAssignedBlocks />
           </ContentBox>
+          <NotAssignedBlocks />
           {days.map(({ dayId, date, description, startTime, endTime }) => (
             <Schedule
               key={dayId}

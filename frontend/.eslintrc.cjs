@@ -21,6 +21,7 @@ module.exports = {
     'react/jsx-key': 'error',
     'react/prop-types': 'error',
     'react/display-name': 'off',
+    'react/self-closing-comp': 'warn',
   },
   settings: {
     react: {
