@@ -114,6 +114,7 @@ const AddBlockForm = () => {
           )(SEXES)}
           control={control}
           label="Sex"
+          emptyOptionLabel="Both"
         />
       </Grid>
       <Flex justifyContent="center">

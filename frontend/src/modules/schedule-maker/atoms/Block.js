@@ -78,6 +78,9 @@ const Block = ({ value, onChange, index, ...props }) => {
       <Box
         color="blue.500"
         fontWeight="500"
+        overflow="hidden"
+        textOverflow="ellipsis"
+        whiteSpace="nowrap"
       >{`${sportsName} - ${value.category}`}</Box>
     </Box>
   );
