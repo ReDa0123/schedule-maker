@@ -4,6 +4,7 @@ import { Schedule } from './index';
 import { Box, IconButton, Tabs, TabList, Tab } from 'src/shared/design-system';
 import { format } from 'date-fns';
 import { AddIcon } from '@chakra-ui/icons';
+import { WithTooltip } from 'src/shared/design-system/molecules';
 
 const ScheduleDays = () => {
   const { days, detailMode } = useTournamentSchedule();
@@ -44,15 +45,17 @@ const ScheduleDays = () => {
             </Tab>
           ))}
           {!detailMode && (
-            <IconButton
-              variant="outline"
-              aria-label="Add day"
-              icon={<AddIcon />}
-              bg="none"
-              color="blue.500"
-              marginY="auto"
-              ml={4}
-            />
+            <WithTooltip label="Add new day">
+              <IconButton
+                variant="outline"
+                aria-label="Add day"
+                icon={<AddIcon />}
+                bg="none"
+                color="blue.500"
+                marginY="auto"
+                ml={4}
+              />
+            </WithTooltip>
           )}
         </TabList>
       </Tabs>
