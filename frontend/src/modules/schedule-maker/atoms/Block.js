@@ -40,13 +40,14 @@ const Block = ({ value, onChange, index, ...props }) => {
       p={2}
       bg="orange.100"
       position="relative"
-      zIndex={isDragging ? -1 : 20}
+      zIndex={20}
       ref={detailMode ? null : drag}
       opacity={isDragging ? 0.5 : 1}
       flexShrink={0}
       borderRadius="md"
       boxShadow="lg"
       cursor="grab"
+      pointerEvents={isDragging ? 'none' : 'all'}
       {...props}
     >
       {!detailMode && (

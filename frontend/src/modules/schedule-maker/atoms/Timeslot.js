@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useIsInViewport } from '../../../shared/hooks';
 import { Box } from 'src/shared/design-system';
 import { BLOCK_SCALE } from '../constants';
@@ -7,6 +7,7 @@ import { calculateEndTime } from '../utils/blocks';
 import { between } from 'ramda-extension';
 import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
+import { Block } from './index';
 
 const TimeslotDrop = ({
   timeslot,
@@ -15,6 +16,7 @@ const TimeslotDrop = ({
   areaId,
   startTimesInThisDayAndArena,
 }) => {
+  const [dropPreview, setDropPreview] = useState(null);
   const onDrop = useCallback(
     ({ onChange, value }) => {
       onChange({
@@ -36,7 +38,7 @@ const TimeslotDrop = ({
   );
 
   const canDropFn = useCallback(
-    ({ value: { blockId, players } }) => {
+    ({ value: { players, blockId } }) => {
       const endTimeOfDraggedBlock = calculateEndTime({
         startTime: timeslot,
         players,
@@ -57,15 +59,33 @@ const TimeslotDrop = ({
     drop: onDrop,
     collect,
     canDrop: canDropFn,
+    hover: ({ value }) => {
+      setDropPreview(value);
+    },
   });
 
   const bg = useMemo(() => {
     if (!isOver) return 'white';
-    if (!canDrop) return 'red.500';
-    return 'green.500';
+    if (!canDrop) return 'red.300';
+    return 'green.300';
   }, [isOver, canDrop]);
 
-  return <Box ref={drop} bg={bg} h="100%" />;
+  useEffect(() => {
+    if (!isOver) setDropPreview(null);
+  }, [isOver]);
+
+  return (
+    <Box ref={drop} bg={bg} h="100%">
+      {dropPreview && (
+        <Block
+          value={dropPreview}
+          pointerEvents="none"
+          opacity="0.4"
+          marginX="auto"
+        />
+      )}
+    </Box>
+  );
 };
 
 const Timeslot = (props) => {
