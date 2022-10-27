@@ -35,7 +35,7 @@ const TournamentScheduleContext = ({ children, tournament }) => {
     <TournamentScheduleProvider
       value={{
         tournament,
-        detailMode: searchParams.get('detailmode') === 'true',
+        detailMode: !!searchParams.get('detailmode'),
         blocks: blocksOfTournament,
         days: daysOfTournament,
         sports,
