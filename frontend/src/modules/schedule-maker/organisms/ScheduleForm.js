@@ -1,15 +1,14 @@
 import { Form } from 'src/shared/react-hook-form/organisms';
 import { FieldArrayContext } from '../contexts';
-import { Flex, Heading } from 'src/shared/design-system';
+import { Flex, Heading, ContentBox } from 'src/shared/design-system';
 import { useTournamentSchedule } from '../hooks';
-import { Schedule } from './';
+import { ScheduleDays } from './';
 import { AddBlockForm, NotAssignedBlocks } from '../molecules';
 import { SCHEDULE_FORM_NAME } from '../constants';
-import ContentBox from '../../../shared/design-system/atoms/ContentBox';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 
 const ScheduleForm = () => {
-  const { days, blocks } = useTournamentSchedule();
+  const { blocks } = useTournamentSchedule();
   return (
     <Form onSubmit={console.log}>
       <FieldArrayContext name={SCHEDULE_FORM_NAME} initialData={blocks}>
@@ -22,16 +21,7 @@ const ScheduleForm = () => {
           </ContentBox>
           <NotAssignedBlocks />
           <ContentBox minW="70%">
-            {days.map(({ dayId, date, description, startTime, endTime }) => (
-              <Schedule
-                key={dayId}
-                dayId={dayId}
-                date={date}
-                description={description}
-                startTime={startTime}
-                endTime={endTime}
-              />
-            ))}
+            <ScheduleDays />
             <FormSubmitButton
               minW="250px"
               containerProps={{ marginX: 'auto', mt: '16px' }}

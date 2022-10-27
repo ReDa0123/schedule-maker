@@ -1,6 +1,5 @@
-import ContentBox from 'src/shared/design-system/atoms/ContentBox';
 import { RouterLink } from 'src/shared/navigation';
-import { Text } from 'src/shared/design-system';
+import { Text, ContentBox } from 'src/shared/design-system';
 
 const LoginPage = () => {
   return (

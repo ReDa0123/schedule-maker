@@ -1,4 +1,4 @@
-import ContentBox from 'src/shared/design-system/atoms/ContentBox';
+import { ContentBox } from 'src/shared/design-system';
 import { RouterLink } from 'src/shared/navigation';
 
 const TournamentsListPage = () => {

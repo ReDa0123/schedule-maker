@@ -129,6 +129,14 @@ export const days = [
     endTime: 400,
     tournamentId: 1,
   },
+  {
+    dayId: 2,
+    date: '2022-01-02',
+    description: 'Dolní část tabulky',
+    startTime: 100,
+    endTime: 400,
+    tournamentId: 1,
+  },
 ];
 
 export const sports = [

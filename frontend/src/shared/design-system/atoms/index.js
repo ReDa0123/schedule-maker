@@ -49,6 +49,8 @@ export {
   Link,
   Tab,
   TabList,
+  TabPanels,
+  TabPanel,
   Tabs,
   Tag,
   Text,
@@ -57,3 +59,5 @@ export {
 } from '@chakra-ui/react';
 
 export { Button } from './Button';
+
+export { ContentBox } from './ContentBox';

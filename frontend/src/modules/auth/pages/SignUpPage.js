@@ -1,4 +1,4 @@
-import ContentBox from 'src/shared/design-system/atoms/ContentBox';
+import { ContentBox } from 'src/shared/design-system';
 
 const SignUpPage = () => {
   return <ContentBox>tady si uživatel založí profil</ContentBox>;

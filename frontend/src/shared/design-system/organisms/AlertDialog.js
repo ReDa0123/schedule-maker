@@ -18,7 +18,6 @@ const AlertDialog = ({
   bodyText,
   confirmButtonText,
   cancelButtonText,
-  dialogProps,
   overlayProps,
   contentProps,
   headerProps,
@@ -26,15 +25,15 @@ const AlertDialog = ({
   footerProps,
   confirmButtonProps,
   cancelButtonProps,
+  ...props
 }) => {
   const leastDestructiveRef = useRef();
-
   return (
     <ChakraAlertDialog
       leastDestructiveRef={leastDestructiveRef}
       isOpen={isOpen}
       onClose={onClose}
-      {...dialogProps}
+      {...props}
     >
       <AlertDialogOverlay {...overlayProps}>
         <AlertDialogContent {...contentProps}>
@@ -70,7 +69,6 @@ AlertDialog.propTypes = {
   bodyText: PropTypes.string,
   confirmButtonText: PropTypes.string.isRequired,
   cancelButtonText: PropTypes.string.isRequired,
-  dialogProps: PropTypes.object,
   overlayProps: PropTypes.object,
   contentProps: PropTypes.object,
   headerProps: PropTypes.object,
