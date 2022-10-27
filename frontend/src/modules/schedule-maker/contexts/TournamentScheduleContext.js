@@ -2,14 +2,14 @@ import { createContext, useMemo } from 'react';
 import { blocks, days, sports, areas } from '../utils/mocks';
 import { propEq } from 'ramda';
 import PropTypes from 'prop-types';
+import { useSearchParams } from 'react-router-dom';
 
 export const tournamentScheduleContext = createContext(null);
 
 const TournamentScheduleProvider = tournamentScheduleContext.Provider;
 
 const TournamentScheduleContext = ({ children, tournament }) => {
-  //TODO: useParams
-  const detailMode = false;
+  const [searchParams] = useSearchParams();
 
   const blocksOfTournament = useMemo(
     () => blocks.filter(propEq('tournamentId', tournament.tournamentId)),
@@ -30,7 +30,7 @@ const TournamentScheduleContext = ({ children, tournament }) => {
     <TournamentScheduleProvider
       value={{
         tournament,
-        detailMode,
+        detailMode: searchParams.get('detailmode') === 'true',
         blocks: blocksOfTournament,
         days: daysOfTournament,
         sports,

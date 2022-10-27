@@ -45,6 +45,7 @@ export {
   Tab,
   TabList,
   Tabs,
+  Text,
   Textarea,
   Tooltip,
 } from '@chakra-ui/react';
