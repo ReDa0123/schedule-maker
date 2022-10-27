@@ -13,7 +13,7 @@ const ScheduleTimeColumn = ({ startTime, endTime }) => {
       const isDivisibleBy15 = i % 15 === 0;
       times.push({
         formattedTime: minutesToTime(i),
-        shouldDisplayTime: i === startTime || i === endTime || isDivisibleBy15,
+        shouldDisplayTime: isDivisibleBy15,
       });
     }
     setTimes(times);
@@ -21,19 +21,20 @@ const ScheduleTimeColumn = ({ startTime, endTime }) => {
 
   return (
     <Box
-      minW="120px"
       pt={`${TABLE_TOP_PADDING}px`}
-      borderRightColor="black"
-      borderRightWidth="1px"
+      paddingInline={{ md: 14, base: 4 }}
+      borderRightWidth="2px"
+      borderRightColor="blue.500"
+      flexShrink={0}
     >
       {times.map(({ formattedTime, shouldDisplayTime }) => (
         <Box
           key={formattedTime}
           h={`${BLOCK_SCALE}px`}
-          fontSize={`${BLOCK_SCALE - 5}px`}
+          fontSize={`${BLOCK_SCALE - 16}px`}
           textAlign="center"
           position="relative"
-          top={`-${BLOCK_SCALE - 7}px`}
+          top={`-${BLOCK_SCALE - 20}px`}
         >
           {shouldDisplayTime ? formattedTime : ''}
         </Box>

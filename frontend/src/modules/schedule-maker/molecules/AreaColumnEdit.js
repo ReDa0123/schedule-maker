@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Box } from 'src/shared/design-system';
 import { Timeslot } from '../atoms';
 import { useAreaColumn, useEditBlocksInArea } from '../hooks';
+import { TABLE_TOP_PADDING } from '../constants';
 
 const AreaColumnEdit = ({
   area: { areaId, name },
@@ -18,18 +19,13 @@ const AreaColumnEdit = ({
 
   return (
     <Box
-      minW="220px"
-      borderRightColor="black"
-      borderRightWidth="1px"
+      minW={{ md: '320px', base: '220px' }}
+      borderRightColor="blue.500"
+      borderRightWidth="2px"
       position="relative"
     >
       {blocksInArea}
-      <Box
-        h="20px"
-        textAlign="center"
-        borderBottomColor="black"
-        borderBottomWidth="1px"
-      >
+      <Box h={`${TABLE_TOP_PADDING}px`} textAlign="center" fontWeight="500">
         {name}
       </Box>
       <Box>

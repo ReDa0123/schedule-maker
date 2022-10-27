@@ -1,5 +1,5 @@
 import { useTournamentSchedule } from '../hooks';
-import { Flex, Heading } from 'src/shared/design-system';
+import { Box, Flex, Heading } from 'src/shared/design-system';
 import PropTypes from 'prop-types';
 import {
   AreaColumnDetail,
@@ -7,6 +7,8 @@ import {
   ScheduleTimeColumn,
 } from '../molecules';
 import { useMemo } from 'react';
+
+const SCHEDULE_INLINE_PADDING = 16;
 
 const Schedule = ({ dayId, date, description, startTime, endTime }) => {
   const { areas, detailMode } = useTournamentSchedule();
@@ -16,18 +18,20 @@ const Schedule = ({ dayId, date, description, startTime, endTime }) => {
     [detailMode]
   );
   return (
-    <>
-      <Heading>
+    <Box marginInline={`${SCHEDULE_INLINE_PADDING}px`}>
+      <Heading fontSize={24} mt={4}>
         {date} - {description}
       </Heading>
       <Flex
-        w="100%"
+        w="fit-content"
         maxW="100%"
         overflow="auto"
-        borderWidth="1px"
-        borderColor="black"
+        borderWidth="3px"
+        borderColor="blue.500"
         mt={4}
-        paddingBlock={2}
+        paddingBlock={6}
+        paddingRight={10}
+        borderRadius="xl"
       >
         <ScheduleTimeColumn startTime={startTime} endTime={endTime} />
         {areas.map((area) => (
@@ -40,7 +44,7 @@ const Schedule = ({ dayId, date, description, startTime, endTime }) => {
           />
         ))}
       </Flex>
-    </>
+    </Box>
   );
 };
 

@@ -10,7 +10,6 @@ export {
   AlertIcon,
   AlertTitle,
   Box,
-  Button,
   Center,
   Checkbox,
   Flex,
@@ -19,6 +18,7 @@ export {
   FormHelperText,
   FormLabel,
   Grid,
+  GridItem,
   Heading,
   Icon,
   IconButton,
@@ -33,6 +33,11 @@ export {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
   Radio,
   RadioGroup,
   Select,
@@ -45,7 +50,10 @@ export {
   Tab,
   TabList,
   Tabs,
+  Tag,
   Text,
   Textarea,
   Tooltip,
 } from '@chakra-ui/react';
+
+export { Button } from './Button';

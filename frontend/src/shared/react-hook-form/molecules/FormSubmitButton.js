@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Box, Button } from '../../design-system';
 import { ErrorTag } from '../atoms';
 import { useSubmitButton } from '../hooks';
+import { useFormContext } from 'react-hook-form';
 
 const FormSubmitButton = ({
   title,
@@ -11,20 +12,23 @@ const FormSubmitButton = ({
   showAlert,
   children,
   onClick,
+  containerProps,
   ...props
 }) => {
   const {
-    isSubmitting,
-    errorsCount,
-    errorsCountBiggestThanZero,
-    onClickButton,
-  } = useSubmitButton({
-    showAlert,
-    onClick,
-  });
+    formState: { errors, isSubmitting, isValid },
+  } = useFormContext();
+
+  const { errorsCount, errorsCountBiggestThanZero, onClickButton } =
+    useSubmitButton({
+      showAlert,
+      onClick,
+      errors,
+      isValid,
+    });
 
   return (
-    <Box position="relative" w="fit-content">
+    <Box position="relative" w="fit-content" {...containerProps}>
       <Button
         type="submit"
         disabled={
@@ -54,6 +58,7 @@ FormSubmitButton.propTypes = {
   showAlert: PropTypes.bool,
   children: PropTypes.node,
   onClick: PropTypes.func,
+  containerProps: PropTypes.object,
 };
 
 export default FormSubmitButton;

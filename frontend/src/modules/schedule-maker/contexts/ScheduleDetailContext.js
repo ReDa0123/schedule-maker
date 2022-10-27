@@ -1,6 +1,19 @@
 import { createContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { both, compose, pluck, uniq, values } from 'ramda';
+import {
+  allPass,
+  compose,
+  pluck,
+  uniq,
+  values,
+  filter as rFilter,
+  o,
+  prop,
+  includes,
+  __,
+  toPairs,
+  map,
+} from 'ramda';
 import { SEXES } from '../constants';
 import { propEqOrIsEmptyOrNil } from '../../../shared/utils';
 import { useTournamentSchedule } from '../hooks';
@@ -8,6 +21,7 @@ import { useTournamentSchedule } from '../hooks';
 const filterFns = {
   category: propEqOrIsEmptyOrNil,
   sex: propEqOrIsEmptyOrNil,
+  sportId: propEqOrIsEmptyOrNil,
 };
 
 export const scheduleDetailContext = createContext(null);
@@ -15,10 +29,11 @@ export const scheduleDetailContext = createContext(null);
 const ScheduleDetailProvider = scheduleDetailContext.Provider;
 
 const ScheduleDetailContext = ({ children }) => {
-  const { blocks } = useTournamentSchedule();
+  const { blocks, sports } = useTournamentSchedule();
   const [filter, setFilter] = useState({
     category: '',
     sex: '',
+    sportId: '',
   });
 
   const categoriesToFilter = useMemo(
@@ -29,12 +44,27 @@ const ScheduleDetailContext = ({ children }) => {
   const filteredBlocks = useMemo(
     () =>
       blocks.filter(
-        both(
-          filterFns.category('category', filter.category),
-          filterFns.sex('sex', filter.sex)
+        allPass(
+          o(
+            map(([fieldName, filterFn]) =>
+              filterFn(fieldName, filter[fieldName])
+            ),
+            toPairs
+          )(filterFns)
         )
       ),
     [blocks, filter]
+  );
+
+  const sportsToFilter = useMemo(
+    () =>
+      rFilter(
+        o(
+          includes(__, compose(uniq, values, pluck('sportId'))(blocks)),
+          prop('sportId')
+        )
+      )(sports),
+    [blocks, sports]
   );
 
   return (
@@ -45,6 +75,7 @@ const ScheduleDetailContext = ({ children }) => {
         categoriesToFilter,
         sexesToFilter: values(SEXES),
         filteredBlocks,
+        sportsToFilter,
       }}
     >
       {children}

@@ -1,13 +1,10 @@
 import { useToast } from '@chakra-ui/react';
-import { useFormContext } from 'react-hook-form';
 import { useCallback, useMemo } from 'react';
 import { keys, length } from 'ramda';
 
-export const useSubmitButton = ({ onClick, showAlert }) => {
+export const useSubmitButton = ({ onClick, showAlert, errors, isValid }) => {
   const toast = useToast();
-  const {
-    formState: { errors, isSubmitting, isValid },
-  } = useFormContext();
+
   const errorsCount = useMemo(() => length(keys(errors)), [errors]);
   const errorsCountBiggestThanZero = useMemo(
     () => errorsCount > 0,
@@ -29,7 +26,6 @@ export const useSubmitButton = ({ onClick, showAlert }) => {
   }, [isValid, showAlert, toast, onClick]);
 
   return {
-    isSubmitting,
     errorsCount,
     errorsCountBiggestThanZero,
     onClickButton,

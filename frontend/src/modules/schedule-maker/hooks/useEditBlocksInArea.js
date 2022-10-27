@@ -3,7 +3,12 @@ import { useMemo } from 'react';
 import { allPass, applySpec, filter, map, o, pick, prop, propEq } from 'ramda';
 import { calculateEndTime } from '../utils/blocks';
 import { Block } from '../atoms';
-import { BLOCK_SCALE, MINUTES_IN_BLOCK, TABLE_TOP_PADDING } from '../constants';
+import {
+  BLOCK_OFFSET,
+  BLOCK_SCALE,
+  MINUTES_IN_BLOCK,
+  TABLE_TOP_PADDING,
+} from '../constants';
 import { useFieldArrayProps } from './';
 
 export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
@@ -45,11 +50,13 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
               <Block
                 onChange={onChange}
                 value={value}
+                index={index}
                 position="absolute"
                 top={`${
                   ((correspondingValue?.startTime - startTime) * BLOCK_SCALE) /
                     MINUTES_IN_BLOCK +
-                  TABLE_TOP_PADDING
+                  TABLE_TOP_PADDING +
+                  BLOCK_OFFSET
                 }px`}
                 left="50%"
                 transform="translateX(-50%)"

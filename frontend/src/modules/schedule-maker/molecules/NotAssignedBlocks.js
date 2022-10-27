@@ -6,6 +6,9 @@ import { useFieldArrayProps } from '../hooks';
 import { propEq } from 'ramda';
 import { Block } from '../atoms';
 import { isNilOrEmpty } from 'ramda-extension';
+import { useMemo } from 'react';
+
+const NOT_ASSIGNED_BLOCKS_HEIGHT = 200;
 
 const NotAssignedBlocks = () => {
   const { fields } = useFieldArrayProps();
@@ -26,38 +29,41 @@ const NotAssignedBlocks = () => {
     }),
   });
 
+  const notAssignedBlocks = useMemo(() => {
+    return fields.map((field, index) => {
+      if (isNilOrEmpty(values)) return null;
+      const correspondingValue = values.find(propEq('blockId', field.blockId));
+      return (
+        !correspondingValue?.startTime && (
+          <Controller
+            key={field.id}
+            name={`schedule.${index}`}
+            render={({ field: { onChange, value } }) => (
+              <Block onChange={onChange} value={value} index={index} />
+            )}
+          />
+        )
+      );
+    });
+  }, [fields, values]);
+
   return (
     <Flex
       gap={2}
-      borderWidth={1}
-      borderColor="black"
-      borderRadius="md"
+      borderWidth="3px"
+      borderColor="blue.500"
       p={2}
       ref={drop}
       bg={isOver ? 'green.500' : 'white'}
-      position={'sticky'}
+      position="sticky"
       top={0}
-      maxH={'25vh'}
-      overflowY={'auto'}
+      h={`${NOT_ASSIGNED_BLOCKS_HEIGHT}px`}
+      overflowY="auto"
       zIndex={1000}
+      marginInline={4}
+      maxW="1000px"
     >
-      {fields.map((field, index) => {
-        if (isNilOrEmpty(values)) return null;
-        const correspondingValue = values.find(
-          propEq('blockId', field.blockId)
-        );
-        return (
-          !correspondingValue?.startTime && (
-            <Controller
-              key={field.id}
-              name={`schedule.${index}`}
-              render={({ field: { onChange, value } }) => (
-                <Block onChange={onChange} value={value} />
-              )}
-            />
-          )
-        );
-      })}
+      {notAssignedBlocks}
     </Flex>
   );
 };

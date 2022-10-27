@@ -11,19 +11,24 @@ const TournamentScheduleProvider = tournamentScheduleContext.Provider;
 const TournamentScheduleContext = ({ children, tournament }) => {
   const [searchParams] = useSearchParams();
 
+  const propEqualsTournamentId = useMemo(
+    () => propEq('tournamentId', tournament.tournamentId),
+    [tournament.tournamentId]
+  );
+
   const blocksOfTournament = useMemo(
-    () => blocks.filter(propEq('tournamentId', tournament.tournamentId)),
-    [tournament]
+    () => blocks.filter(propEqualsTournamentId),
+    [propEqualsTournamentId]
   );
 
   const daysOfTournament = useMemo(
-    () => days.filter(propEq('tournamentId', tournament.tournamentId)),
-    [tournament]
+    () => days.filter(propEqualsTournamentId),
+    [propEqualsTournamentId]
   );
 
   const areasOfTournament = useMemo(
-    () => areas.filter(propEq('tournamentId', tournament.tournamentId)),
-    [tournament]
+    () => areas.filter(propEqualsTournamentId),
+    [propEqualsTournamentId]
   );
 
   return (

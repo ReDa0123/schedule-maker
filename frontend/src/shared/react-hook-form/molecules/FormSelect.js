@@ -37,6 +37,7 @@ const FormSelect = ({
     <FormControl
       isDisabled={disabled}
       isInvalid={isInvalid}
+      maxW="250px"
       {...formControlProps}
     >
       {label && <FormLabel {...formLabelProps}>{label}</FormLabel>}
@@ -45,6 +46,10 @@ const FormSelect = ({
         onChange={onChangeData}
         onBlur={onBlurField}
         onFocus={onFocus}
+        borderWidth={2}
+        borderColor="blue.500"
+        iconColor="blue.600"
+        _hover={{ borderColor: 'blue.700' }}
         {...inputProps}
       >
         <option value="">{emptyOptionLabel}</option>

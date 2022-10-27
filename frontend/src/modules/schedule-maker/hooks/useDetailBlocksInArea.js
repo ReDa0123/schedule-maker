@@ -1,5 +1,10 @@
 import { useScheduleDetail } from './useScheduleDetail';
-import { BLOCK_SCALE, MINUTES_IN_BLOCK, TABLE_TOP_PADDING } from '../constants';
+import {
+  BLOCK_OFFSET,
+  BLOCK_SCALE,
+  MINUTES_IN_BLOCK,
+  TABLE_TOP_PADDING,
+} from '../constants';
 import { Block } from '../atoms';
 
 export const useDetailBlocksInArea = ({ areaId, dayId, startTime }) => {
@@ -16,7 +21,8 @@ export const useDetailBlocksInArea = ({ areaId, dayId, startTime }) => {
       position="absolute"
       top={`${
         ((block.startTime - startTime) * BLOCK_SCALE) / MINUTES_IN_BLOCK +
-        TABLE_TOP_PADDING
+        TABLE_TOP_PADDING +
+        BLOCK_OFFSET
       }px`}
       left="50%"
       transform="translateX(-50%)"

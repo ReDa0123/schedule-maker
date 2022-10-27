@@ -69,22 +69,42 @@ const TimeslotDrop = ({
 };
 
 const Timeslot = (props) => {
+  const { timeslot } = props;
   const { detailMode } = useTournamentSchedule();
   const refForView = useRef(null);
   const isInView = useIsInViewport(refForView);
+  const topBorder = useMemo(() => {
+    if (timeslot % 30 === 0)
+      return {
+        borderTopStyle: 'solid',
+        borderTopColor: 'blue.500',
+      };
+    if (timeslot % 15 === 0)
+      return {
+        borderTopStyle: 'dashed',
+        borderTopColor: 'blue.300',
+      };
+    return {
+      borderTopStyle: 'dotted',
+      borderTopColor: 'blue.200',
+    };
+  }, [timeslot]);
 
   return (
     <Box
       ref={refForView}
       h={`${BLOCK_SCALE}px`}
       w="100%"
-      borderWidth={1}
-      borderTopColor="gray"
-      borderBottomColor="gray"
+      borderTopWidth="2px"
+      {...topBorder}
     >
       {!detailMode && isInView && <TimeslotDrop {...props} />}
     </Box>
   );
+};
+
+Timeslot.propTypes = {
+  timeslot: PropTypes.number.isRequired,
 };
 
 TimeslotDrop.propTypes = {

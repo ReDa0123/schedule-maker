@@ -1,5 +1,12 @@
 import { useScheduleDetail } from '../hooks';
-import { Box, Button, FormLabel, Grid, Select } from 'src/shared/design-system';
+import {
+  GridItem,
+  Button,
+  FormLabel,
+  Grid,
+  Select,
+} from 'src/shared/design-system';
+import { isEmpty } from 'ramda';
 
 const BlockFilter = () => {
   const {
@@ -7,11 +14,20 @@ const BlockFilter = () => {
     setFilter,
     categoriesToFilter,
     sexesToFilter,
+    sportsToFilter,
   } = useScheduleDetail();
 
   return (
-    <Grid gap={2} templateColumns={{ md: '1fr 1fr', base: '1fr' }}>
-      <Box>
+    <Grid
+      gap={4}
+      templateColumns={{
+        lg: '250px 250px 250px',
+        md: '250px 250px',
+        base: '1fr',
+      }}
+      p={4}
+    >
+      <GridItem maxW="250px">
         <FormLabel>Category</FormLabel>
         <Select
           value={blockFilter.category}
@@ -26,8 +42,8 @@ const BlockFilter = () => {
             </option>
           ))}
         </Select>
-      </Box>
-      <Box>
+      </GridItem>
+      <GridItem maxW="250px">
         <FormLabel>Sex</FormLabel>
         <Select
           value={blockFilter.sex}
@@ -40,8 +56,31 @@ const BlockFilter = () => {
             </option>
           ))}
         </Select>
-      </Box>
-      <Button onClick={() => setFilter({ category: '', sex: '' })} maxW="100px">
+      </GridItem>
+      <GridItem maxW="250px">
+        <FormLabel>Sport</FormLabel>
+        <Select
+          value={blockFilter.sportId}
+          onChange={(e) =>
+            setFilter({
+              ...blockFilter,
+              sportId: isEmpty(e.target.value) ? '' : Number(e.target.value),
+            })
+          }
+        >
+          <option value="">All</option>
+          {sportsToFilter.map(({ sportId, name }) => (
+            <option key={sportId} value={sportId}>
+              {name}
+            </option>
+          ))}
+        </Select>
+      </GridItem>
+      <Button
+        onClick={() => setFilter({ category: '', sex: '', sportId: '' })}
+        maxW="100px"
+        alignSelf="end"
+      >
         Reset filter
       </Button>
     </Grid>

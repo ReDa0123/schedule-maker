@@ -3,12 +3,16 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Input,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from '../../design-system';
 import PropTypes from 'prop-types';
 import { useFormField } from '../hooks';
 
-const FormInput = ({
+const FormNumberInput = ({
   name,
   label,
   onChange,
@@ -40,17 +44,25 @@ const FormInput = ({
       {...formControlProps}
     >
       {label && <FormLabel {...formLabelProps}>{label}</FormLabel>}
-      <Input
+      <NumberInput
         {...field}
         onChange={onChangeData}
         onBlur={onBlurField}
         onFocus={onFocus}
         type={type}
-        borderWidth={2}
-        borderColor="blue.500"
-        _hover={{ borderColor: 'blue.700' }}
+        min={0}
         {...inputProps}
-      />
+      >
+        <NumberInputField
+          borderWidth={2}
+          borderColor="blue.500"
+          _hover={{ borderColor: 'blue.700' }}
+        />
+        <NumberInputStepper>
+          <NumberIncrementStepper color="blue.600" border="none" />
+          <NumberDecrementStepper color="blue.600" border="none" />
+        </NumberInputStepper>
+      </NumberInput>
       {isInvalid ? (
         <FormErrorMessage {...formErrorMessageProps}>
           {fieldState.error?.message}
@@ -64,7 +76,7 @@ const FormInput = ({
   );
 };
 
-FormInput.propTypes = {
+FormNumberInput.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   onChange: PropTypes.func,
@@ -81,4 +93,4 @@ FormInput.propTypes = {
   control: PropTypes.object,
 };
 
-export default FormInput;
+export default FormNumberInput;
