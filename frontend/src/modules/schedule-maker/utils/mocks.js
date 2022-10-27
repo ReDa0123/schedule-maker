@@ -159,4 +159,25 @@ export const tournaments = [
     endDate: '2022-01-02',
     userId: 1,
   },
+  {
+    tournamentId: 2,
+    name: 'Závody velkých kluků',
+    location: 'Brno',
+    startDate: '2022-01-01',
+    endDate: '2022-01-02',
+  },
+  {
+    tournamentId: 3,
+    name: 'Závody velkých holek',
+    location: 'Třebíč',
+    startDate: '2022-01-01',
+    endDate: '2022-01-02',
+  },
+  {
+    tournamentId: 4,
+    name: 'Gymnastické závody',
+    location: 'Zbraslavice',
+    startDate: '2022-01-01',
+    endDate: '2022-01-02',
+  },
 ];
