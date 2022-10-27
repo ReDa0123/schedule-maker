@@ -31,11 +31,13 @@ const TournamentScheduleContext = ({ children, tournament }) => {
     [propEqualsTournamentId]
   );
 
+  const detailMode = searchParams.get('detailmode');
+
   return (
     <TournamentScheduleProvider
       value={{
         tournament,
-        detailMode: !!searchParams.get('detailmode'),
+        detailMode: detailMode !== 'false' && !!detailMode,
         blocks: blocksOfTournament,
         days: daysOfTournament,
         sports,
