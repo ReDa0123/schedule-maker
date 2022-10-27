@@ -13,27 +13,32 @@ const ScheduleForm = () => {
   return (
     <Form onSubmit={console.log}>
       <FieldArrayContext name={SCHEDULE_FORM_NAME} initialData={blocks}>
-        <Flex gap={4} flexDir="column">
+        <Flex gap={4} flexDir="column" w="100%">
           <ContentBox>
             <AddBlockForm />
-            <Heading fontSize={24} mb={4} marginInline={4}>
+            <Heading fontSize={24} mb={4}>
               Not assigned blocks
             </Heading>
           </ContentBox>
           <NotAssignedBlocks />
-          {days.map(({ dayId, date, description, startTime, endTime }) => (
-            <Schedule
-              key={dayId}
-              dayId={dayId}
-              date={date}
-              description={description}
-              startTime={startTime}
-              endTime={endTime}
-            />
-          ))}
-          <FormSubmitButton containerProps={{ alignSelf: 'center' }}>
-            SAVE
-          </FormSubmitButton>
+          <ContentBox minW="70%">
+            {days.map(({ dayId, date, description, startTime, endTime }) => (
+              <Schedule
+                key={dayId}
+                dayId={dayId}
+                date={date}
+                description={description}
+                startTime={startTime}
+                endTime={endTime}
+              />
+            ))}
+            <FormSubmitButton
+              minW="250px"
+              containerProps={{ marginX: 'auto', mt: '16px' }}
+            >
+              SAVE
+            </FormSubmitButton>
+          </ContentBox>
         </Flex>
       </FieldArrayContext>
     </Form>

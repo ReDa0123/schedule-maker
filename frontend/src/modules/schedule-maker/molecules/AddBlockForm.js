@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Grid, Button, Flex, Heading, Box } from 'src/shared/design-system';
+import { Grid, Button, Flex, Heading } from 'src/shared/design-system';
 import {
   FormInput,
   FormNumberInput,
@@ -68,11 +68,19 @@ const AddBlockForm = () => {
   });
 
   return (
-    <Box marginInline={4}>
+    <>
       <Heading fontSize={24} mb={4}>
         Block creation
       </Heading>
-      <Grid templateColumns="repeat(auto-fit, minmax(250px, 1fr))" gap={4}>
+      <Grid
+        templateColumns={{
+          base: '1fr',
+          sm: '1fr 1fr',
+          md: '1fr 1fr 1fr',
+        }}
+        gap={4}
+        w="100%"
+      >
         <FormInput name="category" label="Category" control={control} />
         <FormNumberInput
           name="players"
@@ -113,7 +121,7 @@ const AddBlockForm = () => {
           Add
         </Button>
       </Flex>
-    </Box>
+    </>
   );
 };
 

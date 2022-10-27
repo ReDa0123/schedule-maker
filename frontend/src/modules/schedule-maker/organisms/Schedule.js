@@ -8,8 +8,6 @@ import {
 } from '../molecules';
 import { useMemo } from 'react';
 
-const SCHEDULE_INLINE_PADDING = 16;
-
 const Schedule = ({ dayId, date, description, startTime, endTime }) => {
   const { areas, detailMode } = useTournamentSchedule();
   const ColumnToRender = useMemo(
@@ -18,13 +16,12 @@ const Schedule = ({ dayId, date, description, startTime, endTime }) => {
     [detailMode]
   );
   return (
-    <Box marginInline={`${SCHEDULE_INLINE_PADDING}px`}>
+    <Box w="100%">
       <Heading fontSize={24} mt={4}>
         {date} - {description}
       </Heading>
       <Flex
-        w="fit-content"
-        maxW="100%"
+        w="100%"
         overflow="auto"
         borderWidth="3px"
         borderColor="blue.500"

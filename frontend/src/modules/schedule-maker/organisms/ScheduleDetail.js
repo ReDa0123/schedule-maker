@@ -11,16 +11,18 @@ const ScheduleDetail = () => {
       <ContentBox>
         <BlockFilter />
       </ContentBox>
-      {days.map(({ dayId, date, description, startTime, endTime }) => (
-        <Schedule
-          key={dayId}
-          dayId={dayId}
-          date={date}
-          description={description}
-          startTime={startTime}
-          endTime={endTime}
-        />
-      ))}
+      <ContentBox minW="70%">
+        {days.map(({ dayId, date, description, startTime, endTime }) => (
+          <Schedule
+            key={dayId}
+            dayId={dayId}
+            date={date}
+            description={description}
+            startTime={startTime}
+            endTime={endTime}
+          />
+        ))}
+      </ContentBox>
     </ScheduleDetailContext>
   );
 };

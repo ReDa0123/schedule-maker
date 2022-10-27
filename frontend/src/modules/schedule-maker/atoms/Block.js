@@ -8,7 +8,7 @@ import {
   BLOCK_SCALE,
   MINUTES_IN_BLOCK,
 } from '../constants';
-import { PersonsTag, TimeTag, DeleteBlockButton } from './';
+import { PersonsTag, TimeTag, DeleteBlockButton, ResetBlockButton } from './';
 import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
 import { useMemo } from 'react';
 import { propEq } from 'ramda';
@@ -50,7 +50,25 @@ const Block = ({ value, onChange, index, ...props }) => {
       {...props}
     >
       {!detailMode && (
-        <DeleteBlockButton deleteBlock={() => fieldArrayProps.remove(index)} />
+        <>
+          {value.startTime && (
+            <ResetBlockButton
+              resetBlock={() =>
+                onChange({
+                  ...value,
+                  arenaId: null,
+                  dayId: null,
+                  startTime: null,
+                })
+              }
+            />
+          )}
+          <DeleteBlockButton
+            deleteBlock={() => fieldArrayProps.remove(index)}
+            sportsName={sportsName}
+            category={value.category}
+          />
+        </>
       )}
       <Flex gap={2}>
         <TimeTag time={calculateDuration(value)} />

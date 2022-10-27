@@ -60,8 +60,10 @@ const NotAssignedBlocks = () => {
       h={`${NOT_ASSIGNED_BLOCKS_HEIGHT}px`}
       overflowY="auto"
       zIndex={1000}
-      marginInline={4}
-      maxW="1000px"
+      maxW="min(1000px, calc(100% - 32px))"
+      marginX={{ base: '16px', ll: 'auto' }}
+      w="100%"
+      borderRadius="lg"
     >
       {notAssignedBlocks}
     </Flex>
