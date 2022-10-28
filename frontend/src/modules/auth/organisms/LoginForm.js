@@ -8,7 +8,7 @@ import {
 } from 'src/shared/react-hook-form/molecules';
 import PropTypes from 'prop-types';
 
-const initialValues = {
+const defaultValues = {
   email: '',
   password: '',
 };
@@ -24,7 +24,7 @@ const validationSchema = yup.object().shape({
 const LoginForm = ({ onSubmit, errorMessage }) => (
   <Form
     onSubmit={onSubmit}
-    initialValues={initialValues}
+    defaultValues={defaultValues}
     resolver={yupResolver(validationSchema)}
     mode="onChange"
   >
