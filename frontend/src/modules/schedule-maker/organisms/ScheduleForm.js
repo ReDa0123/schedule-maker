@@ -6,11 +6,12 @@ import { ScheduleDays } from './';
 import { AddBlockForm, NotAssignedBlocks } from '../molecules';
 import { SCHEDULE_FORM_NAME } from '../constants';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
+import PropTypes from 'prop-types';
 
-const ScheduleForm = () => {
+const ScheduleForm = ({ onSubmit }) => {
   const { blocks } = useTournamentSchedule();
   return (
-    <Form onSubmit={console.log}>
+    <Form onSubmit={onSubmit}>
       <FieldArrayContext name={SCHEDULE_FORM_NAME} initialData={blocks}>
         <Flex gap={4} flexDir="column" w="100%">
           <ContentBox>
@@ -33,6 +34,10 @@ const ScheduleForm = () => {
       </FieldArrayContext>
     </Form>
   );
+};
+
+ScheduleForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default ScheduleForm;

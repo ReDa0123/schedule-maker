@@ -24,8 +24,14 @@ const ScheduleDays = () => {
               overflow="hidden"
               maxW="250px"
               minW="150px"
+              _hover={{
+                bg: 'orange.50',
+              }}
               _selected={{
                 bg: 'orange.100',
+                _hover: {
+                  bg: 'orange.100',
+                },
               }}
             >
               <Box

@@ -1,14 +1,13 @@
-import { RouterLink } from 'src/shared/navigation';
-import { Text, ContentBox } from 'src/shared/design-system';
+import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import { LoginTemplate } from '../templates';
 
 const LoginPage = () => {
-  return (
-    <ContentBox>
-      <Text>Tady se uživatel přihlásí</Text>
-      <br />
-      <RouterLink to="/tournaments-list">Log in</RouterLink>
-    </ContentBox>
-  );
+  const navigate = useNavigate();
+  const onSubmit = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
+  return <LoginTemplate error={undefined} onSubmit={onSubmit} />;
 };
 
 export default LoginPage;
