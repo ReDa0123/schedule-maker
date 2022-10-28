@@ -76,33 +76,25 @@ const SignUp = ({ errorMessage }) => {
         name="username"
         label="Username"
         helperText="Select your desired username. Username must not be already in use"
-        formControlProps={{ maxW: '350px' }}
       />
       <FormInput
         name="email"
         label="Email"
         helperText="Fill in your email. Email must not be already in use"
         type="email"
-        formControlProps={{ maxW: '350px' }}
       />
       <FormInput
         name="password"
         label="Password"
         helperText="Choose your password. The length should be between 6 and 16 characters"
         type="password"
-        formControlProps={{ maxW: '350px' }}
         onChange={async () => {
           if (repeatPassword !== '') {
             await trigger('repeatPassword');
           }
         }}
       />
-      <FormInput
-        name="repeatPassword"
-        label="Password again"
-        type="password"
-        formControlProps={{ maxW: '350px' }}
-      />
+      <FormInput name="repeatPassword" label="Password again" type="password" />
       <FormSubmitButton title="Sign Up" showAlert />
     </Flex>
   );

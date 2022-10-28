@@ -37,7 +37,7 @@ const FormSelect = ({
     <FormControl
       isDisabled={disabled}
       isInvalid={isInvalid}
-      maxW="250px"
+      w="250px"
       {...formControlProps}
     >
       {label && <FormLabel {...formLabelProps}>{label}</FormLabel>}
@@ -50,6 +50,7 @@ const FormSelect = ({
         borderColor="blue.500"
         iconColor="blue.600"
         _hover={{ borderColor: 'blue.700' }}
+        w="100%"
         {...inputProps}
       >
         <option value="">{emptyOptionLabel}</option>

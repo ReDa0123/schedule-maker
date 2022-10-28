@@ -36,7 +36,7 @@ const FormInput = ({
     <FormControl
       isDisabled={disabled}
       isInvalid={isInvalid}
-      maxW="250px"
+      w="250px"
       {...formControlProps}
     >
       {label && <FormLabel {...formLabelProps}>{label}</FormLabel>}
@@ -48,6 +48,7 @@ const FormInput = ({
         type={type}
         borderWidth={2}
         borderColor="blue.500"
+        w="100%"
         _hover={{ borderColor: 'blue.700' }}
         {...inputProps}
       />

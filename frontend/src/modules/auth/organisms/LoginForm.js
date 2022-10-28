@@ -39,14 +39,12 @@ const LoginForm = ({ onSubmit, errorMessage }) => (
         label="Email"
         helperText="Fill in your e-mail address"
         type="email"
-        formControlProps={{ maxW: '350px' }}
       />
       <FormInput
         name="password"
         label="Password"
         helperText="Fill in your password"
         type="password"
-        formControlProps={{ maxW: '350px' }}
       />
       <FormSubmitButton title="Login" showAlert />
     </Flex>

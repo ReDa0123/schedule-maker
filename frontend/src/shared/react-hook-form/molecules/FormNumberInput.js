@@ -40,7 +40,7 @@ const FormNumberInput = ({
     <FormControl
       isDisabled={disabled}
       isInvalid={isInvalid}
-      maxW="250px"
+      w="250px"
       {...formControlProps}
     >
       {label && <FormLabel {...formLabelProps}>{label}</FormLabel>}
@@ -51,6 +51,7 @@ const FormNumberInput = ({
         onFocus={onFocus}
         type={type}
         min={0}
+        w="100%"
         {...inputProps}
       >
         <NumberInputField
