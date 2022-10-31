@@ -1,6 +1,7 @@
 import merge from 'lodash.merge';
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { typeDef as Dummy, resolvers as dummyResolvers } from './dummy/index';
+import { typeDef as User } from './user/index';
+import { resolvers as userResolvers } from './user/index';
 
 // based on - https://www.apollographql.com/blog/backend/schema-design/modularizing-your-graphql-schema-code/
 const Query = /* GraphQL */ `
@@ -18,6 +19,6 @@ const Mutation = /* GraphQL */ `
 const resolvers = {};
 
 export const schema = makeExecutableSchema({
-  typeDefs: [Query, Mutation, Dummy],
-  resolvers: merge(resolvers, dummyResolvers),
+  typeDefs: [Query, Mutation, User],
+  resolvers: merge(resolvers, userResolvers),
 });
