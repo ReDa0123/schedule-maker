@@ -157,5 +157,6 @@ export const tournaments = [
     location: 'Praha',
     startDate: '2022-01-01',
     endDate: '2022-01-02',
+    userId: 1,
   },
 ];

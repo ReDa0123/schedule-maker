@@ -7,9 +7,9 @@ import { AuthError } from '../../auth/atoms';
 const ScheduleEdit = () => {
   const auth = useAuth();
   const {
-    tournament: { tournamentId },
+    tournament: { userId },
   } = useTournamentSchedule();
-  const canEdit = auth.user && auth.user.userId === tournamentId;
+  const canEdit = auth.user && auth.user.userId === userId;
   const onSubmit = useCallback((data) => {
     console.log(data);
   }, []);
