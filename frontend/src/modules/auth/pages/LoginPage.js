@@ -50,7 +50,7 @@ const LoginPage = () => {
         id: toastLoginId,
       };
       if (!toastErrorRef.current || !toast.isActive(toastErrorRef.current)) {
-        toast(toastOptions);
+        toastErrorRef.current = toast(toastOptions);
       } else {
         toast.update(toastErrorRef.current, toastOptions);
       }
