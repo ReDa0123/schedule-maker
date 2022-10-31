@@ -156,7 +156,7 @@ export const tournaments = [
     name: 'Mistrovství ČR',
     location: 'Praha',
     startDate: '2022-01-01',
-    endDate: '2022-01-02',
+    endDate: '2022-01-15',
     userId: 1,
   },
   {

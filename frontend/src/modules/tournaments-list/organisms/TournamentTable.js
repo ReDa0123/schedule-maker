@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   Table,
   TableCaption,
@@ -9,8 +9,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { useTable } from 'react-table';
+import { Button } from '../../../shared/design-system';
+import { useTable, useGlobalFilter } from 'react-table';
 import { tournaments } from '../../schedule-maker/utils/mocks';
+import TournamentListHeading from '../atoms/TournamentListHeading';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const columns = [
   {
@@ -25,49 +29,101 @@ const columns = [
         accessor: 'location',
       },
       {
-        Header: 'Tournament date',
+        Header: 'Tournament start date',
         accessor: 'startDate',
+      },
+      {
+        Header: 'Tournament end date',
+        accessor: 'endDate',
+      },
+      {
+        Header: 'Details',
+        accessor: 'tournamentId',
+        Cell: (props) => mockButton(props.row.original.tournamentId),
       },
     ],
   },
 ];
+//stupid mocking solution
+const mockButton = (id) => {
+  const btn = () => (
+    <Button minW="120px" colorScheme="green">
+      Details
+    </Button>
+  );
+  if (id === 1) {
+    return <Link to="/schedule-maker/1?detailmode=true">{btn()}</Link>;
+  } else if (id === 2) {
+    return <Link to="/schedule-maker/1?detailmode=false">{btn()}</Link>;
+  } else {
+    return btn();
+  }
+};
 
-export default function TournamentTable() {
+function TournamentTable(props) {
   const data = useMemo(() => tournaments, []);
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter,
+  } = useTable({ columns, data }, useGlobalFilter);
+  const { globalFilter } = state;
+
+  useEffect(() => {
+    props.setFilter({
+      globalFilter,
+      setGlobalFilter,
+    });
+  }, []);
 
   return (
-    <TableContainer>
-      <Table variant="simple" {...getTableProps()}>
-        <TableCaption>Tabulka turnajů</TableCaption>
-        <Thead>
-          {headerGroups.map((group) => (
-            <Tr key={group.id}>
-              {group.headers.map((column) => (
-                <Th key={column.id}>{column.render('Header')}</Th>
-              ))}
-            </Tr>
-          ))}
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <Tr key={row.id}>
-                {row.cells.map((cell) => {
-                  return (
-                    <Td key={cell.id} {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </Td>
-                  );
-                })}
+    <>
+      <TournamentListHeading mb="10px">
+        List of Tournaments
+      </TournamentListHeading>
+
+      <TableContainer>
+        <Table variant="simple" {...getTableProps()}>
+          <TableCaption>Tabulka turnajů</TableCaption>
+          <Thead>
+            {headerGroups.map((group, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Tr key={index}>
+                {group.headers.map((column) => (
+                  <Th key={column.id}>{column.render('Header')}</Th>
+                ))}
               </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-    </TableContainer>
+            ))}
+          </Thead>
+          <Tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <Tr key={row.id}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <Td key={cell.id} {...cell.getCellProps()}>
+                        {cell.render('Cell')}
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
+
+TournamentTable.propTypes = {
+  setFilter: PropTypes.func,
+};
+
+export default TournamentTable;
