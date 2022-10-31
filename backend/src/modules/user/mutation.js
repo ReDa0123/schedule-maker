@@ -1,5 +1,6 @@
 import * as argon2 from 'argon2';
 import { createToken } from '../../libs/token';
+import { userValidationSchema } from './validationSchemas';
 
 export const login = async (_, { email, password }, { dbConnection }) => {
   const dbResponse = await dbConnection.query(
@@ -25,6 +26,7 @@ export const signup = async (
   { email, password, username },
   { dbConnection }
 ) => {
+  userValidationSchema.validateSync({ email, password, username });
   const userByUserName = (
     await dbConnection.query(`SELECT * FROM user WHERE username = ?`, [
       username,

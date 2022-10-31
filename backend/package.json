@@ -27,13 +27,14 @@
     "graphql": "^16.6.0",
     "jsonwebtoken": "^8.5.1",
     "lodash.merge": "^4.6.2",
-    "mariadb": "^3.0.1"
+    "mariadb": "^3.0.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "backpack-core": "^0.8.4",
+    "eslint": "8.22.0",
     "nodemon": "^2.0.12",
     "prettier": "^2.7.1",
-    "touch": "^3.1.0",
-    "eslint": "8.22.0"
+    "touch": "^3.1.0"
   }
 }

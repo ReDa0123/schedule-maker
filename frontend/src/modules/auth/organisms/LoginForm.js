@@ -1,7 +1,7 @@
 import { Form } from 'src/shared/react-hook-form/organisms';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Text, Flex } from 'src/shared/design-system';
+import { Flex } from 'src/shared/design-system';
 import {
   FormInput,
   FormSubmitButton,
@@ -21,7 +21,7 @@ const validationSchema = yup.object().shape({
   password: yup.string().required('Please fill in your password'),
 });
 
-const LoginForm = ({ onSubmit, errorMessage }) => (
+const LoginForm = ({ onSubmit }) => (
   <Form
     onSubmit={onSubmit}
     defaultValues={defaultValues}
@@ -29,11 +29,6 @@ const LoginForm = ({ onSubmit, errorMessage }) => (
     mode="onChange"
   >
     <Flex flexDir="column" gap={4} pb={4}>
-      {errorMessage && (
-        <Text color="red" fontSize={14} mb={4}>
-          {errorMessage}
-        </Text>
-      )}
       <FormInput
         name="email"
         label="Email"
@@ -53,7 +48,6 @@ const LoginForm = ({ onSubmit, errorMessage }) => (
 
 LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string,
 };
 
 export default LoginForm;

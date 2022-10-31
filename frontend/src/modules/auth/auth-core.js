@@ -48,7 +48,7 @@ function createContextValue({ token, user, setState }) {
   return {
     token,
     user,
-    signin: ({ token, user }) => setState({ token, user }),
+    login: ({ token, user }) => setState({ token, user }),
     signout: () => setState({ token: null, user: null }),
   };
 }
@@ -77,7 +77,7 @@ function getStorageState(defaultState) {
   try {
     const { user, token } = JSON.parse(rawData);
 
-    if (token && user && user.userName && user.id && user.name) {
+    if (token && user && user.username && user.userId && user.email) {
       return { token, user };
     }
   } catch {

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Form } from 'src/shared/react-hook-form/organisms';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Text, Flex } from 'src/shared/design-system';
+import { Flex } from 'src/shared/design-system';
 import {
   FormInput,
   FormSubmitButton,
@@ -45,33 +45,27 @@ const validationSchema = yup.object().shape({
     .oneOf([yup.ref('password')], PASSWORD_MISMATCH_MESSAGE),
 });
 
-const SignUpForm = ({ onSubmit, errorMessage }) => (
+const SignUpForm = ({ onSubmit }) => (
   <Form
     onSubmit={onSubmit}
     defaultValues={defaultValues}
     resolver={yupResolver(validationSchema)}
     mode="onBlur"
   >
-    <SignUp errorMessage={errorMessage} />
+    <SignUp />
   </Form>
 );
 
 SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  errorMessage: PropTypes.string,
 };
 
-const SignUp = ({ errorMessage }) => {
+const SignUp = () => {
   const repeatPassword = useWatch({ name: 'repeatPassword' });
   const { trigger } = useFormContext();
 
   return (
     <Flex flexDir="column" gap={4} pb={4}>
-      {errorMessage && (
-        <Text color="red" fontSize={14} mb={4}>
-          {errorMessage}
-        </Text>
-      )}
       <FormInput
         name="username"
         label="Username"
@@ -98,10 +92,6 @@ const SignUp = ({ errorMessage }) => {
       <FormSubmitButton title="Sign Up" showAlert />
     </Flex>
   );
-};
-
-SignUp.propTypes = {
-  errorMessage: PropTypes.string,
 };
 
 export default SignUpForm;
