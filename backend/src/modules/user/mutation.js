@@ -7,6 +7,9 @@ export const login = async (_, { email, password }, { dbConnection }) => {
     [email]
   );
   const user = dbResponse[0];
+  if (!user) {
+    throw new Error('Invalid email or password');
+  }
   if (await argon2.verify(user.password, password)) {
     const token = createToken({ id: user.userId });
     return {
