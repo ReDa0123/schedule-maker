@@ -7,6 +7,8 @@ import {
   FormInput,
   FormSubmitButton,
   FormCheckbox,
+  FormSelect,
+  FormNumberInput,
 } from 'src/shared/react-hook-form/molecules';
 import SubHeader from '../../../shared/design-system/molecules/SubHeader';
 
@@ -78,6 +80,7 @@ const TournamentCreatorPage = () => {
         </Stack>
         <FormSubmitButton title={'Add'} showAlert />
       </Form>
+
       <DateSelection />
     </ContentBox></>
   );
