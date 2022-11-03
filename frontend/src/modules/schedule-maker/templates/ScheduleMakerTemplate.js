@@ -12,7 +12,7 @@ const ScheduleMakerTemplate = () => {
   );
   return (
     <>
-      <SubHeader title="Schedule Maker" />
+      <SubHeader path={'/tournament-list'} title="Schedule Maker" />
       <ComponentToRender />
     </>
   );

@@ -11,19 +11,18 @@ const TournamentsListPage = () => {
 
   return (
     <>
-    <SubHeader title="Tournaments" />
-    <ContentBox>
+      <SubHeader title="Tournaments" />
+      <ContentBox>
+        <Box my={3}>
+          <CreateNewButton />
+        </Box>
 
-      <Box my={3}>
-        <CreateNewButton />
-      </Box>
-
-      <TournamentFilter
-        filter={filter.globalFilter}
-        setFilter={filter.setGlobalFilter}
-      />
-      <TournamentTable setFilter={setFilter} />
-    </ContentBox>
+        <TournamentFilter
+          filter={filter.globalFilter}
+          setFilter={filter.setGlobalFilter}
+        />
+        <TournamentTable setFilter={setFilter} />
+      </ContentBox>
     </>
   );
 };
