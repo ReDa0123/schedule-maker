@@ -1,4 +1,6 @@
-import { ContentBox, Stack } from 'src/shared/design-system';
+import { ContentBox, Stack, Heading } from 'src/shared/design-system';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { DateSelection } from 'src/shared/design-system/organisms';
 import { Form } from 'src/shared/react-hook-form/organisms';
 import {
@@ -27,15 +29,34 @@ const mockAreaTypes = [
   { value: 2, label: 'Jump track' },
   { value: 3, label: 'Hall' },
 ];
+const defaultValues = {
+  TournamentName: '',
+  Location: '',
+};
+
+const validationSchema = yup.object().shape({
+  TournamentName: yup.string().required('Plese enter tournament name'),
+  Location: yup.string().required('Plese enter location'),
+});
+
+const areaValidationSchema = yup.object().shape({
+  AreaTypeSelection: yup.number().required('Please select area type'),
+  AreaCapacity: yup.number().required('Please enter area capacity'),
+});
 
 const TournamentCreatorPage = () => {
   return (
     <>
       <SubHeader title={'Create Tournament'} />
     <ContentBox>
-      Tournament settings
-      <Form onSubmit={(data) => alert(JSON.stringify(data))}>
-        <FormInput name={'Tournament na()me'} label={'Tournament name'} />
+      <Heading> Tournament settings </Heading>
+
+      <Form
+        onSubmit={(data) => alert(JSON.stringify(data))}
+        defaultValues={defaultValues}
+        resolver={yupResolver(validationSchema)}
+      >
+        <FormInput name={'TournamentName'} label={'Tournament name'} />
         <FormInput name={'Location'} label={'Location'} />
         <label> Sports selection </label>
         <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }}>
@@ -45,7 +66,11 @@ const TournamentCreatorPage = () => {
         </SimpleGrid>
         <FormSubmitButton title={'Save'} showAlert />
       </Form>
-      <Form onSubmit={(data) => alert(JSON.stringify(data))}>
+
+      <Form
+        onSubmit={(data) => alert(JSON.stringify(data))}
+        resolver={yupResolver(areaValidationSchema)}
+      >
         <Stack direction={'row'}>
           <FormSelect
             name={'AreaTypeSelection'}
