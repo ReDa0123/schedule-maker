@@ -22,26 +22,20 @@ const Header = (props) => {
   }, [auth, toast, navigate]);
 
   return (
-    <Flex bg="blue.600" minH="50px" {...props}>
-      <Spacer />
-
-      <Center>
+    <Flex bg="blue.600" minH="60px" {...props}>
+      <Center marginX={'15px'} marginLeft={'30px'}>
         <RouterLink to="/" color="white">
           Schedule Maker
         </RouterLink>
       </Center>
 
-      <Spacer />
-
-      <Center>
+      <Center marginX={'15px'}>
         <RouterLink to="/tournaments-list" color="white">
           Tournaments
         </RouterLink>
       </Center>
 
-      <Spacer />
-
-      <Center>
+      <Center marginX={'15px'}>
         <RouterLink to="/tournament-creator" color="white">
           Create Tournament
         </RouterLink>
@@ -57,19 +51,25 @@ const Header = (props) => {
         <>
           <Center>
             <RouterLink to="/login" color="white">
-              Login
+              <Button
+                colorScheme="gray"
+                variant="solid"
+                color="blue.600"
+                marginX="10px"
+              >
+                Login
+              </Button>
             </RouterLink>
           </Center>
-          <Spacer />
           <Center>
-            <RouterLink to="/sign-up" color="white">
-              Sign Up
+            <RouterLink to="/sign-up" color="white" marginRight={'30px'}>
+              <Button colorScheme="gray" variant="outline" marginX="10px">
+                Sign in
+              </Button>
             </RouterLink>
           </Center>
         </>
       )}
-
-      <Spacer />
     </Flex>
   );
 };
