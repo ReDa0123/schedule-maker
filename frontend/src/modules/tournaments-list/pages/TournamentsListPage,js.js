@@ -1,8 +1,8 @@
 import { ContentBox } from 'src/shared/design-system';
+import SubHeader from '../../../shared/design-system/molecules/SubHeader';
 import { Box } from '@chakra-ui/react';
 import CreateNewButton from '../atoms/CreateNewButton';
 import TournamentTable from '../organisms/TournamentTable';
-import TournamentListHeading from '../atoms/TournamentListHeading';
 import { useState } from 'react';
 import TournamentFilter from '../organisms/TournamentFilter';
 
@@ -10,8 +10,9 @@ const TournamentsListPage = () => {
   const [filter, setFilter] = useState({});
 
   return (
+    <>
+    <SubHeader title="Tournaments" />
     <ContentBox>
-      <TournamentListHeading big>Tournaments</TournamentListHeading>
 
       <Box my={3}>
         <CreateNewButton />
@@ -23,6 +24,7 @@ const TournamentsListPage = () => {
       />
       <TournamentTable setFilter={setFilter} />
     </ContentBox>
+    </>
   );
 };
 
