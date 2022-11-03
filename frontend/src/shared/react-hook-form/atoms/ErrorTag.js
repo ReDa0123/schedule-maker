@@ -18,7 +18,7 @@ const ErrorTag = ({ value, children }) => (
 );
 
 ErrorTag.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.node,
 };
 
