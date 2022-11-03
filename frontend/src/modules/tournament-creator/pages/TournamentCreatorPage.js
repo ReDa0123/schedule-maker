@@ -7,8 +7,6 @@ import {
   FormInput,
   FormSubmitButton,
   FormCheckbox,
-  FormSelect,
-  FormNumberInput,
 } from 'src/shared/react-hook-form/molecules';
 import SubHeader from '../../../shared/design-system/molecules/SubHeader';
 
@@ -58,8 +56,7 @@ const TournamentCreatorPage = () => {
       >
         <FormInput name={'TournamentName'} label={'Tournament name'} />
         <FormInput name={'Location'} label={'Location'} />
-        <label> Sports selection </label>
-        <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }}>
+        <SimpleGrid columns={4}>
           {mockSports.map((sport) => (
             <FormCheckbox name={sport} label={sport} key={sport} />
           ))}
