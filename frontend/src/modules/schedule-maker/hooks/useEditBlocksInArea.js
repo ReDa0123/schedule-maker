@@ -24,7 +24,7 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
         map(
           applySpec({
             startTime: prop('startTime'),
-            endTime: o(calculateEndTime, pick(['startTime', 'players'])),
+            endTime: o(calculateEndTime, pick(['startTime', 'persons'])),
             blockId: prop('blockId'),
           })
         ),

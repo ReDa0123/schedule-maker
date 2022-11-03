@@ -4,7 +4,7 @@ export const blocks = [
   {
     blockId: 12,
     startTime: null,
-    players: 3,
+    persons: 3,
     dayId: null,
     areaId: null,
     style: tournamentStyles.TEST,
@@ -16,7 +16,7 @@ export const blocks = [
   {
     blockId: 1,
     startTime: 120,
-    players: 5,
+    persons: 5,
     dayId: 1,
     areaId: 1,
     style: tournamentStyles.TEST,
@@ -28,7 +28,7 @@ export const blocks = [
   {
     blockId: 2,
     startTime: 300,
-    players: 2,
+    persons: 2,
     dayId: 1,
     areaId: 1,
     style: tournamentStyles.TEST,
@@ -40,7 +40,7 @@ export const blocks = [
   {
     blockId: 3,
     startTime: 360,
-    players: 4,
+    persons: 4,
     dayId: 1,
     areaId: 1,
     style: tournamentStyles.TEST,
@@ -51,7 +51,7 @@ export const blocks = [
   {
     blockId: 4,
     startTime: 200,
-    players: 3,
+    persons: 3,
     dayId: 1,
     areaId: 1,
     style: tournamentStyles.TEST,
@@ -62,7 +62,7 @@ export const blocks = [
   {
     blockId: 5,
     startTime: 100,
-    players: 2,
+    persons: 2,
     dayId: 1,
     areaId: 2,
     style: tournamentStyles.TEST,
@@ -73,7 +73,7 @@ export const blocks = [
   {
     blockId: 6,
     startTime: 180,
-    players: 8,
+    persons: 8,
     dayId: 1,
     areaId: 2,
     style: tournamentStyles.TEST,
@@ -85,7 +85,7 @@ export const blocks = [
   {
     blockId: 7,
     startTime: 240,
-    players: 4,
+    persons: 4,
     dayId: 1,
     areaId: 2,
     style: tournamentStyles.TEST,
@@ -97,7 +97,7 @@ export const blocks = [
   {
     blockId: 8,
     startTime: 300,
-    players: 3,
+    persons: 3,
     dayId: 1,
     areaId: 2,
     style: tournamentStyles.TEST,

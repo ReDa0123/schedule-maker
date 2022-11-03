@@ -49,7 +49,7 @@ INSERT INTO `area` (`areaId`, `name`, `tournamentId`) VALUES
 CREATE TABLE `block` (
                        `blockId` int(11) NOT NULL,
                        `startTime` int(11) DEFAULT NULL,
-                       `players` int(11) NOT NULL,
+                       `persons` int(11) NOT NULL,
                        `style` varchar(50) NOT NULL,
                        `category` varchar(50) NOT NULL,
                        `sex` varchar(1) DEFAULT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE `block` (
 -- Vypisuji data pro tabulku `block`
 --
 
-INSERT INTO `block` (`blockId`, `startTime`, `players`, `style`, `category`, `sex`, `tournamentId`, `dayId`, `areaId`, `sportId`) VALUES
+INSERT INTO `block` (`blockId`, `startTime`, `persons`, `style`, `category`, `sex`, `tournamentId`, `dayId`, `areaId`, `sportId`) VALUES
                                                                                                                                     (1, NULL, 3, 'TEST', 'Mladší junioři', 'M', 1, NULL, NULL, 1),
                                                                                                                                     (2, 120, 3, 'TEST', 'Mladší junioři', 'M', 1, 1, 1, 1),
                                                                                                                                     (3, 300, 2, 'TEST', 'Starší junioři', 'F', 1, 1, 1, 1),

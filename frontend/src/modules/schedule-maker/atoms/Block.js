@@ -73,7 +73,7 @@ const Block = ({ value, onChange, index, ...props }) => {
       )}
       <Flex gap={2}>
         <TimeTag time={calculateDuration(value)} />
-        <PersonsTag numberOfPersons={value.players} sex={value.sex} />
+        <PersonsTag numberOfPersons={value.persons} sex={value.sex} />
       </Flex>
       <Box
         color="blue.500"

@@ -15,12 +15,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 const validationSchema = yup.object().shape({
   category: yup.string().required('Please specify category'),
-  players: yup
+  persons: yup
     .number()
-    .typeError('Please input the number of players')
-    .integer('The number of players must be a positive integer')
-    .positive('The number of players must be a positive integer')
-    .required('Please input the number of players'),
+    .typeError('Please input the number of persons')
+    .integer('The number of persons must be a positive integer')
+    .positive('The number of persons must be a positive integer')
+    .required('Please input the number of persons'),
   style: yup.string().required('Please specify the style of the competition'),
   sportId: yup
     .number()
@@ -41,7 +41,7 @@ const AddBlockForm = () => {
   } = useForm({
     defaultValues: {
       category: '',
-      players: '',
+      persons: '',
       style: '',
       blockId: '',
       sportId: '',
@@ -83,8 +83,8 @@ const AddBlockForm = () => {
       >
         <FormInput name="category" label="Category" control={control} />
         <FormNumberInput
-          name="players"
-          label="Players"
+          name="persons"
+          label="Persons"
           type="number"
           control={control}
         />

@@ -7,7 +7,7 @@ export const minutesToTime = (minutes) => {
   return `${hours < 10 ? '0' : ''}${hours}:${mins < 10 ? '0' : ''}${mins}`;
 };
 
-export const calculateDuration = o(multiply(MINUTES_IN_BLOCK), prop('players'));
+export const calculateDuration = o(multiply(MINUTES_IN_BLOCK), prop('persons'));
 
-export const calculateEndTime = ({ startTime, players }) =>
-  calculateDuration({ players }) + startTime;
+export const calculateEndTime = ({ startTime, persons }) =>
+  calculateDuration({ persons }) + startTime;
