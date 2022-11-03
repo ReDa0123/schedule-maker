@@ -78,6 +78,7 @@ function TournamentTable(props) {
       globalFilter,
       setGlobalFilter,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
