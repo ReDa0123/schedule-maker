@@ -7,6 +7,7 @@ import { AuthProvider } from 'src/modules/auth';
 
 import { EnhancedApolloProvider } from 'src/utils/apollo';
 import { Routes } from 'src/Routes';
+import { Body } from './shared/design-system/atoms/Body';
 import { Header, Footer } from './shared/design-system/molecules/';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -19,9 +20,11 @@ export function App() {
           <EnhancedApolloProvider>
             <DndProvider backend={HTML5Backend}>
               <ScrollToTop />
-              <Header />
-              <Routes />
-              <Footer />
+              <Body>
+                <Header />
+                <Routes />
+                <Footer />
+              </Body>
             </DndProvider>
           </EnhancedApolloProvider>
         </AuthProvider>
