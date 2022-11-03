@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { ScheduleDetail, ScheduleEdit } from '../organisms';
 import { useTournamentSchedule } from '../hooks';
+import SubHeader from '../../../shared/design-system/molecules/SubHeader';
 
 const ScheduleMakerTemplate = () => {
   const { detailMode } = useTournamentSchedule();
@@ -9,7 +10,12 @@ const ScheduleMakerTemplate = () => {
     () => (detailMode ? ScheduleDetail : ScheduleEdit),
     [detailMode]
   );
-  return <ComponentToRender />;
+  return (
+    <>
+      <SubHeader path={'/tournament-list'} title="Schedule Maker" />
+      <ComponentToRender />
+    </>
+  );
 };
 
 export default ScheduleMakerTemplate;
