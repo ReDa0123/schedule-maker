@@ -1,11 +1,11 @@
-import { Button } from '../../../shared/design-system';
-
-const CreateNewClicked = () => {
-  alert('Altmanova práce');
-};
+import { Button } from 'src/shared/design-system';
+import { useNavigate } from 'react-router-dom';
 
 const CreateNewButton = () => {
-  return <Button onClick={CreateNewClicked}>Create new</Button>;
+  const navigate = useNavigate();
+  return (
+    <Button onClick={() => navigate('/tournament-creator')}>Create new</Button>
+  );
 };
 
 export default CreateNewButton;

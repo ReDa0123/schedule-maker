@@ -11,8 +11,6 @@ import {
   FormNumberInput,
 } from 'src/shared/react-hook-form/molecules';
 import SubHeader from '../../../shared/design-system/molecules/SubHeader';
-
-
 import { SimpleGrid } from '@chakra-ui/react';
 
 const mockSports = [
@@ -47,42 +45,43 @@ const areaValidationSchema = yup.object().shape({
 const TournamentCreatorPage = () => {
   return (
     <>
-      <SubHeader title={'Create Tournament'} />
-    <ContentBox>
-      <Heading> Tournament settings </Heading>
+      <SubHeader title={'Create Tournament'} path="/tournaments-list" />
+      <ContentBox>
+        <Heading> Tournament settings </Heading>
 
-      <Form
-        onSubmit={(data) => alert(JSON.stringify(data))}
-        defaultValues={defaultValues}
-        resolver={yupResolver(validationSchema)}
-      >
-        <FormInput name={'TournamentName'} label={'Tournament name'} />
-        <FormInput name={'Location'} label={'Location'} />
-        <SimpleGrid columns={4}>
-          {mockSports.map((sport) => (
-            <FormCheckbox name={sport} label={sport} key={sport} />
-          ))}
-        </SimpleGrid>
-        <FormSubmitButton title={'Save'} showAlert />
-      </Form>
+        <Form
+          onSubmit={(data) => alert(JSON.stringify(data))}
+          defaultValues={defaultValues}
+          resolver={yupResolver(validationSchema)}
+        >
+          <FormInput name={'TournamentName'} label={'Tournament name'} />
+          <FormInput name={'Location'} label={'Location'} />
+          <SimpleGrid columns={4}>
+            {mockSports.map((sport) => (
+              <FormCheckbox name={sport} label={sport} key={sport} />
+            ))}
+          </SimpleGrid>
+          <FormSubmitButton title={'Save'} showAlert />
+        </Form>
 
-      <Form
-        onSubmit={(data) => alert(JSON.stringify(data))}
-        resolver={yupResolver(areaValidationSchema)}
-      >
-        <Stack direction={'row'}>
-          <FormSelect
-            name={'AreaTypeSelection'}
-            options={mockAreaTypes}
-            label={'Select area type'}
-          />
-          <FormNumberInput name={'AreaCapacity'} label={'Capacity'} />
-        </Stack>
-        <FormSubmitButton title={'Add'} showAlert />
-      </Form>
+        <Form
+          onSubmit={(data) => alert(JSON.stringify(data))}
+          resolver={yupResolver(areaValidationSchema)}
+        >
+          <Stack direction={'row'}>
+            <FormSelect
+              name={'AreaTypeSelection'}
+              options={mockAreaTypes}
+              label={'Select area type'}
+            />
+            <FormNumberInput name={'AreaCapacity'} label={'Capacity'} />
+          </Stack>
+          <FormSubmitButton title={'Add'} showAlert />
+        </Form>
 
-      <DateSelection />
-    </ContentBox></>
+        <DateSelection />
+      </ContentBox>
+    </>
   );
 };
 
