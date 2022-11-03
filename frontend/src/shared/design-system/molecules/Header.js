@@ -1,9 +1,19 @@
 import { RouterLink } from '../../navigation';
-import { Center, Flex, Spacer, useToast } from '@chakra-ui/react';
+import {
+  Center,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spacer,
+  useToast,
+} from '@chakra-ui/react';
 import { useAuth } from 'src/modules/auth';
 import { Button } from '../atoms';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 const Header = (props) => {
   const auth = useAuth();
@@ -23,6 +33,27 @@ const Header = (props) => {
 
   return (
     <Flex bg="blue.600" minH="60px" {...props}>
+      <Center marginX={'30px'}>
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            Menu
+          </MenuButton>
+          <MenuList>
+            <MenuItem>
+              <RouterLink to="/">Schedule Maker</RouterLink>
+            </MenuItem>
+            <MenuItem>
+              <RouterLink to="/tournaments-list">Tournaments</RouterLink>
+            </MenuItem>
+            <MenuItem>
+              <RouterLink to="/tournament-creator">
+                Create Tournament
+              </RouterLink>
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Center>
+
       <Center marginX={'15px'} marginLeft={'30px'}>
         <RouterLink to="/" color="white">
           Schedule Maker
@@ -45,7 +76,15 @@ const Header = (props) => {
 
       {auth.user ? (
         <Center>
-          <Button onClick={handleSignout}>Sign out</Button>
+          <Button
+            onClick={handleSignout}
+            colorScheme="gray"
+            variant="outline"
+            marginRight={'30px'}
+            color={'white'}
+          >
+            Sign out
+          </Button>
         </Center>
       ) : (
         <>
