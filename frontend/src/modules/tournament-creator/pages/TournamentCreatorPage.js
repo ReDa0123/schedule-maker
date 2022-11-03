@@ -1,7 +1,7 @@
 import { ContentBox, Stack, Heading } from 'src/shared/design-system';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { DateSelection } from 'src/shared/design-system/organisms';
+import { DateSelection } from '../organisms';
 import { Form } from 'src/shared/react-hook-form/organisms';
 import {
   FormInput,
