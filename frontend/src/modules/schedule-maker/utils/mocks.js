@@ -180,4 +180,11 @@ export const tournaments = [
     startDate: '2022-01-01',
     endDate: '2022-01-02',
   },
+  {
+    tournamentId: 5,
+    name: 'Gymnastické závody mladých dívek',
+    location: 'Zbraslavice',
+    startDate: '2022-01-01',
+    endDate: '2022-01-02',
+  },
 ];

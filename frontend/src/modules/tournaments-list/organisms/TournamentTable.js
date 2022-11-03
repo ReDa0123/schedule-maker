@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import {
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
@@ -18,22 +17,22 @@ import { Link } from 'react-router-dom';
 
 const columns = [
   {
-    Header: 'Tabulka',
+    Header: 'Table of tournaments',
     columns: [
       {
         Header: 'Tournament name',
         accessor: 'name',
       },
       {
-        Header: 'Tournament location',
+        Header: 'Location',
         accessor: 'location',
       },
       {
-        Header: 'Tournament start date',
+        Header: 'Start date',
         accessor: 'startDate',
       },
       {
-        Header: 'Tournament end date',
+        Header: 'End date',
         accessor: 'endDate',
       },
       {
@@ -89,7 +88,6 @@ function TournamentTable(props) {
 
       <TableContainer>
         <Table variant="simple" {...getTableProps()}>
-          <TableCaption>Tabulka turnajů</TableCaption>
           <Thead>
             {headerGroups.map((group, index) => (
               // eslint-disable-next-line react/no-array-index-key
@@ -107,7 +105,7 @@ function TournamentTable(props) {
                 <Tr key={row.id}>
                   {row.cells.map((cell) => {
                     return (
-                      <Td key={cell.id} {...cell.getCellProps()}>
+                      <Td key={cell.id} isTruncated {...cell.getCellProps()}>
                         {cell.render('Cell')}
                       </Td>
                     );
