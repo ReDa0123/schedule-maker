@@ -1,30 +1,29 @@
 import { Form } from '../../../shared/react-hook-form/organisms';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import {
-  FormCheckbox,
   FormInput,
   FormSubmitButton,
 } from '../../../shared/react-hook-form/molecules';
-import { SimpleGrid } from 'src/shared/design-system/atoms';
+
 import * as yup from 'yup';
+import Combobox from '../../../shared/react-hook-form/molecules/Combobox';
 
 const mockSports = [
-  'Tennis',
-  'Long jump',
-  'Swimming',
-  'High jump',
-  'Chess',
-  'Archery',
+  { value: 1, label: 'Tennis' },
+  { value: 2, label: 'Long jump' },
+  { value: 3, label: 'Swimming' },
 ];
 
 const defaultValues = {
   TournamentName: '',
   Location: '',
+  Sports: mockSports,
 };
 
 const validationSchema = yup.object().shape({
-  TournamentName: yup.string().required('Plese enter tournament name'),
-  Location: yup.string().required('Plese enter location'),
+  TournamentName: yup.string().required('Please enter tournament name'),
+  Location: yup.string().required('Please enter location'),
+  Sports: yup.array().required('Please enter sports'),
 });
 
 const BasicTournamentSettings = () => {
@@ -36,11 +35,8 @@ const BasicTournamentSettings = () => {
     >
       <FormInput name={'TournamentName'} label={'Tournament name'} />
       <FormInput name={'Location'} label={'Location'} />
-      <SimpleGrid columns={{ base: 2, md: 3, lg: 4 }}>
-        {mockSports.map((sport) => (
-          <FormCheckbox name={sport} label={sport} key={sport} />
-        ))}
-      </SimpleGrid>
+
+      <Combobox name={'Sports'} label={'Sports'} options={mockSports} />
       <FormSubmitButton title={'Save'} showAlert />
     </Form>
   );
