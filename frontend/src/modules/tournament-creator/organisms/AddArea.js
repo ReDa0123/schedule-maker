@@ -8,6 +8,11 @@ import {
 } from '../../../shared/react-hook-form/molecules';
 import * as yup from 'yup';
 
+const defaultValues = {
+  AreaTypeSelection: '',
+  AreaCapacity: 0,
+};
+
 const mockAreaTypes = [
   { value: 1, label: 'Swimming pool' },
   { value: 2, label: 'Jump track' },
@@ -24,6 +29,7 @@ const AddArea = () => {
     <Form
       onSubmit={(data) => alert(JSON.stringify(data))}
       resolver={yupResolver(areaValidationSchema)}
+      defaultValues={defaultValues}
     >
       <Stack direction={'row'}>
         <FormSelect
