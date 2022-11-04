@@ -25,7 +25,7 @@ const Block = ({ value, onChange, index, ...props }) => {
   const { sports, detailMode } = useTournamentSchedule();
   const fieldArrayProps = useFieldArrayProps();
   const sportsName = useMemo(
-    () => sports.find(propEq('sportId', value.sportId)).name,
+    () => sports.find(propEq('sportId', value.sportId))?.name,
     [sports, value]
   );
 
@@ -82,7 +82,15 @@ const Block = ({ value, onChange, index, ...props }) => {
         overflow="hidden"
         textOverflow="ellipsis"
         whiteSpace="nowrap"
-      >{`${sportsName} - ${value.category}`}</Box>
+      >
+        <Box>
+          {sportsName} - {value.age}
+        </Box>
+        <Box>
+          {value.category}
+          {value.customParameter ? ` - ${value.customParameter}` : ''}
+        </Box>
+      </Box>
     </Box>
   );
 };

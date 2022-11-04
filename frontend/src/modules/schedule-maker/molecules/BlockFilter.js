@@ -21,7 +21,7 @@ const BlockFilter = () => {
   return (
     <>
       <Heading fontSize={24} mb={4}>
-        Block creation
+        Block filter
       </Heading>
       <Grid
         gap={4}

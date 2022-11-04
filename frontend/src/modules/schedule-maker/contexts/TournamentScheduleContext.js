@@ -1,6 +1,6 @@
 import { createContext, useMemo } from 'react';
-import { blocks, days, sports, areas } from '../utils/mocks';
-import { propEq } from 'ramda';
+import { blocks, days, sports, areas, tournamentSports } from '../utils/mocks';
+import { prop, propEq } from 'ramda';
 import PropTypes from 'prop-types';
 
 export const tournamentScheduleContext = createContext(null);
@@ -28,6 +28,15 @@ const TournamentScheduleContext = ({ children, tournament, edit }) => {
     [propEqualsTournamentId]
   );
 
+  const sportsOfTournament = useMemo(() => {
+    const sportIdsInTournament = tournamentSports
+      .filter(propEqualsTournamentId)
+      .map(prop('sportId'));
+    return sports.filter((sport) =>
+      sportIdsInTournament.includes(sport.sportId)
+    );
+  }, [propEqualsTournamentId]);
+
   return (
     <TournamentScheduleProvider
       value={{
@@ -35,7 +44,7 @@ const TournamentScheduleContext = ({ children, tournament, edit }) => {
         detailMode: !edit,
         blocks: blocksOfTournament,
         days: daysOfTournament,
-        sports,
+        sports: sportsOfTournament,
         areas: areasOfTournament,
       }}
     >

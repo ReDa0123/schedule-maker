@@ -28,6 +28,8 @@ const validationSchema = yup.object().shape({
     .integer()
     .required('Please select sport'),
   sex: yup.string(),
+  age: yup.string().required('Please specify age group'),
+  customParameter: yup.string(),
 });
 
 const AddBlockForm = () => {
@@ -46,6 +48,8 @@ const AddBlockForm = () => {
       blockId: '',
       sportId: '',
       sex: '',
+      age: '',
+      customParameter: '',
     },
     resolver: yupResolver(validationSchema),
     mode: 'onBlur',
@@ -115,6 +119,12 @@ const AddBlockForm = () => {
           control={control}
           label="Sex"
           emptyOptionLabel="Both"
+        />
+        <FormInput name="age" label="Age" control={control} />
+        <FormInput
+          name="customParameter"
+          label="Custom parameter"
+          control={control}
         />
       </Grid>
       <Flex justifyContent="center">
