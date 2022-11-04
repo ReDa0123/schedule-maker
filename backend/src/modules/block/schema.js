@@ -8,7 +8,7 @@ export const typeDef = /* GraphQL */ `
   type Mutation {
     createBlock(
       startTime: String!
-      endTime: String!
+      persons: Int!
       style: String!
       category: String
       sex: String
@@ -24,7 +24,7 @@ export const typeDef = /* GraphQL */ `
   type Block {
     blockId: Int!
     startTime: String!
-    endTime: String!
+    persons: Int!
     style: String!
     category: String
     sex: String

@@ -11,10 +11,11 @@ const FieldArrayContext = ({ name, initialData = [], ...props }) => {
     name,
   });
 
+  const { replace } = fieldArrayProps;
+
   useEffect(() => {
-    fieldArrayProps.replace(initialData);
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialData]);
+    replace(initialData);
+  }, [replace, initialData]);
 
   return <FieldArrayProvider value={{ ...fieldArrayProps }} {...props} />;
 };
