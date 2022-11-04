@@ -7,7 +7,7 @@ import {
   ScheduleTimeColumn,
 } from '../molecules';
 import { useMemo } from 'react';
-import { DayResetButton } from '../atoms';
+import { DayResetButton } from '../organisms';
 
 const Schedule = ({ dayId, startTime, endTime }) => {
   const { areas, detailMode } = useTournamentSchedule();

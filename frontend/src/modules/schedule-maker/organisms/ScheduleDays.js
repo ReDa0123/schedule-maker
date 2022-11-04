@@ -1,10 +1,11 @@
 import { useTournamentSchedule } from '../hooks';
 import { useState } from 'react';
 import { Schedule } from './index';
-import { Box, IconButton, Tabs, TabList, Tab } from 'src/shared/design-system';
+import { Box, Tabs, TabList, Tab } from 'src/shared/design-system';
 import { format } from 'date-fns';
-import { AddIcon } from '@chakra-ui/icons';
 import { WithTooltip } from 'src/shared/design-system/molecules';
+import { IconButton } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 
 const ScheduleDays = () => {
   const { days, detailMode } = useTournamentSchedule();
@@ -16,24 +17,7 @@ const ScheduleDays = () => {
       <Tabs index={activeIndex} onChange={setActiveIndex} overflow="auto">
         <TabList>
           {days.map(({ dayId, date, description }) => (
-            <Tab
-              key={dayId}
-              display="flex"
-              flexDir="column"
-              borderTopRadius="md"
-              overflow="hidden"
-              maxW="250px"
-              minW="150px"
-              _hover={{
-                bg: 'orange.50',
-              }}
-              _selected={{
-                bg: 'orange.100',
-                _hover: {
-                  bg: 'orange.100',
-                },
-              }}
-            >
+            <Tab key={dayId}>
               <Box
                 w="100%"
                 color="blue.600"

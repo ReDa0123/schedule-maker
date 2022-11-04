@@ -5,7 +5,7 @@ import {
   MINUTES_IN_BLOCK,
   TABLE_TOP_PADDING,
 } from '../constants';
-import { Block } from '../atoms';
+import { Block } from '../molecules';
 
 export const useDetailBlocksInArea = ({ areaId, dayId, startTime }) => {
   const { filteredBlocks: blocks } = useScheduleDetail();

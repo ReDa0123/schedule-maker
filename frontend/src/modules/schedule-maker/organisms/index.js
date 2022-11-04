@@ -3,5 +3,15 @@ import Schedule from './Schedule';
 import ScheduleEdit from './ScheduleEdit';
 import ScheduleForm from './ScheduleForm';
 import ScheduleDays from './ScheduleDays';
+import DayResetButton from './DayResetButton';
+import Timeslot from './Timeslot';
 
-export { ScheduleDetail, ScheduleEdit, ScheduleForm, ScheduleDays, Schedule };
+export {
+  DayResetButton,
+  ScheduleDetail,
+  ScheduleEdit,
+  ScheduleForm,
+  ScheduleDays,
+  Schedule,
+  Timeslot,
+};

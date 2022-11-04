@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Box } from 'src/shared/design-system';
-import { Timeslot } from '../atoms';
+import { Timeslot } from '../organisms';
 import { useAreaColumn, useDetailBlocksInArea } from '../hooks';
 import { TABLE_TOP_PADDING } from '../constants';
 

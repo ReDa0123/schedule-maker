@@ -8,7 +8,8 @@ import {
   BLOCK_SCALE,
   MINUTES_IN_BLOCK,
 } from '../constants';
-import { PersonsTag, TimeTag, DeleteBlockButton, ResetBlockButton } from './';
+import { PersonsTag, TimeTag, ResetBlockButton } from '../atoms';
+import { DeleteBlockButton } from './index';
 import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
 import { useMemo } from 'react';
 import { propEq } from 'ramda';

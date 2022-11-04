@@ -48,7 +48,6 @@ export {
   Square,
   Switch,
   Link,
-  Tab,
   TabList,
   TabPanels,
   TabPanel,
@@ -60,5 +59,5 @@ export {
 } from '@chakra-ui/react';
 
 export { Button } from './Button';
-
+export { Tab } from './Tab';
 export { ContentBox } from './ContentBox';

@@ -4,7 +4,7 @@ import { useDrop } from 'react-dnd';
 import { Flex } from 'src/shared/design-system';
 import { useFieldArrayProps } from '../hooks';
 import { propEq } from 'ramda';
-import { Block } from '../atoms';
+import { Block } from '../molecules';
 import { isNilOrEmpty } from 'ramda-extension';
 import { useMemo } from 'react';
 

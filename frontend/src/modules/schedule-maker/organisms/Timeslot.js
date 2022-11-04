@@ -7,7 +7,7 @@ import { calculateEndTime } from '../utils/blocks';
 import { between } from 'ramda-extension';
 import { useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
-import { Block } from './index';
+import { Block } from '../molecules';
 
 const TimeslotDrop = ({
   timeslot,
