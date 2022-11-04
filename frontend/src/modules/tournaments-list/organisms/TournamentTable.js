@@ -14,6 +14,7 @@ import { tournaments } from '../../schedule-maker/utils/mocks';
 import TournamentListHeading from '../atoms/TournamentListHeading';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { route } from 'src/Routes';
 
 const columns = [
   {
@@ -51,9 +52,9 @@ const mockButton = (id) => {
     </Button>
   );
   if (id === 1) {
-    return <Link to="/schedule-maker/1?detailmode=true">{btn()}</Link>;
+    return <Link to={route.scheduleMaker({ id: 1 })}>{btn()}</Link>;
   } else if (id === 2) {
-    return <Link to="/schedule-maker/1?detailmode=false">{btn()}</Link>;
+    return <Link to={route.scheduleMakerEdit({ id: 2 })}>{btn()}</Link>;
   } else {
     return btn();
   }

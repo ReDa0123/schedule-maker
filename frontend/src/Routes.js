@@ -9,7 +9,8 @@ import TournamentCreatorPage from './modules/tournament-creator/pages/Tournament
 
 export const route = {
   home: () => `/`,
-  scheduleMaker: () => `/schedule-maker/:tournamentId`,
+  scheduleMaker: ({ id }) => `/schedule-maker/${id}`,
+  scheduleMakerEdit: ({ id }) => `/schedule-maker/edit/${id}`,
   tournamentsList: () => 'tournaments-list',
   login: () => '/login',
   signUp: () => '/sign-up',
@@ -20,7 +21,14 @@ export function Routes() {
   return (
     <RouterRoutes>
       <Route path={route.home()} element={<AboutPage />} />
-      <Route path={route.scheduleMaker()} element={<ScheduleMakerPage />} />
+      <Route
+        path={route.scheduleMaker({ id: ':tournamentId' })}
+        element={<ScheduleMakerPage />}
+      />
+      <Route
+        path={route.scheduleMakerEdit({ id: ':tournamentId' })}
+        element={<ScheduleMakerPage edit />}
+      />
       <Route path={route.login()} element={<LoginPage />} />
       <Route path={route.signUp()} element={<SignUpPage />} />
       <Route path={route.tournamentsList()} element={<TournamentsListPage />} />
