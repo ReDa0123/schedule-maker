@@ -1,4 +1,4 @@
-import { HStack, Input, Select, Text } from '@chakra-ui/react';
+import { Flex, Input, Select, Grid } from 'src/shared/design-system';
 import { tournaments } from '../../schedule-maker/utils/mocks';
 import PropTypes from 'prop-types';
 
@@ -7,7 +7,14 @@ const SelectiveFiltering = ({ selectRef, setFilter, ...props }) => {
     new Set(tournaments.map((o) => o.location))
   );
   return (
-    <HStack spacing={10} {...props}>
+    <Grid
+      templateColumns={{
+        base: '1fr',
+        md: '215px 1fr',
+      }}
+      gap={4}
+      {...props}
+    >
       <Select
         placeholder="Select location"
         maxW="190px"
@@ -21,12 +28,12 @@ const SelectiveFiltering = ({ selectRef, setFilter, ...props }) => {
         ))}
       </Select>
 
-      <HStack>
+      <Flex wrap="wrap" alignItems="center" gap={4}>
         <Input placeholder="Select date" maxW="190px" type="date" />
-        <Text as="label"> - </Text>
+        -
         <Input placeholder="Select date" maxW="190px" type="date" />
-      </HStack>
-    </HStack>
+      </Flex>
+    </Grid>
   );
 };
 

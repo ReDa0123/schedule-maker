@@ -106,7 +106,7 @@ function TournamentTable(props) {
                 <Tr key={row.id}>
                   {row.cells.map((cell) => {
                     return (
-                      <Td key={cell.id} isTruncated {...cell.getCellProps()}>
+                      <Td key={cell.id} {...cell.getCellProps()}>
                         {cell.render('Cell')}
                       </Td>
                     );

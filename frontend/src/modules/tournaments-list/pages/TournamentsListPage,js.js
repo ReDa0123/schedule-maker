@@ -16,7 +16,6 @@ const TournamentsListPage = () => {
         <Box my={3}>
           <CreateNewButton />
         </Box>
-
         <TournamentFilter
           filter={filter.globalFilter}
           setFilter={filter.setGlobalFilter}

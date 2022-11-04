@@ -41,6 +41,7 @@ export {
   Radio,
   RadioGroup,
   Select,
+  SimpleGrid,
   Spacer,
   Stack,
   StackDivider,

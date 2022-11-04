@@ -7,17 +7,15 @@ import SelectiveFiltering from '../molecules/SelectiveFiltering';
 const TournamentFilter = ({ filter, setFilter }) => {
   const selectRef = useRef('');
   return (
-    <Box mb="100px" mt="30px">
+    <Box mb="50px" mt="30px">
+      <TournamentListHeading>Filter</TournamentListHeading>
       <SelectiveFiltering
-        mt="60px"
-        mb="60px"
+        mt={4}
+        mb={4}
         selectRef={selectRef}
         setFilter={setFilter}
       />
-
-      <TournamentListHeading mt="10px" mb="10px">
-        Search
-      </TournamentListHeading>
+      <TournamentListHeading mb={4}>Search</TournamentListHeading>
       <Input
         value={filter}
         onChange={(e) => {
