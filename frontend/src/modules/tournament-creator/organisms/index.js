@@ -1,3 +1,4 @@
 import DateSelection from './DateSelection';
-
-export { DateSelection };
+import BasicTournamentSettings from './BasicTournamentSettings';
+import AddArea from './AddArea';
+export { DateSelection, BasicTournamentSettings, AddArea };
