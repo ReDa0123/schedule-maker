@@ -3,9 +3,12 @@ import { useCallback } from 'react';
 import { useAuth } from '../../auth';
 import { useTournamentSchedule } from '../hooks';
 import { AuthError } from '../../auth/atoms';
+import { route } from '../../../Routes';
+import { useParams } from 'react-router-dom';
 
 const ScheduleEdit = () => {
   const auth = useAuth();
+  const { tournamentId } = useParams();
   const {
     tournament: { userId },
   } = useTournamentSchedule();
@@ -19,7 +22,7 @@ const ScheduleEdit = () => {
   ) : (
     <AuthError
       message="You are not authorized to edit the schedule of this tournament."
-      to="./?detailmode=true"
+      to={route.scheduleMaker({ id: tournamentId })}
       linkMessage="View Schedule"
     />
   );

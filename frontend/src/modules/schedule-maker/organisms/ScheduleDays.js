@@ -6,10 +6,14 @@ import { format } from 'date-fns';
 import { WithTooltip } from 'src/shared/design-system/molecules';
 import { IconButton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
+import { isNilOrEmpty } from 'ramda-extension';
 
 const ScheduleDays = () => {
   const { days, detailMode } = useTournamentSchedule();
   const [activeIndex, setActiveIndex] = useState(0);
+  if (isNilOrEmpty(days)) {
+    return null;
+  }
   const { dayId, startTime, endTime } = days[activeIndex];
 
   return (
