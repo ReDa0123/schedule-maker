@@ -1,5 +1,5 @@
 import { useTournamentSchedule } from '../hooks';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Schedule } from './index';
 import { Box, Tabs, TabList, Tab } from 'src/shared/design-system';
 import { format } from 'date-fns';
@@ -11,10 +11,13 @@ import { isNilOrEmpty } from 'ramda-extension';
 const ScheduleDays = () => {
   const { days, detailMode } = useTournamentSchedule();
   const [activeIndex, setActiveIndex] = useState(0);
+  const { dayId, startTime, endTime } = useMemo(
+    () => days[activeIndex],
+    [days, activeIndex]
+  );
   if (isNilOrEmpty(days)) {
     return null;
   }
-  const { dayId, startTime, endTime } = days[activeIndex];
 
   return (
     <>
@@ -34,7 +37,7 @@ const ScheduleDays = () => {
                 {description}
               </Box>
               <Box color="blue.600" w="100%" textAlign="start">
-                {format(new Date(date), 'dd.MM.yyyy')}
+                {format(new Date(Number(date)), 'dd.MM.yyyy')}
               </Box>
             </Tab>
           ))}

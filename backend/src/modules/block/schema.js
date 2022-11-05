@@ -1,3 +1,16 @@
+const blockDef = `
+  startTime: Int
+  persons: Int!
+  style: String!
+  category: String
+  sex: String
+  dayId: Int
+  areaId: Int
+  sportId: Int!
+  age: String!
+  customParameter: String
+`;
+
 export const typeDef = /* GraphQL */ `
   type Query {
     blocks: [Block!]!
@@ -6,33 +19,19 @@ export const typeDef = /* GraphQL */ `
   }
 
   type Mutation {
-    createBlock(
-      startTime: String!
-      endTime: String!
-      style: String!
-      category: String
-      sex: String
-      age: String!
-      customParameter: String
+    saveBlocks(
+      blocks: [BlockInput!]!
       tournamentId: Int!
-      dayId: Int
-      areaId: Int
-      sportId: Int!
-    ): Block!
+    ): String!
   }
 
   type Block {
     blockId: Int!
-    startTime: String!
-    endTime: String!
-    style: String!
-    category: String
-    sex: String
     tournamentId: Int!
-    dayId: Int
-    areaId: Int
-    sportId: Int!
-    age: String!
-    customParameter: String
+    ${blockDef}
+  }
+
+  input BlockInput {
+    ${blockDef}
   }
 `;

@@ -6,6 +6,10 @@ export const day = async (_, { dayId }, { dbConnection }) => {
     dayId,
   ]);
 
+  if (!day[0]) {
+    throw new Error('Day not found');
+  }
+
   return day[0];
 };
 

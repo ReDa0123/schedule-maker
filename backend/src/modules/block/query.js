@@ -7,6 +7,10 @@ export const block = async (_, { blockId }, { dbConnection }) => {
     [blockId]
   );
 
+  if (!block[0]) {
+    throw new Error('Block not found');
+  }
+
   return block[0];
 };
 

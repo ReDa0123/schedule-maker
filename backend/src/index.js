@@ -18,7 +18,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     schema,
     context: async ({ req }) => {
-      const auth = req.headers.Authorization || '';
+      const auth = req.headers.Authorization || req.headers.authorization || '';
 
       return {
         dbConnection,

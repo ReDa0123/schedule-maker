@@ -1,53 +1,29 @@
 import { createContext, useMemo } from 'react';
-import { blocks, days, sports, areas, tournamentSports } from '../utils/mocks';
-import { prop, propEq } from 'ramda';
 import PropTypes from 'prop-types';
+import { omit } from 'ramda';
+import { defaultToEmptyObject } from 'ramda-extension';
 
 export const tournamentScheduleContext = createContext(null);
 
 const TournamentScheduleProvider = tournamentScheduleContext.Provider;
 
 const TournamentScheduleContext = ({ children, tournament, edit }) => {
-  const propEqualsTournamentId = useMemo(
-    () => propEq('tournamentId', tournament.tournamentId),
-    [tournament.tournamentId]
-  );
-
-  const blocksOfTournament = useMemo(
-    () => blocks.filter(propEqualsTournamentId),
-    [propEqualsTournamentId]
-  );
-
-  const daysOfTournament = useMemo(
-    () => days.filter(propEqualsTournamentId),
-    [propEqualsTournamentId]
-  );
-
-  const areasOfTournament = useMemo(
-    () => areas.filter(propEqualsTournamentId),
-    [propEqualsTournamentId]
-  );
-
-  const sportsOfTournament = useMemo(() => {
-    const sportIdsInTournament = tournamentSports
-      .filter(propEqualsTournamentId)
-      .map(prop('sportId'));
-    return sports.filter((sport) =>
-      sportIdsInTournament.includes(sport.sportId)
-    );
-  }, [propEqualsTournamentId]);
+  const value = useMemo(() => {
+    return {
+      tournament: omit(
+        ['sports', 'areas', 'days', 'blocks'],
+        defaultToEmptyObject(tournament)
+      ),
+      detailMode: !edit,
+      blocks: tournament?.blocks,
+      days: tournament?.days,
+      sports: tournament?.sports,
+      areas: tournament?.areas,
+    };
+  }, [edit, tournament]);
 
   return (
-    <TournamentScheduleProvider
-      value={{
-        tournament,
-        detailMode: !edit,
-        blocks: blocksOfTournament,
-        days: daysOfTournament,
-        sports: sportsOfTournament,
-        areas: areasOfTournament,
-      }}
-    >
+    <TournamentScheduleProvider value={value}>
       {children}
     </TournamentScheduleProvider>
   );
@@ -55,7 +31,7 @@ const TournamentScheduleContext = ({ children, tournament, edit }) => {
 
 TournamentScheduleContext.propTypes = {
   children: PropTypes.node.isRequired,
-  tournament: PropTypes.object.isRequired,
+  tournament: PropTypes.object,
   edit: PropTypes.bool,
 };
 

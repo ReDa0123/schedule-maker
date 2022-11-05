@@ -14,7 +14,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 const validationSchema = yup.object().shape({
-  category: yup.string().required('Please specify category'),
+  category: yup.string(),
   persons: yup
     .number()
     .typeError('Please input the number of persons')

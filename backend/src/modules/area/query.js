@@ -6,6 +6,10 @@ export const area = async (_, { areaId }, { dbConnection }) => {
     areaId,
   ]);
 
+  if (!area[0]) {
+    throw new Error('Area not found');
+  }
+
   return area[0];
 };
 

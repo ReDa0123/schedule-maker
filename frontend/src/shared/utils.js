@@ -1,5 +1,5 @@
-import { always, equals, ifElse, o, prop } from 'ramda';
-import { isNilOrEmpty } from 'ramda-extension';
+import { always, equals, ifElse, o, prop, when } from 'ramda';
+import { alwaysNull, isNilOrEmpty } from 'ramda-extension';
 
 export const propEqOrIsEmptyOrNil = (propName, equalValue) => (value) => {
   if (isNilOrEmpty(equalValue)) {
@@ -10,3 +10,9 @@ export const propEqOrIsEmptyOrNil = (propName, equalValue) => (value) => {
     prop(propName)
   )(value);
 };
+
+export const convertPropToNumberIfNotNil = (propName) =>
+  o(ifElse(isNilOrEmpty, alwaysNull, Number), prop(propName));
+
+export const nilIfEmptyProp = (propName) =>
+  o(when(isNilOrEmpty, alwaysNull), prop(propName));
