@@ -7,7 +7,7 @@ const ResetBlockButton = ({ resetBlock }) => (
     <RepeatClockIcon
       position="absolute"
       top={2}
-      right={7}
+      right={12}
       boxSize={3}
       color="green.500"
       focusable

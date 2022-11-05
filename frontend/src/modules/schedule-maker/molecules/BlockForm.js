@@ -5,13 +5,14 @@ import {
   FormNumberInput,
   FormSelect,
 } from 'src/shared/react-hook-form/molecules';
-import { assoc, map, o, values } from 'ramda';
-import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
-import { SEXES } from '../constants';
+import { map, o, values } from 'ramda';
+import { useTournamentSchedule } from '../hooks';
+import { SEXES, tournamentStyles } from '../constants';
 import { useSubmitButton } from 'src/shared/react-hook-form/hooks';
 import { useCallback } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import PropTypes from 'prop-types';
 
 const validationSchema = yup.object().shape({
   category: yup.string(),
@@ -32,8 +33,7 @@ const validationSchema = yup.object().shape({
   customParameter: yup.string(),
 });
 
-const AddBlockForm = () => {
-  const { append } = useFieldArrayProps();
+const BlockForm = ({ onSubmit, defaultValues }) => {
   const { sports } = useTournamentSchedule();
   const {
     handleSubmit,
@@ -42,14 +42,14 @@ const AddBlockForm = () => {
     reset,
   } = useForm({
     defaultValues: {
-      category: '',
-      persons: '',
-      style: '',
-      blockId: '',
-      sportId: '',
-      sex: '',
-      age: '',
-      customParameter: '',
+      category: defaultValues?.category || '',
+      persons: defaultValues?.persons || '',
+      style: defaultValues?.style || '',
+      blockId: defaultValues?.blockId || '',
+      sportId: defaultValues?.sportId || '',
+      sex: defaultValues?.sex || '',
+      age: defaultValues?.age || '',
+      customParameter: defaultValues?.customParameter || '',
     },
     resolver: yupResolver(validationSchema),
     mode: 'onBlur',
@@ -58,10 +58,10 @@ const AddBlockForm = () => {
   const onClick = useCallback(
     () =>
       handleSubmit((data) => {
-        append(assoc('blockId', Math.floor(Math.random() * 1000) + 5, data));
+        onSubmit(data);
         reset();
       })(),
-    [append, handleSubmit, reset]
+    [onSubmit, handleSubmit, reset]
   );
 
   const { onClickButton } = useSubmitButton({
@@ -96,7 +96,10 @@ const AddBlockForm = () => {
           name="style"
           label="Style"
           control={control}
-          options={[{ value: 'Test', label: 'Test' }]}
+          options={values(tournamentStyles).map((style) => ({
+            value: style,
+            label: style,
+          }))}
         />
         <FormSelect
           name="sportId"
@@ -129,11 +132,25 @@ const AddBlockForm = () => {
       </Grid>
       <Flex justifyContent="center">
         <Button onClick={onClickButton} marginBlock={4} disabled={isSubmitting}>
-          Add
+          {defaultValues ? 'Edit' : 'Create'}
         </Button>
       </Flex>
     </>
   );
 };
 
-export default AddBlockForm;
+BlockForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  defaultValues: PropTypes.shape({
+    category: PropTypes.string,
+    persons: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    style: PropTypes.string,
+    blockId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    sportId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    age: PropTypes.string,
+    customParameter: PropTypes.string,
+    sex: PropTypes.string,
+  }),
+};
+
+export default BlockForm;

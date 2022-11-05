@@ -2,13 +2,14 @@ import BlockFilter from './BlockFilter';
 import ScheduleTimeColumn from './ScheduleTimeColumn';
 import AreaColumnDetail from './AreaColumnDetail';
 import AreaColumnEdit from './AreaColumnEdit';
-import AddBlockForm from './AddBlockForm';
+import BlockForm from './BlockForm';
 import NotAssignedBlocks from './NotAssignedBlocks';
 import DeleteBlockButton from './DeleteBlockButton';
+import EditBlockButton from './EditBlockButton';
 import Block from './Block';
 
 export {
-  AddBlockForm,
+  BlockForm,
   AreaColumnDetail,
   AreaColumnEdit,
   Block,
@@ -16,4 +17,5 @@ export {
   NotAssignedBlocks,
   ScheduleTimeColumn,
   DeleteBlockButton,
+  EditBlockButton,
 };

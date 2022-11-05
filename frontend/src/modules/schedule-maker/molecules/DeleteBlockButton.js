@@ -4,7 +4,7 @@ import { useDisclosure } from 'src/shared/design-system/hooks';
 import { AlertDialog } from 'src/shared/design-system/organisms';
 import { WithTooltip } from 'src/shared/design-system/molecules';
 
-const DeleteBlockButton = ({ deleteBlock, sportsName, category }) => {
+const DeleteBlockButton = ({ deleteBlock, sportsName, age }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -26,7 +26,7 @@ const DeleteBlockButton = ({ deleteBlock, sportsName, category }) => {
         onClose={onClose}
         onConfirm={deleteBlock}
         headerText="Do you really want to delete this block?"
-        bodyText={`Block "${sportsName} - ${category}" will be deleted.`}
+        bodyText={`Block "${sportsName} - ${age}" will be deleted.`}
         cancelButtonText="Cancel"
         confirmButtonText="Delete"
         confirmButtonProps={{ colorScheme: 'red' }}
@@ -38,7 +38,7 @@ const DeleteBlockButton = ({ deleteBlock, sportsName, category }) => {
 DeleteBlockButton.propTypes = {
   deleteBlock: PropTypes.func.isRequired,
   sportsName: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
+  age: PropTypes.string.isRequired,
 };
 
 export default DeleteBlockButton;

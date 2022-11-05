@@ -9,7 +9,7 @@ import {
   MINUTES_IN_BLOCK,
 } from '../constants';
 import { PersonsTag, TimeTag, ResetBlockButton } from '../atoms';
-import { DeleteBlockButton } from './index';
+import { DeleteBlockButton, EditBlockButton } from './';
 import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
 import { useMemo } from 'react';
 import { propEq } from 'ramda';
@@ -65,10 +65,14 @@ const Block = ({ value, onChange, index, ...props }) => {
               }
             />
           )}
+          <EditBlockButton
+            editBlock={(data) => onChange({ ...value, ...data })}
+            block={value}
+          />
           <DeleteBlockButton
             deleteBlock={() => fieldArrayProps.remove(index)}
             sportsName={sportsName}
-            category={value.category}
+            age={value.age}
           />
         </>
       )}
