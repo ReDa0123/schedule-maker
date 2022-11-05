@@ -54,7 +54,7 @@ const mockButton = (id) => {
   if (id === 1) {
     return <Link to={route.scheduleMaker({ id: 1 })}>{btn()}</Link>;
   } else if (id === 2) {
-    return <Link to={route.scheduleMakerEdit({ id: 2 })}>{btn()}</Link>;
+    return <Link to={route.scheduleMakerEdit({ id: 1 })}>{btn()}</Link>;
   } else {
     return btn();
   }

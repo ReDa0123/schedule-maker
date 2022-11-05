@@ -7,6 +7,10 @@ export const sport = async (_, { sportId }, { dbConnection }) => {
     [sportId]
   );
 
+  if (!sport[0]) {
+    throw new Error('Sport not found');
+  }
+
   return sport[0];
 };
 

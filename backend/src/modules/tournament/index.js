@@ -10,28 +10,28 @@ const resolvers = {
   //  ...mutations,
   //},
   TournamentEnhanced: {
-    async sports(parent, _, { dbConnection }) {
+    async sports({ tournamentId }, _, { dbConnection }) {
       return await dbConnection.query(
         `SELECT * FROM sport JOIN tournament_sport USING (sportId) WHERE tournamentId = ?`,
-        [parent.tournamentId]
+        [tournamentId]
       );
     },
-    async areas(parent, _, { dbConnection }) {
+    async areas({ tournamentId }, _, { dbConnection }) {
       return await dbConnection.query(
         `SELECT * FROM area WHERE tournamentId = ?`,
-        [parent.tournamentId]
+        [tournamentId]
       );
     },
-    async days(parent, _, { dbConnection }) {
+    async days({ tournamentId }, _, { dbConnection }) {
       return await dbConnection.query(
         `SELECT * FROM day WHERE tournamentId = ?`,
-        [parent.tournamentId]
+        [tournamentId]
       );
     },
-    async blocks(parent, _, { dbConnection }) {
+    async blocks({ tournamentId }, _, { dbConnection }) {
       return await dbConnection.query(
         `SELECT * FROM block WHERE tournamentId = ?`,
-        [parent.tournamentId]
+        [tournamentId]
       );
     },
   },

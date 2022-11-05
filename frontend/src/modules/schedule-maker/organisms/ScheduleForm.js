@@ -7,8 +7,9 @@ import { AddBlockForm, NotAssignedBlocks } from '../molecules';
 import { SCHEDULE_FORM_NAME } from '../constants';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 import PropTypes from 'prop-types';
+import { LoadingModal } from 'src/shared/design-system/molecules';
 
-const ScheduleForm = ({ onSubmit }) => {
+const ScheduleForm = ({ onSubmit, isSaving }) => {
   const { blocks } = useTournamentSchedule();
   return (
     <Form onSubmit={onSubmit}>
@@ -32,12 +33,14 @@ const ScheduleForm = ({ onSubmit }) => {
           </ContentBox>
         </Flex>
       </FieldArrayContext>
+      {isSaving && <LoadingModal message="Saving blocks" />}
     </Form>
   );
 };
 
 ScheduleForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  isSaving: PropTypes.bool,
 };
 
 export default ScheduleForm;

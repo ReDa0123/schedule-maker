@@ -2,10 +2,16 @@ export const tournaments = async (_, __, { dbConnection }) =>
   await dbConnection.query(`SELECT * FROM tournament`);
 
 export const tournament = async (_, { tournamentId }, { dbConnection }) => {
-  const tournament = await dbConnection.query(
+  const tournaments = await dbConnection.query(
     `SELECT * FROM tournament WHERE tournamentId = ?`,
     [tournamentId]
   );
+
+  const tournament = tournaments[0];
+
+  if (!tournament) {
+    throw new Error('Tournament not found');
+  }
 
   const sportsOfTournament = await dbConnection.query(
     `SELECT * FROM sport JOIN tournament_sport USING (sportId) WHERE tournamentId = ?`,
@@ -27,10 +33,8 @@ export const tournament = async (_, { tournamentId }, { dbConnection }) => {
     [tournamentId]
   );
 
-  console.log({ tournament, tournaments, tournamentId });
-
   return {
-    ...tournament[0],
+    ...tournament,
     sports: sportsOfTournament,
     areas: areasOfTournament,
     days: daysOfTournament,

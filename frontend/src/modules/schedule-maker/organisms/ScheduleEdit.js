@@ -5,20 +5,64 @@ import { useTournamentSchedule } from '../hooks';
 import { AuthError } from '../../auth/atoms';
 import { route } from '../../../Routes';
 import { useParams } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
+import PropTypes from 'prop-types';
+import { useToast } from '@chakra-ui/react';
+import { convertBlocksForSending } from '../utils/blocks';
 
-const ScheduleEdit = () => {
+const SAVE_BLOCKS_MUTATION = gql`
+  mutation SaveBlocks($blocks: [BlockInput!]!, $tournamentId: Int!) {
+    saveBlocks(blocks: $blocks, tournamentId: $tournamentId)
+  }
+`;
+
+const ScheduleEdit = ({ refetch }) => {
   const auth = useAuth();
+  const toast = useToast();
+  const [saveBlocksRequest, saveBlocksRequestState] = useMutation(
+    SAVE_BLOCKS_MUTATION,
+    {
+      onCompleted: ({ saveBlocks: successMessage }) => {
+        toast({
+          title: successMessage,
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right',
+        });
+        refetch();
+      },
+      onError: ({ message }) => {
+        toast({
+          title: message,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right',
+        });
+      },
+    }
+  );
   const { tournamentId } = useParams();
   const {
     tournament: { userId },
   } = useTournamentSchedule();
   const canEdit = auth.user && auth.user.userId === userId;
-  const onSubmit = useCallback((data) => {
-    console.log(data);
-  }, []);
+  const onSubmit = useCallback(
+    async ({ schedule }) => {
+      const blocks = convertBlocksForSending(schedule);
+      await saveBlocksRequest({
+        variables: { blocks, tournamentId: Number(tournamentId) },
+      });
+    },
+    [saveBlocksRequest, tournamentId]
+  );
 
   return canEdit ? (
-    <ScheduleForm onSubmit={onSubmit} />
+    <ScheduleForm
+      onSubmit={onSubmit}
+      isSaving={saveBlocksRequestState.loading}
+    />
   ) : (
     <AuthError
       message="You are not authorized to edit the schedule of this tournament."
@@ -26,6 +70,10 @@ const ScheduleEdit = () => {
       linkMessage="View Schedule"
     />
   );
+};
+
+ScheduleEdit.propTypes = {
+  refetch: PropTypes.func.isRequired,
 };
 
 export default ScheduleEdit;

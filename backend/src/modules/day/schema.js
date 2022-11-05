@@ -6,8 +6,21 @@ export const typeDef = /* GraphQL */ `
   }
 
   type Mutation {
-    createDay(name: String!, tournamentId: Int!): Day!
-    editDay(dayId: Int!, name: String!): Day!
+    createDay(
+      name: String!
+      tournamentId: Int!
+      description: String!
+      startTime: Int!
+      endTime: Int!
+    ): Day!
+    editDay(
+      dayId: Int!
+      name: String!
+      tournamentId: Int!
+      description: String!
+      startTime: Int!
+      endTime: Int!
+    ): Day!
     deleteDay(dayId: Int!): Day!
   }
 
@@ -15,8 +28,8 @@ export const typeDef = /* GraphQL */ `
     dayId: Int!
     date: String!
     description: String!
-    startTime: String!
-    endTime: String!
+    startTime: Int!
+    endTime: Int!
     tournamentId: Int!
   }
 `;

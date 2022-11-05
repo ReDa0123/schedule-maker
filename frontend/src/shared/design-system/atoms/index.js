@@ -61,3 +61,5 @@ export {
 export { Button } from './Button';
 export { Tab } from './Tab';
 export { ContentBox } from './ContentBox';
+export { BigSpinner } from './BigSpinner';
+export { ErrorText } from './ErrorText';

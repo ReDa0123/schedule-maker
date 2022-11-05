@@ -20,3 +20,16 @@ export const SEXES = keyMirror({
 export const SCHEDULE_FORM_NAME = 'schedule';
 
 export const BLOCK_DND_NAME = 'block';
+
+export const BLOCKS_PROPS_TO_SEND = [
+  'startTime',
+  'persons',
+  'style',
+  'category',
+  'sex',
+  'dayId',
+  'areaId',
+  'sportId',
+  'age',
+  'customParameter',
+];

@@ -51,7 +51,7 @@ const GET_TOURNAMENT_QUERY = gql`
 const ScheduleMakerPage = ({ edit }) => {
   const { tournamentId } = useParams();
   const tournamentFetcher = useQuery(GET_TOURNAMENT_QUERY, {
-    variables: { tournamentId },
+    variables: { tournamentId: Number(tournamentId) },
   });
 
   return tournamentFetcher.data &&
@@ -59,12 +59,13 @@ const ScheduleMakerPage = ({ edit }) => {
     <NotFoundPage />
   ) : (
     <TournamentScheduleContext
-      tournament={tournamentFetcher.data.tournament}
+      tournament={tournamentFetcher.data?.tournament}
       edit={edit}
     >
       <ScheduleMakerTemplate
         isLoading={tournamentFetcher.loading}
         error={tournamentFetcher.error}
+        refetch={tournamentFetcher.refetch}
       />
     </TournamentScheduleContext>
   );
