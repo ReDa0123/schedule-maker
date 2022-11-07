@@ -28,7 +28,13 @@ const SubHeader = ({ title, path = '/' }) => {
       </Center>
 
       <Center>
-        <Text color={'blue.600'} fontSize="3xl">
+        <Text
+          color={'blue.600'}
+          fontSize={{
+            base: '2xl',
+            sm: '3xl',
+          }}
+        >
           {title}
         </Text>
       </Center>
