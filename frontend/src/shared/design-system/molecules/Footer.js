@@ -9,10 +9,14 @@ const Footer = () => {
         direction={'column'}
         justifyContent={'center'}
         alignItems={'center'}
+        fontSize={{
+          base: '11pt',
+          sm: '13pt',
+        }}
       >
-        <Text color="white">
-          © Scheduler Maker s.r.o. - všechna práva vyhrazena
-        </Text>
+        <Box color="white">
+          <Text>© Scheduler Maker s.r.o. - všechna práva vyhrazena</Text>
+        </Box>
         <Text color="white">code © Kluci z agilního vývoje</Text>
       </Flex>
     </Box>
