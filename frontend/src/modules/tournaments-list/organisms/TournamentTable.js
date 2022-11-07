@@ -14,6 +14,8 @@ import PropTypes from 'prop-types';
 import { ActionLinksCell } from '../molecules';
 import { format } from 'date-fns';
 import { convertStringToDate } from '../../../shared/utils';
+import { RouterLink } from 'src/shared/navigation';
+import { route } from 'src/Routes';
 
 const columns = [
   {
@@ -21,7 +23,11 @@ const columns = [
     columns: [
       {
         Header: 'Tournament name',
-        accessor: 'name',
+        accessor: ({ name, tournamentId }) => (
+          <RouterLink to={route.scheduleMaker({ id: tournamentId })}>
+            {name}
+          </RouterLink>
+        ),
       },
       {
         Header: 'Location',
