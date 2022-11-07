@@ -24,15 +24,15 @@ const ActionMenu = ({ tournamentId }) => (
             </RouterLink>
           </MenuItem>
           <MenuItem>
-            <RouterLink
-              to={route.scheduleMakerEdit({ id: tournamentId })}
-              w="100%"
-            >
+            <RouterLink to={route.tournamentCreator()} w="100%">
               Edit Tournament
             </RouterLink>
           </MenuItem>
           <MenuItem>
-            <RouterLink to={route.tournamentCreator()} w="100%">
+            <RouterLink
+              to={route.scheduleMakerEdit({ id: tournamentId })}
+              w="100%"
+            >
               Edit Tournament Schedule
             </RouterLink>
           </MenuItem>
