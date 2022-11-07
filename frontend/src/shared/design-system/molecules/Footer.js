@@ -4,20 +4,19 @@ const Footer = () => {
   return (
     <Box marginTop={'auto'}>
       <Flex
+        color={'white'}
         bg={'blue.500'}
         minH={'50px'}
         direction={'column'}
         justifyContent={'center'}
         alignItems={'center'}
         fontSize={{
-          base: '11pt',
+          base: '10pt',
           sm: '13pt',
         }}
       >
-        <Box color="white">
-          <Text>© Scheduler Maker s.r.o. - všechna práva vyhrazena</Text>
-        </Box>
-        <Text color="white">code © Kluci z agilního vývoje</Text>
+        <Text>© Scheduler Maker s.r.o. - všechna práva vyhrazena</Text>
+        <Text>code © Kluci z agilního vývoje</Text>
       </Flex>
     </Box>
   );
