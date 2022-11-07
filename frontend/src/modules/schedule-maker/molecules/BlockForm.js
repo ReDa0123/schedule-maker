@@ -15,10 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
 
 const validationSchema = yup.object().shape({
-  category: yup
-    .string()
-    .max(50, `Category can't be longer than 50 characters`)
-    .required(),
+  category: yup.string().max(50, `Category can't be longer than 50 characters`),
   persons: yup
     .number()
     .typeError('Please input the number of persons')
@@ -34,7 +31,7 @@ const validationSchema = yup.object().shape({
     .typeError('Please select sport')
     .integer()
     .required('Please select sport'),
-  sex: yup.string().oneOf(['M', 'F', null]).nullable(true),
+  sex: yup.string().oneOf(['M', 'F', '', null]).nullable(true),
   age: yup
     .string()
     .required('Please specify age group')
