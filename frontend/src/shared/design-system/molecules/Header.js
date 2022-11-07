@@ -1,6 +1,6 @@
 import { RouterLink } from '../../navigation';
 import {
-  Image,
+  Box,
   Center,
   Flex,
   Menu,
@@ -15,6 +15,7 @@ import { Button } from '../atoms';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import Logo from '../svgs/Logo';
 
 const Header = (props) => {
   const auth = useAuth();
@@ -34,16 +35,17 @@ const Header = (props) => {
 
   return (
     <Flex bg="blue.600" minH="60px" {...props}>
-      <Image
+      <Box
         position={'absolute'}
         left={'10px'}
         top={'10px'}
         w={'70px'}
         h={'70px'}
-        src="/Logo.svg"
         cursor={'pointer'}
         onClick={() => navigate('/')}
-      />
+      >
+        <Logo />
+      </Box>
 
       <Flex
         w={'100%'}
