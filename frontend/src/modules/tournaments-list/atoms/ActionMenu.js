@@ -19,17 +19,20 @@ const ActionMenu = ({ tournamentId }) => (
         </MenuButton>
         <MenuList>
           <MenuItem>
-            <RouterLink to={route.scheduleMaker({ id: tournamentId })}>
+            <RouterLink to={route.scheduleMaker({ id: tournamentId })} w="100%">
               Details
             </RouterLink>
           </MenuItem>
           <MenuItem>
-            <RouterLink to={route.scheduleMakerEdit({ id: tournamentId })}>
+            <RouterLink
+              to={route.scheduleMakerEdit({ id: tournamentId })}
+              w="100%"
+            >
               Edit Tournament
             </RouterLink>
           </MenuItem>
           <MenuItem>
-            <RouterLink to={route.tournamentCreator()}>
+            <RouterLink to={route.tournamentCreator()} w="100%">
               Edit Tournament Schedule
             </RouterLink>
           </MenuItem>
