@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import {
   Table,
   TableContainer,
@@ -8,13 +8,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { Button } from '../../../shared/design-system';
 import { useTable, useGlobalFilter } from 'react-table';
-import { tournaments } from '../../schedule-maker/utils/mocks';
-import TournamentListHeading from '../atoms/TournamentListHeading';
+import { TournamentListHeading } from '../atoms';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { route } from 'src/Routes';
+import { ActionLinksCell } from '../molecules';
+import { format } from 'date-fns';
+import { convertStringToDate } from '../../../shared/utils';
 
 const columns = [
   {
@@ -30,39 +29,24 @@ const columns = [
       },
       {
         Header: 'Start date',
-        accessor: 'startDate',
+        accessor: ({ startDate }) =>
+          format(convertStringToDate(startDate), 'dd.MM.yyyy'),
       },
       {
         Header: 'End date',
-        accessor: 'endDate',
+        accessor: ({ endDate }) =>
+          format(convertStringToDate(endDate), 'dd.MM.yyyy'),
       },
       {
-        Header: 'Details',
+        Header: 'Actions',
         accessor: 'tournamentId',
-        Cell: (props) => mockButton(props.row.original.tournamentId),
+        Cell: ActionLinksCell,
       },
     ],
   },
 ];
-//stupid mocking solution
-const mockButton = (id) => {
-  const btn = () => (
-    <Button minW="120px" colorScheme="green">
-      Details
-    </Button>
-  );
-  if (id === 1) {
-    return <Link to={route.scheduleMaker({ id: 1 })}>{btn()}</Link>;
-  } else if (id === 2) {
-    return <Link to={route.scheduleMakerEdit({ id: 1 })}>{btn()}</Link>;
-  } else {
-    return btn();
-  }
-};
 
-function TournamentTable(props) {
-  const data = useMemo(() => tournaments, []);
-
+function TournamentTable({ data, setFilter }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -75,7 +59,7 @@ function TournamentTable(props) {
   const { globalFilter } = state;
 
   useEffect(() => {
-    props.setFilter({
+    setFilter({
       globalFilter,
       setGlobalFilter,
     });
@@ -123,7 +107,8 @@ function TournamentTable(props) {
 }
 
 TournamentTable.propTypes = {
-  setFilter: PropTypes.func,
+  setFilter: PropTypes.func.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
 export default TournamentTable;

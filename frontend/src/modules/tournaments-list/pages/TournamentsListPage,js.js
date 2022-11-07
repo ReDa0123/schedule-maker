@@ -1,28 +1,28 @@
-import { ContentBox } from 'src/shared/design-system';
-import SubHeader from '../../../shared/design-system/molecules/SubHeader';
-import { Box } from '@chakra-ui/react';
-import CreateNewButton from '../atoms/CreateNewButton';
-import TournamentTable from '../organisms/TournamentTable';
-import { useState } from 'react';
-import TournamentFilter from '../organisms/TournamentFilter';
+import { TournamentListTemplate } from '../templates';
+import { gql, useQuery } from '@apollo/client';
+
+const GET_TOURNAMENTS_QUERY = gql`
+  query Tournaments {
+    tournaments {
+      tournamentId
+      name
+      location
+      startDate
+      endDate
+      userId
+    }
+  }
+`;
 
 const TournamentsListPage = () => {
-  const [filter, setFilter] = useState({});
+  const tournamentsFetcher = useQuery(GET_TOURNAMENTS_QUERY);
 
   return (
-    <>
-      <SubHeader title="Tournaments" />
-      <ContentBox>
-        <Box my={3}>
-          <CreateNewButton />
-        </Box>
-        <TournamentFilter
-          filter={filter.globalFilter}
-          setFilter={filter.setGlobalFilter}
-        />
-        <TournamentTable setFilter={setFilter} />
-      </ContentBox>
-    </>
+    <TournamentListTemplate
+      tournaments={tournamentsFetcher.data?.tournaments}
+      isLoading={tournamentsFetcher.loading}
+      error={tournamentsFetcher.error}
+    />
   );
 };
 

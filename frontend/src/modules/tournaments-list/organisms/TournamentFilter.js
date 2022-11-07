@@ -1,8 +1,8 @@
 import { Box, Input } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import TournamentListHeading from '../atoms/TournamentListHeading';
+import { TournamentListHeading } from '../atoms';
 import { useRef } from 'react';
-import SelectiveFiltering from '../molecules/SelectiveFiltering';
+import { SelectiveFiltering } from '../molecules';
 
 const TournamentFilter = ({ filter, setFilter }) => {
   const selectRef = useRef('');
