@@ -1,6 +1,7 @@
 import { Button, Center, Flex, Text } from '../atoms';
 import { RouterLink } from '../../navigation';
 import PropTypes from 'prop-types';
+import { Divider } from '@chakra-ui/react';
 
 const SubHeader = ({ title, path = '/' }) => {
   return (
@@ -12,7 +13,7 @@ const SubHeader = ({ title, path = '/' }) => {
         md: '20px',
       }}
     >
-      <Center>
+      <Center flexShrink="0">
         <RouterLink to={path} marginX="20px">
           <Button
             colorScheme="blue"
@@ -27,7 +28,7 @@ const SubHeader = ({ title, path = '/' }) => {
         </RouterLink>
       </Center>
 
-      <Center>
+      <Center flexShrink={'0'}>
         <Text
           color={'blue.600'}
           fontSize={{
@@ -37,6 +38,23 @@ const SubHeader = ({ title, path = '/' }) => {
         >
           {title}
         </Text>
+      </Center>
+
+      <Center
+        flexGrow={'1'}
+        display={{
+          base: 'none',
+          sm: 'flex',
+        }}
+      >
+        <Divider
+          marginX={'20px'}
+          marginTop={'10px'}
+          height={'5px'}
+          orientation="horizontal"
+          bgColor={'blue.500'}
+          opacity={'1'}
+        />
       </Center>
     </Flex>
   );
