@@ -40,7 +40,7 @@ const Header = (props) => {
         top={'10px'}
         w={'70px'}
         h={'70px'}
-        src="/Logo.png"
+        src="/Logo.svg"
         cursor={'pointer'}
         onClick={() => navigate('/')}
       />
