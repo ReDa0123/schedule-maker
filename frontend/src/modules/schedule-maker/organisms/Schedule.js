@@ -8,6 +8,10 @@ import {
 } from '../molecules';
 import { useMemo } from 'react';
 import { DayResetButton } from '../organisms';
+import { isNilOrEmpty } from 'ramda-extension';
+import { Text } from '@chakra-ui/react';
+import { RouterLink } from '../../../shared/navigation';
+import { route } from '../../../Routes';
 
 const Schedule = ({ dayId, startTime, endTime }) => {
   const { areas, detailMode } = useTournamentSchedule();
@@ -30,15 +34,28 @@ const Schedule = ({ dayId, startTime, endTime }) => {
       >
         {!detailMode && <DayResetButton dayId={dayId} />}
         <ScheduleTimeColumn startTime={startTime} endTime={endTime} />
-        {areas.map((area) => (
-          <ColumnToRender
-            key={area.areaId}
-            area={area}
-            startTime={startTime}
-            endTime={endTime}
-            dayId={dayId}
-          />
-        ))}
+        {isNilOrEmpty(areas) ? (
+          <Box w="100%" textAlign="center">
+            There are no areas in this tournament yet.
+            {!detailMode && (
+              <Text as="span">
+                {' '}
+                You can add them{' '}
+                <RouterLink to={route.tournamentCreator()}>here</RouterLink>.
+              </Text>
+            )}
+          </Box>
+        ) : (
+          areas.map((area) => (
+            <ColumnToRender
+              key={area.areaId}
+              area={area}
+              startTime={startTime}
+              endTime={endTime}
+              dayId={dayId}
+            />
+          ))
+        )}
       </Flex>
     </Box>
   );

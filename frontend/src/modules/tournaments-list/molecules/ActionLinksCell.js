@@ -9,11 +9,9 @@ const ActionLinksCell = ({
     original: { tournamentId, userId },
   },
 }) => {
-  const {
-    user: { userId: currentUserId },
-  } = useAuth();
+  const { user } = useAuth();
 
-  return currentUserId !== userId ? (
+  return user?.userId !== userId ? (
     <RouterLink
       to={route.scheduleMaker({ id: tournamentId })}
       _hover={{ underline: 'none' }}

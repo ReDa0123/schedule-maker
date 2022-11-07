@@ -1,7 +1,7 @@
 import { useTournamentSchedule } from '../hooks';
 import { useMemo, useState } from 'react';
 import { Schedule } from './index';
-import { Box, Tabs, TabList, Tab } from 'src/shared/design-system';
+import { Box, Tabs, TabList, Tab, Text, Link } from 'src/shared/design-system';
 import { format } from 'date-fns';
 import { WithTooltip } from 'src/shared/design-system/molecules';
 import { IconButton } from '@chakra-ui/react';
@@ -11,15 +11,9 @@ import { isNilOrEmpty } from 'ramda-extension';
 const ScheduleDays = () => {
   const { days, detailMode } = useTournamentSchedule();
   const [activeIndex, setActiveIndex] = useState(0);
-  const { dayId, startTime, endTime } = useMemo(
-    () => days[activeIndex],
-    [days, activeIndex]
-  );
-  if (isNilOrEmpty(days)) {
-    return null;
-  }
+  const selectedDay = useMemo(() => days[activeIndex], [days, activeIndex]);
 
-  return (
+  return !isNilOrEmpty(days) ? (
     <>
       <Tabs index={activeIndex} onChange={setActiveIndex} overflow="auto">
         <TabList>
@@ -56,7 +50,20 @@ const ScheduleDays = () => {
           )}
         </TabList>
       </Tabs>
-      <Schedule dayId={dayId} startTime={startTime} endTime={endTime} />
+      <Schedule
+        dayId={selectedDay.dayId}
+        startTime={selectedDay.startTime}
+        endTime={selectedDay.endTime}
+      />
+    </>
+  ) : (
+    <>
+      This tournament has no days yet.
+      {!detailMode && (
+        <Text>
+          You can add one <Link onClick={() => {}}>here</Link>.
+        </Text>
+      )}
     </>
   );
 };
