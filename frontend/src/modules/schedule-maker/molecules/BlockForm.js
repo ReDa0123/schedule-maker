@@ -15,22 +15,33 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
 
 const validationSchema = yup.object().shape({
-  category: yup.string(),
+  category: yup
+    .string()
+    .max(50, `Category can't be longer than 50 characters`)
+    .required(),
   persons: yup
     .number()
     .typeError('Please input the number of persons')
     .integer('The number of persons must be a positive integer')
     .positive('The number of persons must be a positive integer')
     .required('Please input the number of persons'),
-  style: yup.string().required('Please specify the style of the competition'),
+  style: yup
+    .string()
+    .required('Please specify the style of the competition')
+    .max(50, `Style can't be longer than 50 characters`),
   sportId: yup
     .number()
     .typeError('Please select sport')
     .integer()
     .required('Please select sport'),
-  sex: yup.string(),
-  age: yup.string().required('Please specify age group'),
-  customParameter: yup.string(),
+  sex: yup.string().oneOf(['M', 'F', null]).nullable(true),
+  age: yup
+    .string()
+    .required('Please specify age group')
+    .max(50, `Age can't be longer than 50 characters`),
+  customParameter: yup
+    .string()
+    .max(50, `Custom parameter can't be longer than 50 characters`),
 });
 
 const BlockForm = ({ onSubmit, defaultValues }) => {

@@ -1,3 +1,4 @@
+//TODO: Limit the number of tournaments returned
 export const tournaments = async (_, __, { dbConnection }) =>
   await dbConnection.query(`SELECT * FROM tournament`);
 

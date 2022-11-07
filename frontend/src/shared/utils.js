@@ -16,3 +16,5 @@ export const convertPropToNumberIfNotNil = (propName) =>
 
 export const nilIfEmptyProp = (propName) =>
   o(when(isNilOrEmpty, alwaysNull), prop(propName));
+
+export const convertStringToDate = (dateString) => new Date(Number(dateString));
