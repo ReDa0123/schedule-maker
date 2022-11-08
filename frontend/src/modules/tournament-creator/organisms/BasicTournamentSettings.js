@@ -1,9 +1,9 @@
-import { Form } from '../../../shared/react-hook-form/organisms';
+import { Form } from 'src/shared/react-hook-form/organisms';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import {
   FormInput,
   FormSubmitButton,
-} from '../../../shared/react-hook-form/molecules';
+} from 'src/shared/react-hook-form/molecules';
 
 import * as yup from 'yup';
 import Combobox from '../../../shared/react-hook-form/molecules/Combobox';
@@ -15,15 +15,26 @@ const mockSports = [
 ];
 
 const defaultValues = {
-  TournamentName: '',
-  Location: '',
-  Sports: mockSports,
+  name: '',
+  location: '',
+  sports: mockSports,
 };
 
 const validationSchema = yup.object().shape({
-  TournamentName: yup.string().required('Please enter tournament name'),
-  Location: yup.string().required('Please enter location'),
-  Sports: yup.array().required('Please enter sports'),
+  name: yup.string().required('Please enter tournament name'),
+  location: yup.string().required('Please enter location'),
+  sports: yup
+    .array()
+    .min(1, 'Please enter at least some area')
+    .required('Please enter at least some area')
+    .test({
+      name: 'areas-unique',
+      message: 'Areas must be unique',
+      test: (value) => {
+        const set = new Set(value);
+        return set.size === value.length;
+      },
+    }),
 });
 
 const BasicTournamentSettings = () => {
@@ -33,10 +44,10 @@ const BasicTournamentSettings = () => {
       defaultValues={defaultValues}
       resolver={yupResolver(validationSchema)}
     >
-      <FormInput name={'TournamentName'} label={'Tournament name'} />
-      <FormInput name={'Location'} label={'Location'} />
+      <FormInput name={'name'} label={'Tournament name'} />
+      <FormInput name={'location'} label={'Location'} />
 
-      <Combobox name={'Sports'} label={'Sports'} options={mockSports} />
+      <Combobox name={'sports'} label={'Sports'} options={mockSports} />
       <FormSubmitButton title={'Save'} showAlert />
     </Form>
   );

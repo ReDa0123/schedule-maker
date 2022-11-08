@@ -1,16 +1,12 @@
-import { Form } from '../../../shared/react-hook-form/organisms';
+import { Form } from 'src/shared/react-hook-form/organisms';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { Stack } from 'src/shared/design-system';
-import {
-  FormNumberInput,
-  FormSubmitButton,
-} from '../../../shared/react-hook-form/molecules';
+import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 import * as yup from 'yup';
-import Combobox from '../../../shared/react-hook-form/molecules/Combobox';
+import Combobox from 'src/shared/react-hook-form/molecules/Combobox';
 
 const defaultValues = {
-  AreaTypeSelection: [],
-  AreaCapacity: 0,
+  areas: [],
 };
 
 const mockAreaTypes = [
@@ -20,28 +16,38 @@ const mockAreaTypes = [
 ];
 
 const areaValidationSchema = yup.object().shape({
-  AreaTypeSelection: yup.array().required('Please enter at least some array'),
-  AreaCapacity: yup.number().required('Please enter area capacity'),
+  areas: yup
+    .array()
+    .min(1, 'Please enter at least some area')
+    .required('Please enter at least some area')
+    .test({
+      name: 'areas-unique',
+      message: 'Areas must be unique',
+      test: (value) => {
+        const set = new Set(value);
+        return set.size === value.length;
+      },
+    }),
 });
 
-const AddArea = () => {
+const AddAreaForm = () => {
   return (
     <Form
       onSubmit={(data) => alert(JSON.stringify(data))}
       resolver={yupResolver(areaValidationSchema)}
       defaultValues={defaultValues}
+      mode="onBlur"
     >
       <Stack direction={'row'}>
         <Combobox
-          name={'AreaTypeSelection'}
+          name={'areas'}
           options={mockAreaTypes}
           label={'Select area type'}
         />
-        <FormNumberInput name={'AreaCapacity'} label={'Capacity'} />
       </Stack>
       <FormSubmitButton title={'Add'} showAlert />
     </Form>
   );
 };
 
-export default AddArea;
+export default AddAreaForm;

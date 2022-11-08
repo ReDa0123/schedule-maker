@@ -14,7 +14,6 @@ import { CheckCircleIcon, CloseIcon, SmallAddIcon } from '@chakra-ui/icons';
 const Combobox = ({
   name,
   label,
-  isInvalid,
   disabled,
   helperText,
   formControlProps,
@@ -25,20 +24,23 @@ const Combobox = ({
   options,
 }) => {
   return (
-    <FormControl
-      isDisabled={disabled}
-      isInvalid={isInvalid}
-      w="250px"
-      {...formControlProps}
-    >
-      {label && <FormLabel {...formLabelProps}>{label}</FormLabel>}
-
-      <Controller
-        name={name}
-        render={({ field: { onChange, value } }) => (
+    <Controller
+      name={name}
+      render={({
+        field: { onChange, value, onBlur },
+        fieldState: { error },
+      }) => (
+        <FormControl
+          isDisabled={disabled}
+          isInvalid={error}
+          w="250px"
+          {...formControlProps}
+        >
+          {label && <FormLabel {...formLabelProps}>{label}</FormLabel>}
           <Box>
             <Autocomplete
               options={options}
+              onBlur={onBlur}
               result={value}
               setResult={onChange}
               renderCheckIcon={() => (
@@ -71,26 +73,26 @@ const Combobox = ({
               )}
             />
           </Box>
-        )}
-      />
-
-      {isInvalid ? (
-        <FormErrorMessage {...formErrorMessageProps}>
-          Error when saving areas
-        </FormErrorMessage>
-      ) : (
-        helperText && (
-          <FormHelperText {...formHelperTextProps}>{helperText}</FormHelperText>
-        )
+          {error ? (
+            <FormErrorMessage {...formErrorMessageProps}>
+              Error when saving areas
+            </FormErrorMessage>
+          ) : (
+            helperText && (
+              <FormHelperText {...formHelperTextProps}>
+                {helperText}
+              </FormHelperText>
+            )
+          )}
+        </FormControl>
       )}
-    </FormControl>
+    />
   );
 };
 
 Combobox.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
-  isInvalid: PropTypes.bool,
   disabled: PropTypes.bool,
   helperText: PropTypes.string,
   formControlProps: PropTypes.object,
@@ -100,8 +102,8 @@ Combobox.propTypes = {
   placeholder: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     })
   ).isRequired,
 };

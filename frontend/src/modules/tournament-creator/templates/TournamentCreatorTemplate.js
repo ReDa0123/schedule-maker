@@ -1,6 +1,6 @@
 import SubHeader from '../../../shared/design-system/molecules/SubHeader';
 import { ContentBox, Heading } from '../../../shared/design-system';
-import { AddArea, BasicTournamentSettings, DayForm } from '../organisms';
+import { AddAreaForm, BasicTournamentSettings, DayForm } from '../organisms';
 
 export function TournamentCreatorTemplate() {
   return (
@@ -9,7 +9,7 @@ export function TournamentCreatorTemplate() {
       <ContentBox>
         <Heading> Tournament settings </Heading>
         <BasicTournamentSettings />
-        <AddArea />
+        <AddAreaForm />
         <DayForm onSubmit={(data) => console.log(data)} />
       </ContentBox>
     </>
