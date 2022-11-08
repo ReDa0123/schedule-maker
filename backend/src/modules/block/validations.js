@@ -32,7 +32,7 @@ export const validateBlocks = async ({
   );
 
   const areas = await dbConnection.query(
-    `SELECT areaId FROM area WHERE tournamentId = ?`,
+    `SELECT * FROM area JOIN tournament_area USING (areaId) WHERE tournamentId = ?`,
     [tournamentId]
   );
 

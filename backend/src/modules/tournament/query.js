@@ -20,7 +20,7 @@ export const tournament = async (_, { tournamentId }, { dbConnection }) => {
   );
 
   const areasOfTournament = await dbConnection.query(
-    `SELECT * FROM area WHERE tournamentId = ?`,
+    `SELECT * FROM area JOIN tournament_area USING (areaId) WHERE tournamentId = ?`,
     [tournamentId]
   );
 

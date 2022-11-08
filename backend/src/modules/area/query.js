@@ -12,12 +12,3 @@ export const area = async (_, { areaId }, { dbConnection }) => {
 
   return area[0];
 };
-
-export const areasOfTournament = async (
-  _,
-  { tournamentId },
-  { dbConnection }
-) =>
-  await dbConnection.query(`SELECT * FROM area WHERE tournamentId = ?`, [
-    tournamentId,
-  ]);

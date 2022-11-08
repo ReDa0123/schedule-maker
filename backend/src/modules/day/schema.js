@@ -7,21 +7,20 @@ export const typeDef = /* GraphQL */ `
 
   type Mutation {
     createDay(
-      name: String!
+      date: String!
       tournamentId: Int!
       description: String!
       startTime: Int!
       endTime: Int!
-    ): Day!
+    ): String!
     editDay(
       dayId: Int!
-      name: String!
-      tournamentId: Int!
+      date: String!
       description: String!
       startTime: Int!
       endTime: Int!
-    ): Day!
-    deleteDay(dayId: Int!): Day!
+    ): String!
+    deleteDay(dayId: Int!): String!
   }
 
   type Day {
