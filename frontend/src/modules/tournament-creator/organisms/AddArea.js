@@ -3,13 +3,13 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { Stack } from 'src/shared/design-system';
 import {
   FormNumberInput,
-  FormSelect,
   FormSubmitButton,
 } from '../../../shared/react-hook-form/molecules';
 import * as yup from 'yup';
+import Combobox from '../../../shared/react-hook-form/molecules/Combobox';
 
 const defaultValues = {
-  AreaTypeSelection: '',
+  AreaTypeSelection: [],
   AreaCapacity: 0,
 };
 
@@ -20,7 +20,7 @@ const mockAreaTypes = [
 ];
 
 const areaValidationSchema = yup.object().shape({
-  AreaTypeSelection: yup.number().required('Please select area type'),
+  AreaTypeSelection: yup.array().required('Please enter at least some array'),
   AreaCapacity: yup.number().required('Please enter area capacity'),
 });
 
@@ -32,7 +32,7 @@ const AddArea = () => {
       defaultValues={defaultValues}
     >
       <Stack direction={'row'}>
-        <FormSelect
+        <Combobox
           name={'AreaTypeSelection'}
           options={mockAreaTypes}
           label={'Select area type'}
