@@ -52,7 +52,7 @@ export const deleteDay = async (_, { dayId }, { dbConnection, auth }) => {
     dayId,
   ]);
 
-  const tournamentId = day[0] ? day[0].tournamentId : null;
+  const tournamentId = day[0] ? day[0].tournamentId : undefined;
 
   await validateDay({
     auth,
