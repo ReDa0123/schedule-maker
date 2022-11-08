@@ -25,8 +25,8 @@ const validationSchema = yup.object().shape({
   location: yup.string().required('Please enter location'),
   sports: yup
     .array()
-    .min(1, 'Please enter at least some area')
-    .required('Please enter at least some area')
+    .min(1, 'Please enter at least one sport')
+    .required('Please enter at least one sport')
     .test({
       name: 'areas-unique',
       message: 'Areas must be unique',
@@ -37,12 +37,13 @@ const validationSchema = yup.object().shape({
     }),
 });
 
-const BasicTournamentSettings = () => {
+const BasicTournamentForm = () => {
   return (
     <Form
       onSubmit={(data) => alert(JSON.stringify(data))}
       defaultValues={defaultValues}
       resolver={yupResolver(validationSchema)}
+      mode="onChange"
     >
       <FormInput name={'name'} label={'Tournament name'} />
       <FormInput name={'location'} label={'Location'} />
@@ -53,4 +54,4 @@ const BasicTournamentSettings = () => {
   );
 };
 
-export default BasicTournamentSettings;
+export default BasicTournamentForm;

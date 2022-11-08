@@ -10,7 +10,15 @@ import { Autocomplete } from 'chakra-ui-simple-autocomplete';
 import { Controller } from 'react-hook-form';
 import { Badge, Box, Text } from '@chakra-ui/react';
 import { CheckCircleIcon, CloseIcon, SmallAddIcon } from '@chakra-ui/icons';
-import { equals, uniqWith } from 'ramda';
+import {
+  compose,
+  equals,
+  filter,
+  flatten,
+  groupWith,
+  prop,
+  sortBy,
+} from 'ramda';
 
 const Combobox = ({
   name,
@@ -44,8 +52,12 @@ const Combobox = ({
               onBlur={onBlur}
               result={value}
               setResult={(values) => {
-                //TODO: Remove both duplicates
-                const valuesToChange = uniqWith(equals)(values);
+                const valuesToChange = compose(
+                  flatten,
+                  filter((value) => value.length === 1),
+                  groupWith(equals),
+                  sortBy(prop('value'))
+                )(values);
                 onChange(valuesToChange);
               }}
               renderCheckIcon={() => (
@@ -80,7 +92,7 @@ const Combobox = ({
           </Box>
           {error ? (
             <FormErrorMessage {...formErrorMessageProps}>
-              Error when saving areas
+              {error.message}
             </FormErrorMessage>
           ) : (
             helperText && (
