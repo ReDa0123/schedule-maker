@@ -101,7 +101,7 @@ const DayForm = ({ onSubmit, defaultValues }) => {
           disabled={isSubmitting}
           type="submit"
         >
-          {defaultValues ? 'Edit' : 'Create'}
+          {defaultValues ? 'Edit' : 'Add'}
         </Button>
       </Flex>
     </Box>

@@ -6,34 +6,34 @@ import {
 } from 'src/shared/react-hook-form/molecules';
 
 import * as yup from 'yup';
-import Combobox from '../../../shared/react-hook-form/molecules/Combobox';
-
-const mockSports = [
-  { value: 1, label: 'Tennis' },
-  { value: 2, label: 'Long jump' },
-  { value: 3, label: 'Swimming' },
-];
 
 const defaultValues = {
   name: '',
   location: '',
-  sports: mockSports,
+  startDate: '',
+  endDate: '',
 };
 
 const validationSchema = yup.object().shape({
   name: yup.string().required('Please enter tournament name'),
   location: yup.string().required('Please enter location'),
-  sports: yup
-    .array()
-    .min(1, 'Please enter at least one sport')
-    .required('Please enter at least one sport')
+  startDate: yup
+    .date()
+    .required('Please enter start time')
     .test({
-      name: 'areas-unique',
-      message: 'Areas must be unique',
-      test: (value) => {
-        const set = new Set(value);
-        return set.size === value.length;
-      },
+      name: 'startDate-after-endDDate',
+      message: 'Start date must be before end date',
+      test: (value, ctx) =>
+        isNaN(ctx.parent.endDate) ? true : value <= ctx.parent.endDate,
+    }),
+  endDate: yup
+    .date()
+    .required('Please enter end time')
+    .test({
+      name: 'endDate-before-startDate',
+      message: 'End date must be after start date',
+      test: (value, ctx) =>
+        isNaN(ctx.parent.startDate) ? true : value >= ctx.parent.startDate,
     }),
 });
 
@@ -47,8 +47,8 @@ const BasicTournamentForm = () => {
     >
       <FormInput name={'name'} label={'Tournament name'} />
       <FormInput name={'location'} label={'Location'} />
-
-      <Combobox name={'sports'} label={'Sports'} options={mockSports} />
+      <FormInput name={'startDate'} label={'Start date'} type={'date'} />
+      <FormInput name={'endDate'} label={'End date'} type={'date'} />
       <FormSubmitButton title={'Save'} showAlert />
     </Form>
   );
