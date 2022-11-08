@@ -18,8 +18,8 @@ const mockAreaTypes = [
 const areaValidationSchema = yup.object().shape({
   areas: yup
     .array()
-    .min(1, 'Please enter at least some area')
-    .required('Please enter at least some area')
+    .min(1, 'Please enter at least one area')
+    .required('Please enter at least one area')
     .test({
       name: 'areas-unique',
       message: 'Areas must be unique',
