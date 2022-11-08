@@ -12,7 +12,11 @@ const TournamentList = ({ tournaments }) => {
       <Box my={3}>
         <CreateNewButton />
       </Box>
-      <TournamentFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      <TournamentFilter
+        filter={globalFilter}
+        setFilter={setGlobalFilter}
+        tournaments={tournaments}
+      />
       <TournamentTable data={tournaments} setFilter={setFilter} />
     </>
   );

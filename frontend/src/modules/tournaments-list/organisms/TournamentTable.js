@@ -9,13 +9,11 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import { useTable, useGlobalFilter } from 'react-table';
-import { TournamentListHeading } from '../atoms';
+import { NameCell, TournamentListHeading } from '../atoms';
 import PropTypes from 'prop-types';
 import { ActionLinksCell } from '../molecules';
 import { format } from 'date-fns';
-import { convertStringToDate } from '../../../shared/utils';
-import { RouterLink } from 'src/shared/navigation';
-import { route } from 'src/Routes';
+import { convertStringToDate } from 'src/shared/utils';
 
 const columns = [
   {
@@ -23,11 +21,8 @@ const columns = [
     columns: [
       {
         Header: 'Tournament name',
-        accessor: ({ name, tournamentId }) => (
-          <RouterLink to={route.scheduleMaker({ id: tournamentId })}>
-            {name}
-          </RouterLink>
-        ),
+        accessor: 'name',
+        Cell: NameCell,
       },
       {
         Header: 'Location',

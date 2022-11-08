@@ -1,11 +1,7 @@
 import { Flex, Input, Select, Grid } from 'src/shared/design-system';
-import { tournaments } from '../../schedule-maker/utils/mocks';
 import PropTypes from 'prop-types';
 
-const SelectiveFiltering = ({ selectRef, setFilter, ...props }) => {
-  const tournamentLocations = Array.from(
-    new Set(tournaments.map((o) => o.location))
-  );
+const SelectiveFiltering = ({ selectRef, setFilter, locations, ...props }) => {
   return (
     <Grid
       templateColumns={{
@@ -21,7 +17,7 @@ const SelectiveFiltering = ({ selectRef, setFilter, ...props }) => {
         ref={selectRef}
         onChange={(e) => setFilter(e.target.value)}
       >
-        {tournamentLocations.map((location) => (
+        {locations.map((location) => (
           <option key={location} value={location}>
             {location}
           </option>
@@ -40,6 +36,7 @@ const SelectiveFiltering = ({ selectRef, setFilter, ...props }) => {
 SelectiveFiltering.propTypes = {
   selectRef: PropTypes.object,
   setFilter: PropTypes.func,
+  locations: PropTypes.array,
 };
 
 export default SelectiveFiltering;

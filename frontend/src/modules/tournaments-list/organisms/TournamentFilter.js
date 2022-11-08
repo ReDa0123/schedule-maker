@@ -1,11 +1,16 @@
 import { Box, Input } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { TournamentListHeading } from '../atoms';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { SelectiveFiltering } from '../molecules';
+import { o, pluck, uniq } from 'ramda';
 
-const TournamentFilter = ({ filter, setFilter }) => {
+const TournamentFilter = ({ filter, setFilter, tournaments }) => {
   const selectRef = useRef('');
+  const locations = useMemo(
+    () => o(uniq, pluck('location'))(tournaments),
+    [tournaments]
+  );
   return (
     <Box mb="50px" mt="30px">
       <TournamentListHeading>Filter</TournamentListHeading>
@@ -14,6 +19,7 @@ const TournamentFilter = ({ filter, setFilter }) => {
         mb={4}
         selectRef={selectRef}
         setFilter={setFilter}
+        locations={locations}
       />
       <TournamentListHeading mb={4}>Search</TournamentListHeading>
       <Input
@@ -32,6 +38,7 @@ const TournamentFilter = ({ filter, setFilter }) => {
 TournamentFilter.propTypes = {
   filter: PropTypes.any,
   setFilter: PropTypes.any,
+  tournaments: PropTypes.array,
 };
 
 export default TournamentFilter;
