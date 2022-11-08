@@ -2,9 +2,16 @@ import { Flex, Icon, Square, Tooltip } from '../atoms';
 import { QuestionIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 
-const WithTooltip = ({ children, tooltipProps, standalone, label, icon }) =>
+const WithTooltip = ({
+  children,
+  tooltipProps,
+  standalone,
+  label,
+  icon,
+  ...props
+}) =>
   standalone ? (
-    <Flex alignItems="center" gap={2}>
+    <Flex alignItems="center" gap={2} {...props}>
       {children}
       <Tooltip placement="bottom" hasArrow label={label} {...tooltipProps}>
         {icon ? (

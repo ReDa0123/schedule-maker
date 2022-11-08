@@ -7,6 +7,8 @@ import NotAssignedBlocks from './NotAssignedBlocks';
 import DeleteBlockButton from './DeleteBlockButton';
 import EditBlockButton from './EditBlockButton';
 import Block from './Block';
+import DayTabContent from './DayTabContent';
+import AddDay from './AddDay';
 
 export {
   BlockForm,
@@ -18,4 +20,6 @@ export {
   ScheduleTimeColumn,
   DeleteBlockButton,
   EditBlockButton,
+  DayTabContent,
+  AddDay,
 };

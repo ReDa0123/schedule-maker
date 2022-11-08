@@ -18,3 +18,15 @@ export const nilIfEmptyProp = (propName) =>
   o(when(isNilOrEmpty, alwaysNull), prop(propName));
 
 export const convertStringToDate = (dateString) => new Date(Number(dateString));
+
+export const convertToDate = (date) => new Date(date);
+
+export const convertPropToDate = (propName) => o(convertToDate, prop(propName));
+
+export const convertTimeToMinutes = (time) => {
+  const [hours, minutes] = time.split(':');
+  return Number(hours) * 60 + Number(minutes);
+};
+
+export const convertPropToMinutes = (propName) =>
+  o(convertTimeToMinutes, prop(propName));

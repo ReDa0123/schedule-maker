@@ -7,7 +7,7 @@ export const tournamentScheduleContext = createContext(null);
 
 const TournamentScheduleProvider = tournamentScheduleContext.Provider;
 
-const TournamentScheduleContext = ({ children, tournament, edit }) => {
+const TournamentScheduleContext = ({ children, tournament, edit, refetch }) => {
   const value = useMemo(() => {
     return {
       tournament: omit(
@@ -19,8 +19,9 @@ const TournamentScheduleContext = ({ children, tournament, edit }) => {
       days: tournament?.days,
       sports: tournament?.sports,
       areas: tournament?.areas,
+      refetch,
     };
-  }, [edit, tournament]);
+  }, [edit, tournament, refetch]);
 
   return (
     <TournamentScheduleProvider value={value}>
@@ -33,6 +34,7 @@ TournamentScheduleContext.propTypes = {
   children: PropTypes.node.isRequired,
   tournament: PropTypes.object,
   edit: PropTypes.bool,
+  refetch: PropTypes.func,
 };
 
 export default TournamentScheduleContext;

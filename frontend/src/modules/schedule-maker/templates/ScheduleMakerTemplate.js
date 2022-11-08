@@ -5,7 +5,7 @@ import SubHeader from 'src/shared/design-system/molecules/SubHeader';
 import PropTypes from 'prop-types';
 import { BigSpinner, ErrorText } from 'src/shared/design-system';
 
-const ScheduleMakerTemplate = ({ isLoading, error, refetch }) => {
+const ScheduleMakerTemplate = ({ isLoading, error }) => {
   const { detailMode } = useTournamentSchedule();
 
   const ComponentToRender = useMemo(
@@ -20,7 +20,7 @@ const ScheduleMakerTemplate = ({ isLoading, error, refetch }) => {
       ) : error ? (
         <ErrorText text={error.message} />
       ) : (
-        <ComponentToRender refetch={refetch} />
+        <ComponentToRender />
       )}
     </>
   );
@@ -29,7 +29,6 @@ const ScheduleMakerTemplate = ({ isLoading, error, refetch }) => {
 ScheduleMakerTemplate.propTypes = {
   isLoading: PropTypes.bool,
   error: PropTypes.object,
-  refetch: PropTypes.func.isRequired,
 };
 
 export default ScheduleMakerTemplate;

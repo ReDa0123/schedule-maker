@@ -61,11 +61,11 @@ const ScheduleMakerPage = ({ edit }) => {
     <TournamentScheduleContext
       tournament={tournamentFetcher.data?.tournament}
       edit={edit}
+      refetch={tournamentFetcher.refetch}
     >
       <ScheduleMakerTemplate
         isLoading={tournamentFetcher.loading}
         error={tournamentFetcher.error}
-        refetch={tournamentFetcher.refetch}
       />
     </TournamentScheduleContext>
   );

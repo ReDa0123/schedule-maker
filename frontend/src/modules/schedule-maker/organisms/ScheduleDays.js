@@ -1,12 +1,10 @@
 import { useTournamentSchedule } from '../hooks';
 import { useMemo, useState } from 'react';
 import { Schedule } from './index';
-import { Box, Tabs, TabList, Tab, Text, Link } from 'src/shared/design-system';
-import { format } from 'date-fns';
+import { Heading, Tabs, TabList, Text, Link } from 'src/shared/design-system';
 import { WithTooltip } from 'src/shared/design-system/molecules';
-import { IconButton } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
 import { isNilOrEmpty } from 'ramda-extension';
+import { AddDay, DayTabContent } from '../molecules';
 
 const ScheduleDays = () => {
   const { days, detailMode } = useTournamentSchedule();
@@ -15,37 +13,33 @@ const ScheduleDays = () => {
 
   return !isNilOrEmpty(days) ? (
     <>
+      {detailMode ? (
+        <Heading fontSize={24} mb={4}>
+          Days of the tournament
+        </Heading>
+      ) : (
+        <WithTooltip
+          label="While dragging a block, you can hover over a day tab to change the active day."
+          standalone
+          mb={4}
+        >
+          <Heading fontSize={24}>Days of the tournament</Heading>
+        </WithTooltip>
+      )}
       <Tabs index={activeIndex} onChange={setActiveIndex} overflow="auto">
         <TabList>
-          {days.map(({ dayId, date, description }) => (
-            <Tab key={dayId}>
-              <Box
-                w="100%"
-                color="blue.600"
-                fontSize={20}
-                whiteSpace="nowrap"
-                overflow="hidden"
-                textOverflow="ellipsis"
-                textAlign="start"
-              >
-                {description}
-              </Box>
-              <Box color="blue.600" w="100%" textAlign="start">
-                {format(new Date(Number(date)), 'dd.MM.yyyy')}
-              </Box>
-            </Tab>
+          {days.map(({ dayId, date, description }, index) => (
+            <DayTabContent
+              key={dayId}
+              description={description}
+              date={date}
+              setIndex={setActiveIndex}
+              index={index}
+            />
           ))}
           {!detailMode && (
             <WithTooltip label="Add new day">
-              <IconButton
-                variant="outline"
-                aria-label="Add day"
-                icon={<AddIcon />}
-                bg="none"
-                color="blue.500"
-                marginY="auto"
-                ml={4}
-              />
+              <AddDay />
             </WithTooltip>
           )}
         </TabList>

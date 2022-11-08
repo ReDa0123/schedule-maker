@@ -1,4 +1,4 @@
-import DateSelection from './DateSelection';
+import DayForm from './DayForm';
 import BasicTournamentSettings from './BasicTournamentSettings';
 import AddArea from './AddArea';
-export { DateSelection, BasicTournamentSettings, AddArea };
+export { DayForm, BasicTournamentSettings, AddArea };

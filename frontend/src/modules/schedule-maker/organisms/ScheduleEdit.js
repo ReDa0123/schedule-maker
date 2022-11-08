@@ -6,7 +6,6 @@ import { AuthError } from '../../auth/atoms';
 import { route } from '../../../Routes';
 import { useParams } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import PropTypes from 'prop-types';
 import { useToast } from '@chakra-ui/react';
 import { convertBlocksForSending } from '../utils/blocks';
 
@@ -16,7 +15,7 @@ const SAVE_BLOCKS_MUTATION = gql`
   }
 `;
 
-const ScheduleEdit = ({ refetch }) => {
+const ScheduleEdit = () => {
   const auth = useAuth();
   const toast = useToast();
   const [saveBlocksRequest, saveBlocksRequestState] = useMutation(
@@ -30,7 +29,6 @@ const ScheduleEdit = ({ refetch }) => {
           isClosable: true,
           position: 'top-right',
         });
-        refetch();
       },
       onError: ({ message }) => {
         toast({
@@ -70,10 +68,6 @@ const ScheduleEdit = ({ refetch }) => {
       linkMessage="View Schedule"
     />
   );
-};
-
-ScheduleEdit.propTypes = {
-  refetch: PropTypes.func.isRequired,
 };
 
 export default ScheduleEdit;

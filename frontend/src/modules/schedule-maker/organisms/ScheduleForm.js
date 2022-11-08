@@ -26,9 +26,7 @@ const ScheduleFormContent = () => {
     <Flex gap={4} flexDir="column" w="100%">
       <ContentBox>
         <BlockForm onSubmit={onBlockFormSubmit} />
-        <Heading fontSize={24} mb={4}>
-          Not assigned blocks
-        </Heading>
+        <Heading fontSize={24}>Not assigned blocks</Heading>
       </ContentBox>
       <NotAssignedBlocks />
       <ContentBox minW="70%">
