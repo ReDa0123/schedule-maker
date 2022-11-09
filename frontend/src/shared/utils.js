@@ -1,4 +1,18 @@
-import { always, equals, ifElse, o, prop, when } from 'ramda';
+import {
+  __,
+  always,
+  applySpec,
+  equals,
+  identity,
+  ifElse,
+  includes,
+  map,
+  o,
+  pluck,
+  prop,
+  values,
+  when,
+} from 'ramda';
 import { alwaysNull, isNilOrEmpty } from 'ramda-extension';
 
 export const propEqOrIsEmptyOrNil = (propName, equalValue) => (value) => {
@@ -7,6 +21,17 @@ export const propEqOrIsEmptyOrNil = (propName, equalValue) => (value) => {
   }
   return o(
     ifElse(isNilOrEmpty, always(true), equals(equalValue)),
+    prop(propName)
+  )(value);
+};
+
+export const propIsContainedInValues = (propName, containedArr) => (value) => {
+  if (isNilOrEmpty(containedArr)) {
+    return true;
+  }
+
+  return o(
+    includes(__, o(values, pluck('value'))(containedArr)),
     prop(propName)
   )(value);
 };
@@ -30,3 +55,14 @@ export const convertTimeToMinutes = (time) => {
 
 export const convertPropToMinutes = (propName) =>
   o(convertTimeToMinutes, prop(propName));
+
+export const convertValuesToLabelValueObj = (
+  valueFn = identity,
+  labelFn = identity()
+) =>
+  map(
+    applySpec({
+      value: valueFn,
+      label: labelFn,
+    })
+  );

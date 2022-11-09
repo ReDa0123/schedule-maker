@@ -7,7 +7,8 @@ import {
   Select,
   Heading,
 } from 'src/shared/design-system';
-import { isEmpty } from 'ramda';
+import { Autocomplete } from 'chakra-ui-simple-autocomplete';
+import { filterDefaultValues } from '../contexts/ScheduleDetailContext';
 
 const BlockFilter = () => {
   const {
@@ -16,6 +17,8 @@ const BlockFilter = () => {
     categoriesToFilter,
     sexesToFilter,
     sportsToFilter,
+    agesToFilter,
+    customParamsToFilter,
   } = useScheduleDetail();
 
   return (
@@ -33,19 +36,16 @@ const BlockFilter = () => {
       >
         <GridItem maxW="250px">
           <FormLabel>Category</FormLabel>
-          <Select
-            value={blockFilter.category}
-            onChange={(e) =>
-              setFilter({ ...blockFilter, category: e.target.value })
+          <Autocomplete
+            options={categoriesToFilter}
+            result={blockFilter.category}
+            setResult={(values) =>
+              setFilter({ ...blockFilter, category: values })
             }
-          >
-            <option value="">All</option>
-            {categoriesToFilter.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </Select>
+            allowCreation={false}
+            notFoundText="Category not found"
+            placeholder="Type a category to filter"
+          />
         </GridItem>
         <GridItem maxW="250px">
           <FormLabel>Sex</FormLabel>
@@ -63,25 +63,43 @@ const BlockFilter = () => {
         </GridItem>
         <GridItem maxW="250px">
           <FormLabel>Sport</FormLabel>
-          <Select
-            value={blockFilter.sportId}
-            onChange={(e) =>
-              setFilter({
-                ...blockFilter,
-                sportId: isEmpty(e.target.value) ? '' : Number(e.target.value),
-              })
+          <Autocomplete
+            options={sportsToFilter}
+            result={blockFilter.sportId}
+            setResult={(values) =>
+              setFilter({ ...blockFilter, sportId: values })
             }
-          >
-            <option value="">All</option>
-            {sportsToFilter.map(({ sportId, name }) => (
-              <option key={sportId} value={sportId}>
-                {name}
-              </option>
-            ))}
-          </Select>
+            placeholder="Type a sport to filter"
+            allowCreation={false}
+            notFoundText="Sport not found"
+          />
+        </GridItem>
+        <GridItem maxW="250px">
+          <FormLabel>Age</FormLabel>
+          <Autocomplete
+            options={agesToFilter}
+            result={blockFilter.age}
+            setResult={(values) => setFilter({ ...blockFilter, age: values })}
+            placeholder="Type an age to filter"
+            allowCreation={false}
+            notFoundText="Age not found"
+          />
+        </GridItem>
+        <GridItem maxW="250px">
+          <FormLabel>Parameter</FormLabel>
+          <Autocomplete
+            options={customParamsToFilter}
+            result={blockFilter.customParameter}
+            setResult={(values) =>
+              setFilter({ ...blockFilter, customParameter: values })
+            }
+            placeholder="Type a parameter to filter"
+            allowCreation={false}
+            notFoundText="Parameter not found"
+          />
         </GridItem>
         <Button
-          onClick={() => setFilter({ category: '', sex: '', sportId: '' })}
+          onClick={() => setFilter(filterDefaultValues)}
           maxW="100px"
           alignSelf="end"
         >

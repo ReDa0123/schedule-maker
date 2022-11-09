@@ -1,6 +1,21 @@
-import { applySpec, map, multiply, o, prop } from 'ramda';
+import {
+  applySpec,
+  compose,
+  map,
+  multiply,
+  o,
+  pluck,
+  prop,
+  uniq,
+  values,
+} from 'ramda';
 import { MINUTES_IN_BLOCK } from '../constants';
-import { convertPropToNumberIfNotNil, nilIfEmptyProp } from 'src/shared/utils';
+import {
+  convertPropToNumberIfNotNil,
+  convertValuesToLabelValueObj,
+  nilIfEmptyProp,
+} from 'src/shared/utils';
+import { rejectNil } from 'ramda-extension';
 
 export const minutesToTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
@@ -27,3 +42,12 @@ export const convertBlocksForSending = map(
     customParameter: nilIfEmptyProp('customParameter'),
   })
 );
+
+export const propUniqAndConvertToLabelValueObj = (propName) =>
+  compose(
+    convertValuesToLabelValueObj(),
+    uniq,
+    rejectNil,
+    values,
+    pluck(propName)
+  );
