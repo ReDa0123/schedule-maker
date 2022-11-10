@@ -1,18 +1,9 @@
-import {
-  applySpec,
-  compose,
-  map,
-  multiply,
-  o,
-  pluck,
-  prop,
-  uniq,
-  values,
-} from 'ramda';
+import { compose, multiply, o, pluck, prop, uniq, values } from 'ramda';
 import { MINUTES_IN_BLOCK } from '../constants';
 import {
   convertPropToNumberIfNotNil,
   convertValuesToLabelValueObj,
+  mapplySpec,
   nilIfEmptyProp,
 } from 'src/shared/utils';
 import { rejectNil } from 'ramda-extension';
@@ -28,20 +19,18 @@ export const calculateDuration = o(multiply(MINUTES_IN_BLOCK), prop('persons'));
 export const calculateEndTime = ({ startTime, persons }) =>
   calculateDuration({ persons }) + startTime;
 
-export const convertBlocksForSending = map(
-  applySpec({
-    startTime: convertPropToNumberIfNotNil('startTime'),
-    persons: convertPropToNumberIfNotNil('persons'),
-    style: prop('style'),
-    category: nilIfEmptyProp('category'),
-    sex: nilIfEmptyProp('sex'),
-    dayId: convertPropToNumberIfNotNil('dayId'),
-    areaId: convertPropToNumberIfNotNil('areaId'),
-    sportId: convertPropToNumberIfNotNil('sportId'),
-    age: prop('age'),
-    customParameter: nilIfEmptyProp('customParameter'),
-  })
-);
+export const convertBlocksForSending = mapplySpec({
+  startTime: convertPropToNumberIfNotNil('startTime'),
+  persons: convertPropToNumberIfNotNil('persons'),
+  style: prop('style'),
+  category: nilIfEmptyProp('category'),
+  sex: nilIfEmptyProp('sex'),
+  dayId: convertPropToNumberIfNotNil('dayId'),
+  areaId: convertPropToNumberIfNotNil('areaId'),
+  sportId: convertPropToNumberIfNotNil('sportId'),
+  age: prop('age'),
+  customParameter: nilIfEmptyProp('customParameter'),
+});
 
 export const propUniqAndConvertToLabelValueObj = (propName) =>
   compose(

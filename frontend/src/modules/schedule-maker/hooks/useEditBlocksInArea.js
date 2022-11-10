@@ -1,6 +1,6 @@
 import { useWatch, Controller } from 'react-hook-form';
 import { useMemo } from 'react';
-import { allPass, applySpec, filter, map, o, pick, prop, propEq } from 'ramda';
+import { allPass, filter, o, pick, prop, propEq } from 'ramda';
 import { calculateEndTime } from '../utils/blocks';
 import { Block } from '../molecules';
 import {
@@ -10,6 +10,7 @@ import {
   TABLE_TOP_PADDING,
 } from '../constants';
 import { useFieldArrayProps } from './';
+import { mapplySpec } from 'src/shared/utils';
 
 export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
   const { fields } = useFieldArrayProps();
@@ -21,13 +22,11 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
   const startTimesInThisDayAndArena = useMemo(
     () =>
       o(
-        map(
-          applySpec({
-            startTime: prop('startTime'),
-            endTime: o(calculateEndTime, pick(['startTime', 'persons'])),
-            blockId: prop('blockId'),
-          })
-        ),
+        mapplySpec({
+          startTime: prop('startTime'),
+          endTime: o(calculateEndTime, pick(['startTime', 'persons'])),
+          blockId: prop('blockId'),
+        }),
         filter(allPass([propEq('dayId', dayId), propEq('areaId', areaId)]))
       )(values),
     [values, areaId, dayId]

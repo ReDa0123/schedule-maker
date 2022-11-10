@@ -36,6 +36,8 @@ export const propIsContainedInValues = (propName, containedArr) => (value) => {
   )(value);
 };
 
+export const mapplySpec = (spec) => map(applySpec(spec));
+
 export const convertPropToNumberIfNotNil = (propName) =>
   o(ifElse(isNilOrEmpty, alwaysNull, Number), prop(propName));
 
@@ -58,11 +60,9 @@ export const convertPropToMinutes = (propName) =>
 
 export const convertValuesToLabelValueObj = (
   valueFn = identity,
-  labelFn = identity()
+  labelFn = identity
 ) =>
-  map(
-    applySpec({
-      value: valueFn,
-      label: labelFn,
-    })
-  );
+  mapplySpec({
+    value: valueFn,
+    label: labelFn,
+  });
