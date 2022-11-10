@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import Logo from '../svgs/Logo';
+import { route } from '../../../Routes';
 
 const Header = (props) => {
   const auth = useAuth();
@@ -61,29 +62,33 @@ const Header = (props) => {
           <MenuButton as={HamburgerIcon} color={'white'} cursor={'pointer'} />
           <MenuList>
             <MenuItem>
-              <RouterLink to="/" w={'100%'} h={'100%'}>
+              <RouterLink to={route.home()} w={'100%'} h={'100%'}>
                 Schedule Maker
               </RouterLink>
             </MenuItem>
             <MenuItem>
-              <RouterLink to="/tournaments-list" w={'100%'} h={'100%'}>
+              <RouterLink to={route.tournamentsList()} w={'100%'} h={'100%'}>
                 Tournaments
               </RouterLink>
             </MenuItem>
             <MenuItem>
-              <RouterLink to="/tournament-creator" w={'100%'} h={'100%'}>
+              <RouterLink
+                to={route.tournamentsList(true)}
+                w={'100%'}
+                h={'100%'}
+              >
                 Create Tournament
               </RouterLink>
             </MenuItem>
             {!auth.user ? (
               <>
                 <MenuItem>
-                  <RouterLink to="/login" w={'100%'} h={'100%'}>
+                  <RouterLink to={route.login()} w={'100%'} h={'100%'}>
                     Login
                   </RouterLink>
                 </MenuItem>
                 <MenuItem>
-                  <RouterLink to="/sign-up" w={'100%'} h={'100%'}>
+                  <RouterLink to={route.signUp()} w={'100%'} h={'100%'}>
                     Sign up
                   </RouterLink>
                 </MenuItem>
@@ -111,19 +116,19 @@ const Header = (props) => {
         }}
       >
         <Center marginX={'15px'} marginLeft={'30px'}>
-          <RouterLink to="/" color="white">
+          <RouterLink to={route.home()} color="white">
             Schedule Maker
           </RouterLink>
         </Center>
 
         <Center marginX={'15px'}>
-          <RouterLink to="/tournaments-list" color="white">
+          <RouterLink to={route.tournamentsList()} color="white">
             Tournaments
           </RouterLink>
         </Center>
 
         <Center marginX={'15px'}>
-          <RouterLink to="/tournament-creator" color="white">
+          <RouterLink to={route.tournamentsList(true)} color="white">
             Create Tournament
           </RouterLink>
         </Center>
@@ -145,7 +150,7 @@ const Header = (props) => {
         ) : (
           <>
             <Center>
-              <RouterLink to="/login" color="white">
+              <RouterLink to={route.login()} color="white">
                 <Button
                   colorScheme="gray"
                   variant="solid"
@@ -157,14 +162,18 @@ const Header = (props) => {
               </RouterLink>
             </Center>
             <Center>
-              <RouterLink to="/sign-up" color="white" marginRight={'30px'}>
+              <RouterLink
+                to={route.signUp()}
+                color="white"
+                marginRight={'30px'}
+              >
                 <Button
                   variant="outline"
                   marginX="10px"
                   color={'white'}
                   _hover={{ color: 'blue.300', bg: 'white' }}
                 >
-                  Sign in
+                  Sign up
                 </Button>
               </RouterLink>
             </Center>

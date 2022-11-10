@@ -14,7 +14,11 @@ import { RouterLink } from '../../../shared/navigation';
 import { route } from '../../../Routes';
 
 const Schedule = ({ dayId, startTime, endTime }) => {
-  const { areas, detailMode } = useTournamentSchedule();
+  const {
+    areas,
+    detailMode,
+    tournament: { tournamentId },
+  } = useTournamentSchedule();
   const ColumnToRender = useMemo(
     () => (detailMode ? AreaColumnDetail : AreaColumnEdit),
     [detailMode]
@@ -41,7 +45,10 @@ const Schedule = ({ dayId, startTime, endTime }) => {
               <Text as="span">
                 {' '}
                 You can add them{' '}
-                <RouterLink to={route.tournamentCreator()}>here</RouterLink>.
+                <RouterLink to={route.tournamentCreator({ id: tournamentId })}>
+                  here
+                </RouterLink>
+                .
               </Text>
             )}
           </Box>

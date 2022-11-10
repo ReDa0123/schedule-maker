@@ -22,7 +22,7 @@ export const typeDef = /* GraphQL */ `
       userId: Int!
       sports: [String!]!
     ): Tournament!
-    deleteTournament(tournamentId: Int!): Tournament!
+    deleteTournament(tournamentId: Int!): String!
   }
 
   type Tournament {

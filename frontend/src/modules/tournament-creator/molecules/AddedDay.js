@@ -51,9 +51,9 @@ const AddedDay = ({ day, refetch }) => {
       alignItems="center"
     >
       <Box w="min(40%, 50ch)">{description}</Box>
-      <Box>Date: {format(convertToDate(Number(date)), 'dd.MM.yyyy')}</Box>
-      <Box>Start Time: {minutesToTime(startTime)}</Box>
-      <Box>End Time: {minutesToTime(endTime)}</Box>
+      <Box w="120px">{format(convertToDate(Number(date)), 'dd.MM.yyyy')}</Box>
+      <Box w="80px">{minutesToTime(startTime)}</Box>
+      <Box>{minutesToTime(endTime)}</Box>
       <WithTooltip label="Edit Day">
         <EditDayButton day={day} refetch={refetch} />
       </WithTooltip>

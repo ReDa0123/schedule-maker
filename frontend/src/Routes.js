@@ -11,10 +11,11 @@ export const route = {
   home: () => `/`,
   scheduleMaker: ({ id }) => `/schedule-maker/${id}`,
   scheduleMakerEdit: ({ id }) => `/schedule-maker/edit/${id}`,
-  tournamentsList: () => 'tournaments-list',
+  tournamentsList: (createModalOpen = undefined) =>
+    `/tournaments-list${createModalOpen ? '?create=true' : ''}`,
   login: () => '/login',
   signUp: () => '/sign-up',
-  tournamentCreator: () => '/tournament-creator',
+  tournamentCreator: ({ id }) => `/tournament-creator/${id}`,
 };
 
 export function Routes() {
@@ -33,7 +34,7 @@ export function Routes() {
       <Route path={route.signUp()} element={<SignUpPage />} />
       <Route path={route.tournamentsList()} element={<TournamentsListPage />} />
       <Route
-        path={route.tournamentCreator()}
+        path={route.tournamentCreator({ id: ':tournamentId' })}
         element={<TournamentCreatorPage />}
       />
       <Route path="*" element={<NotFoundPage />} />

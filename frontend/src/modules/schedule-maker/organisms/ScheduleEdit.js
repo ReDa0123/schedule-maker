@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useAuth } from '../../auth';
 import { useTournamentSchedule } from '../hooks';
 import { AuthError } from '../../auth/atoms';
-import { route } from '../../../Routes';
+import { route } from 'src/Routes';
 import { useParams } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { useToast } from '@chakra-ui/react';

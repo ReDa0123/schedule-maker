@@ -5,6 +5,9 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { Spinner, ErrorText } from 'src/shared/design-system';
 import { convertDayValuesForSending, CREATE_DAY_MUTATION } from '../utils';
 import { useCallback } from 'react';
+import { isNilOrEmpty } from 'ramda-extension';
+import { AddedDaysHeader } from '../atoms';
+import PropTypes from 'prop-types';
 
 const GET_DAYS_OF_TOURNAMENT = gql`
   query DaysOfTournament($tournamentId: Int!) {
@@ -19,9 +22,7 @@ const GET_DAYS_OF_TOURNAMENT = gql`
   }
 `;
 
-const Days = () => {
-  //const { tournamentId } = useParams();
-  const tournamentId = 1;
+const Days = ({ tournamentId }) => {
   const { data, loading, error, refetch } = useQuery(GET_DAYS_OF_TOURNAMENT, {
     variables: { tournamentId: Number(tournamentId) },
   });
@@ -69,6 +70,7 @@ const Days = () => {
       <Heading as="h3" size="md" marginY={4}>
         Days of the tournament
       </Heading>
+      {!isNilOrEmpty(data.daysOfTournament) && <AddedDaysHeader />}
       {data?.daysOfTournament.map((day) => (
         <AddedDay key={day.dayId} day={day} refetch={refetch} />
       ))}
@@ -78,6 +80,11 @@ const Days = () => {
       <DayForm onSubmit={onSubmit} />
     </>
   );
+};
+
+Days.propTypes = {
+  tournamentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
 };
 
 export default Days;

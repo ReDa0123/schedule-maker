@@ -1,6 +1,6 @@
 import { Form } from 'src/shared/react-hook-form/organisms';
 import { FieldArrayContext } from '../contexts';
-import { Flex, Heading, ContentBox } from 'src/shared/design-system';
+import { Flex, Heading, ContentBox, Button } from 'src/shared/design-system';
 import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
 import { ScheduleDays } from './';
 import { BlockForm, NotAssignedBlocks } from '../molecules';
@@ -11,9 +11,14 @@ import { LoadingModal } from 'src/shared/design-system/molecules';
 import { useCallback } from 'react';
 import { assoc } from 'ramda';
 import uuid from 'react-uuid';
+import { RouterLink } from '../../../shared/navigation';
+import { route } from '../../../Routes';
 
 const ScheduleFormContent = () => {
   const { append } = useFieldArrayProps();
+  const {
+    tournament: { tournamentId },
+  } = useTournamentSchedule();
 
   const onBlockFormSubmit = useCallback(
     (data) => {
@@ -24,7 +29,19 @@ const ScheduleFormContent = () => {
 
   return (
     <Flex gap={4} flexDir="column" w="100%">
-      <ContentBox>
+      <ContentBox position="relative">
+        <RouterLink
+          to={route.tournamentCreator({ id: tournamentId })}
+          color="white"
+          _hover={{
+            textDecoration: 'none',
+          }}
+          position="absolute"
+          right="0"
+          top="16px"
+        >
+          <Button>Edit tournament</Button>
+        </RouterLink>
         <BlockForm onSubmit={onBlockFormSubmit} />
         <Heading fontSize={24}>Not assigned blocks</Heading>
       </ContentBox>
