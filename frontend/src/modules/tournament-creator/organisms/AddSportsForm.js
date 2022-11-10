@@ -3,16 +3,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import Combobox from 'src/shared/react-hook-form/molecules/Combobox';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
-
-const mockSports = [
-  { value: 1, label: 'Tennis' },
-  { value: 2, label: 'Long jump' },
-  { value: 3, label: 'Swimming' },
-];
-
-const defaultValues = {
-  sports: [],
-};
+import PropTypes from 'prop-types';
 
 const validationSchema = yup.object().shape({
   sports: yup
@@ -29,18 +20,26 @@ const validationSchema = yup.object().shape({
     }),
 });
 
-const AddSportsForm = () => {
+const AddSportsForm = ({ onSubmit, sports, defaultValues }) => {
   return (
     <Form
-      onSubmit={(data) => alert(JSON.stringify(data))}
-      defaultValues={defaultValues}
+      onSubmit={onSubmit}
+      defaultValues={{
+        sports: defaultValues?.sports || [],
+      }}
       resolver={yupResolver(validationSchema)}
       mode="onChange"
     >
-      <Combobox name={'sports'} options={mockSports} label={'Select sport'} />
+      <Combobox name={'sports'} options={sports} label={'Select sport'} />
       <FormSubmitButton title={'Add'} showAlert />
     </Form>
   );
+};
+
+AddSportsForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  sports: PropTypes.array.isRequired,
+  defaultValues: PropTypes.object,
 };
 
 export default AddSportsForm;

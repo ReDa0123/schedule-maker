@@ -43,6 +43,7 @@ export {
   Select,
   SimpleGrid,
   Spacer,
+  Spinner,
   Stack,
   StackDivider,
   Square,

@@ -4,16 +4,7 @@ import { Stack } from 'src/shared/design-system';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 import * as yup from 'yup';
 import Combobox from 'src/shared/react-hook-form/molecules/Combobox';
-
-const defaultValues = {
-  areas: [],
-};
-
-const mockAreaTypes = [
-  { value: 1, label: 'Swimming pool' },
-  { value: 2, label: 'Jump track' },
-  { value: 3, label: 'Hall' },
-];
+import PropTypes from 'prop-types';
 
 const areaValidationSchema = yup.object().shape({
   areas: yup
@@ -30,24 +21,26 @@ const areaValidationSchema = yup.object().shape({
     }),
 });
 
-const AddAreaForm = () => {
+const AddAreasForm = ({ areas, defaultValues, onSubmit }) => {
   return (
     <Form
-      onSubmit={(data) => alert(JSON.stringify(data))}
+      onSubmit={onSubmit}
       resolver={yupResolver(areaValidationSchema)}
-      defaultValues={defaultValues}
+      defaultValues={{ areas: defaultValues?.areas || [] }}
       mode="onBlur"
     >
       <Stack direction={'row'}>
-        <Combobox
-          name={'areas'}
-          options={mockAreaTypes}
-          label={'Select area type'}
-        />
+        <Combobox name={'areas'} options={areas} label={'Select area type'} />
       </Stack>
       <FormSubmitButton title={'Add'} showAlert />
     </Form>
   );
 };
 
-export default AddAreaForm;
+AddAreasForm.propTypes = {
+  areas: PropTypes.array.isRequired,
+  defaultValues: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default AddAreasForm;
