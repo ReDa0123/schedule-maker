@@ -6,10 +6,12 @@ import { convertValuesForSending, CREATE_TOURNAMENT_MUTATION } from '../utils';
 import { useMutation } from '@apollo/client';
 import { useToast } from '@chakra-ui/react';
 import { useAuth } from '../../auth';
+import { useNavigate } from 'react-router-dom';
 
 const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
   const auth = useAuth();
   const toast = useToast();
+  const navigate = useNavigate();
 
   const [createTournament] = useMutation(CREATE_TOURNAMENT_MUTATION, {
     onCompleted: ({ createTournament: successMessage }) => {
@@ -36,9 +38,12 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
     async (values) => {
       const newTournament = convertValuesForSending(values);
       newTournament.userId = auth.user.userId;
-      console.log(newTournament);
-      await createTournament({ newTournament });
+      const newTournamentObject = await createTournament({
+        variables: newTournament,
+      });
+      const newTournamentId = newTournamentObject.data.createTournament;
       onClose();
+      navigate(`/tournament-creator/${newTournamentId}`);
     },
     [onClose]
   );
@@ -60,7 +65,6 @@ CreateNewTournamentModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default CreateNewTournamentModal;

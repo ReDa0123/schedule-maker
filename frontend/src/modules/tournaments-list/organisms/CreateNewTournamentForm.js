@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 const defaultValues = {
   tournamentName: '',
   tournamentLocation: '',
+  startDate: '',
+  endDate: '',
 };
 
 const validationSchema = yup.object().shape({

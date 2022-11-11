@@ -53,5 +53,10 @@ export const createTournament = async (
     [name, location, startDate, endDate, userId]
   );
 
-  return 'Tournament created successfully';
+  const newTournamentId = await dbConnection.query(
+    `SELECT MAX(tournamentId) from tournament t where t.userId = ?;`,
+    [userId]
+  );
+
+  return Object.values(newTournamentId[0])[0];
 };
