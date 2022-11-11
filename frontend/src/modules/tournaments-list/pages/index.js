@@ -1,3 +1,3 @@
-import TournamentsListPage from './TournamentsListPage,js';
+import TournamentsListPage from './TournamentsListPage';
 
 export { TournamentsListPage };

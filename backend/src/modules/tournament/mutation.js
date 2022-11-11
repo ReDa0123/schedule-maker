@@ -41,3 +41,17 @@ export const deleteTournament = async (
 
   return 'Tournament deleted';
 };
+
+export const createTournament = async (
+  _,
+  { name, location, startDate, endDate, userId },
+  { dbConnection, auth }
+) => {
+  //TODO: VALIDATE
+  await dbConnection.query(
+    `INSERT INTO tournament (name, location, startDate, endDate, userId) VALUES (?, ?, ?, ?, ?);`,
+    [name, location, startDate, endDate, userId]
+  );
+
+  return 'Tournament created successfully';
+};
