@@ -16,10 +16,10 @@ const WithTooltip = ({
       <Tooltip placement="bottom" hasArrow label={label} {...tooltipProps}>
         {icon ? (
           <Square>
-            <Icon as={icon} />
+            <Icon as={icon} color="blue.500" />
           </Square>
         ) : (
-          <QuestionIcon />
+          <QuestionIcon color="blue.500" />
         )}
       </Tooltip>
     </Flex>
