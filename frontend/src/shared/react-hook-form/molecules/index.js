@@ -4,6 +4,7 @@ import FormRadioGroup from './FormRadioGroup';
 import FormSelect from './FormSelect';
 import FormSubmitButton from './FormSubmitButton';
 import FormNumberInput from './FormNumberInput';
+import FormCombobox from './FormCombobox';
 
 export {
   FormCheckbox,
@@ -12,4 +13,5 @@ export {
   FormSelect,
   FormSubmitButton,
   FormNumberInput,
+  FormCombobox,
 };

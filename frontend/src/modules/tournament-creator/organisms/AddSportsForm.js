@@ -1,7 +1,7 @@
 import { Form } from 'src/shared/react-hook-form/organisms';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
-import Combobox from 'src/shared/react-hook-form/molecules/Combobox';
+import { FormCombobox } from 'src/shared/react-hook-form/molecules';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 import PropTypes from 'prop-types';
 
@@ -30,7 +30,7 @@ const AddSportsForm = ({ onSubmit, sports, defaultValues }) => {
       resolver={yupResolver(validationSchema)}
       mode="onChange"
     >
-      <Combobox name={'sports'} options={sports} label={'Select sport'} />
+      <FormCombobox name={'sports'} options={sports} label={'Select sport'} />
       <FormSubmitButton title={'Add'} showAlert />
     </Form>
   );

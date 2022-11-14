@@ -6,10 +6,9 @@ import {
   Grid,
   Select,
   Heading,
+  Combobox,
 } from 'src/shared/design-system';
-import { Autocomplete } from 'chakra-ui-simple-autocomplete';
 import { filterDefaultValues } from '../contexts/ScheduleDetailContext';
-import { renderComboboxBadge } from 'src/shared/utils';
 
 const BlockFilter = () => {
   const {
@@ -37,7 +36,7 @@ const BlockFilter = () => {
       >
         <GridItem maxW="250px">
           <FormLabel>Category</FormLabel>
-          <Autocomplete
+          <Combobox
             options={categoriesToFilter}
             result={blockFilter.category}
             setResult={(values) =>
@@ -46,7 +45,6 @@ const BlockFilter = () => {
             allowCreation={false}
             notFoundText="Category not found"
             placeholder="Type a category to filter"
-            renderBadge={renderComboboxBadge}
           />
         </GridItem>
         <GridItem maxW="250px">
@@ -65,7 +63,7 @@ const BlockFilter = () => {
         </GridItem>
         <GridItem maxW="250px">
           <FormLabel>Sport</FormLabel>
-          <Autocomplete
+          <Combobox
             options={sportsToFilter}
             result={blockFilter.sportId}
             setResult={(values) =>
@@ -74,24 +72,22 @@ const BlockFilter = () => {
             placeholder="Type a sport to filter"
             allowCreation={false}
             notFoundText="Sport not found"
-            renderBadge={renderComboboxBadge}
           />
         </GridItem>
         <GridItem maxW="250px">
           <FormLabel>Age</FormLabel>
-          <Autocomplete
+          <Combobox
             options={agesToFilter}
             result={blockFilter.age}
             setResult={(values) => setFilter({ ...blockFilter, age: values })}
             placeholder="Type an age to filter"
             allowCreation={false}
             notFoundText="Age not found"
-            renderBadge={renderComboboxBadge}
           />
         </GridItem>
         <GridItem maxW="250px">
           <FormLabel>Parameter</FormLabel>
-          <Autocomplete
+          <Combobox
             options={customParamsToFilter}
             result={blockFilter.customParameter}
             setResult={(values) =>
@@ -100,7 +96,6 @@ const BlockFilter = () => {
             placeholder="Type a parameter to filter"
             allowCreation={false}
             notFoundText="Parameter not found"
-            renderBadge={renderComboboxBadge}
           />
         </GridItem>
         <Button

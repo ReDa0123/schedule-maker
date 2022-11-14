@@ -64,3 +64,4 @@ export { Tab } from './Tab';
 export { ContentBox } from './ContentBox';
 export { BigSpinner } from './BigSpinner';
 export { ErrorText } from './ErrorText';
+export { Combobox } from './Combobox';

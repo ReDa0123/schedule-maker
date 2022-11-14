@@ -1,4 +1,4 @@
-import { Flex, Icon, Square, Tooltip } from '../atoms';
+import { Flex, Icon, Square, Tooltip } from '@chakra-ui/react';
 import { QuestionIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 

@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import { Stack } from 'src/shared/design-system';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 import * as yup from 'yup';
-import Combobox from 'src/shared/react-hook-form/molecules/Combobox';
+import { FormCombobox } from 'src/shared/react-hook-form/molecules';
 import PropTypes from 'prop-types';
 
 const areaValidationSchema = yup.object().shape({
@@ -30,7 +30,11 @@ const AddAreasForm = ({ areas, defaultValues, onSubmit }) => {
       mode="onBlur"
     >
       <Stack direction={'row'}>
-        <Combobox name={'areas'} options={areas} label={'Select area type'} />
+        <FormCombobox
+          name={'areas'}
+          options={areas}
+          label={'Select area type'}
+        />
       </Stack>
       <FormSubmitButton title={'Add'} showAlert />
     </Form>
