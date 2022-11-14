@@ -6,9 +6,7 @@ export const typeDef = /* GraphQL */ `
   }
 
   type Mutation {
-    createSport(name: String!): Sport!
-    editSport(sportId: Int!, name: String!): Sport!
-    deleteSport(sportId: Int!): Sport!
+    saveSports(sports: [String!]!, tournamentId: Int!): String!
   }
 
   type Sport {
