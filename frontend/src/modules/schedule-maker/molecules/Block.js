@@ -80,17 +80,11 @@ const Block = ({ value, onChange, index, ...props }) => {
         <TimeTag time={calculateDuration(value)} />
         <PersonsTag numberOfPersons={value.persons} sex={value.sex} />
       </Flex>
-      <Box
-        color="blue.500"
-        fontWeight="500"
-        overflow="hidden"
-        textOverflow="ellipsis"
-        whiteSpace="nowrap"
-      >
-        <Box>
+      <Box color="blue.500" fontWeight="500">
+        <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
           {sportsName} - {value.age}
         </Box>
-        <Box>
+        <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
           {value.category}
           {value.customParameter ? ` - ${value.customParameter}` : ''}
         </Box>

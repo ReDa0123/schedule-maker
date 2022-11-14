@@ -56,7 +56,7 @@ const AddDayModal = ({ onClose, isOpen, onOpen }) => {
       onOpen={() => {
         onOpen();
       }}
-      title="Add Day"
+      headerText="Add Day"
       modalBody={<DayForm onSubmit={onSubmit} />}
       modalProps={{ size: '3xl' }}
     />

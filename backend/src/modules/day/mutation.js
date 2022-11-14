@@ -1,4 +1,5 @@
 import { validateDay } from './validations';
+import { resetBlocks } from '../block/helper';
 
 export const createDay = async (
   _,
@@ -60,6 +61,8 @@ export const deleteDay = async (_, { dayId }, { dbConnection, auth }) => {
     tournamentId,
     day,
   });
+
+  await resetBlocks('dayId', dayId, dbConnection);
 
   await dbConnection.query(`DELETE FROM day WHERE dayId = ?;`, [dayId]);
 

@@ -23,7 +23,7 @@ const DeleteDayButton = forwardRef(({ dayId, deleteDay, ...props }, ref) => {
         confirmButtonText="Delete"
         cancelButtonText="Cancel"
         headerText="Delete Day"
-        bodyText="Are you sure you want to delete this day?"
+        bodyText="Are you sure you want to delete this day? All blocks assigned to this day will be unassigned."
         confirmButtonProps={{ colorScheme: 'red' }}
       />
     </>

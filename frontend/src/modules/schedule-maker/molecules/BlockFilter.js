@@ -7,6 +7,7 @@ import {
   Select,
   Heading,
   Combobox,
+  Text,
 } from 'src/shared/design-system';
 import { filterDefaultValues } from '../contexts/ScheduleDetailContext';
 
@@ -19,6 +20,7 @@ const BlockFilter = () => {
     sportsToFilter,
     agesToFilter,
     customParamsToFilter,
+    filteredBlocks,
   } = useScheduleDetail();
 
   return (
@@ -52,8 +54,11 @@ const BlockFilter = () => {
           <Select
             value={blockFilter.sex}
             onChange={(e) => setFilter({ ...blockFilter, sex: e.target.value })}
+            borderColor="blue.500"
+            borderWidth={2}
+            _hover={{ borderColor: 'blue.700' }}
           >
-            <option value="">All</option>
+            <option value="">Both</option>
             {sexesToFilter.map((sex) => (
               <option key={sex} value={sex}>
                 {sex}
@@ -106,6 +111,9 @@ const BlockFilter = () => {
           Reset filter
         </Button>
       </Grid>
+      {filteredBlocks.length === 0 && (
+        <Text mt={4}>(There are no blocks using this filter)</Text>
+      )}
     </>
   );
 };
