@@ -9,6 +9,7 @@ import {
 } from 'src/shared/design-system';
 import { Autocomplete } from 'chakra-ui-simple-autocomplete';
 import { filterDefaultValues } from '../contexts/ScheduleDetailContext';
+import { renderComboboxBadge } from 'src/shared/utils';
 
 const BlockFilter = () => {
   const {
@@ -45,6 +46,7 @@ const BlockFilter = () => {
             allowCreation={false}
             notFoundText="Category not found"
             placeholder="Type a category to filter"
+            renderBadge={renderComboboxBadge}
           />
         </GridItem>
         <GridItem maxW="250px">
@@ -72,6 +74,7 @@ const BlockFilter = () => {
             placeholder="Type a sport to filter"
             allowCreation={false}
             notFoundText="Sport not found"
+            renderBadge={renderComboboxBadge}
           />
         </GridItem>
         <GridItem maxW="250px">
@@ -83,6 +86,7 @@ const BlockFilter = () => {
             placeholder="Type an age to filter"
             allowCreation={false}
             notFoundText="Age not found"
+            renderBadge={renderComboboxBadge}
           />
         </GridItem>
         <GridItem maxW="250px">
@@ -96,6 +100,7 @@ const BlockFilter = () => {
             placeholder="Type a parameter to filter"
             allowCreation={false}
             notFoundText="Parameter not found"
+            renderBadge={renderComboboxBadge}
           />
         </GridItem>
         <Button

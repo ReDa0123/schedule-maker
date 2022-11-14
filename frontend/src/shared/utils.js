@@ -14,6 +14,10 @@ import {
   when,
 } from 'ramda';
 import { alwaysNull, isNilOrEmpty } from 'ramda-extension';
+import { Badge } from '@chakra-ui/react';
+import { CloseIcon } from '@chakra-ui/icons';
+import React from 'react';
+import { WithTooltip } from './design-system/molecules';
 
 export const propEqOrIsEmptyOrNil = (propName, equalValue) => (value) => {
   if (isNilOrEmpty(equalValue)) {
@@ -66,3 +70,22 @@ export const convertValuesToLabelValueObj = (
     value: valueFn,
     label: labelFn,
   });
+
+export const renderComboboxBadge = (option) => (
+  <WithTooltip label="Remove">
+    <Badge
+      borderRadius="full"
+      px="2"
+      bg="blue.500"
+      color="white"
+      mx={1}
+      cursor="pointer"
+      _hover={{
+        bg: 'blue.600',
+      }}
+    >
+      {option.label}
+      <CloseIcon ml={1} w={2} h={2} mb="4px" />
+    </Badge>
+  </WithTooltip>
+);

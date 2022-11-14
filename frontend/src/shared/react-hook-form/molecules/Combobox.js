@@ -8,8 +8,8 @@ import {
 import PropTypes from 'prop-types';
 import { Autocomplete } from 'chakra-ui-simple-autocomplete';
 import { Controller } from 'react-hook-form';
-import { Badge, Box, Text } from '@chakra-ui/react';
-import { CheckCircleIcon, CloseIcon, SmallAddIcon } from '@chakra-ui/icons';
+import { Box, Text } from '@chakra-ui/react';
+import { CheckCircleIcon, SmallAddIcon } from '@chakra-ui/icons';
 import {
   compose,
   equals,
@@ -19,6 +19,7 @@ import {
   prop,
   sortBy,
 } from 'ramda';
+import { renderComboboxBadge } from '../../utils';
 
 const Combobox = ({
   name,
@@ -76,18 +77,7 @@ const Combobox = ({
               borderColor="blue.500"
               placeholder={placeholder}
               _hover={{ borderColor: 'blue.700' }}
-              renderBadge={(option) => (
-                <Badge
-                  borderRadius="full"
-                  px="2"
-                  colorScheme="teal"
-                  mx={1}
-                  cursor="pointer"
-                >
-                  {option.label}
-                  <CloseIcon ml={1} w={2} h={2} mb="4px" />
-                </Badge>
-              )}
+              renderBadge={renderComboboxBadge}
             />
           </Box>
           {error ? (
