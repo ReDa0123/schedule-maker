@@ -1,4 +1,5 @@
 import getUser from '../user/helper';
+import { newTournamentValidationSchema } from './validationSchemas';
 
 export const deleteTournament = async (
   _,
@@ -47,16 +48,22 @@ export const createTournament = async (
   { name, location, startDate, endDate, userId },
   { dbConnection, auth }
 ) => {
-  //TODO: VALIDATE
-  await dbConnection.query(
+  await newTournamentValidationSchema.validate({
+    name,
+    location,
+    startDate,
+    endDate,
+    userId,
+  });
+
+  if (getUser(auth) !== userId) {
+    throw new Error('You are not authorized to create a tournament');
+  }
+
+  const insertQuery = await dbConnection.query(
     `INSERT INTO tournament (name, location, startDate, endDate, userId) VALUES (?, ?, ?, ?, ?);`,
     [name, location, startDate, endDate, userId]
   );
 
-  const newTournamentId = await dbConnection.query(
-    `SELECT MAX(tournamentId) from tournament t where t.userId = ?;`,
-    [userId]
-  );
-
-  return Object.values(newTournamentId[0])[0];
+  return insertQuery.insertId;
 };

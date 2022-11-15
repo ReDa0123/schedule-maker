@@ -6,6 +6,7 @@ import { convertValuesForSending, CREATE_TOURNAMENT_MUTATION } from '../utils';
 import { useMutation } from '@apollo/client';
 import { useToast } from '@chakra-ui/react';
 import { useAuth } from '../../auth';
+import { route } from '../../../Routes';
 import { useNavigate } from 'react-router-dom';
 
 const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
@@ -14,14 +15,15 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
   const navigate = useNavigate();
 
   const [createTournament] = useMutation(CREATE_TOURNAMENT_MUTATION, {
-    onCompleted: ({ createTournament: successMessage }) => {
+    onCompleted: ({ createTournament: newTournamentId }) => {
       toast({
-        title: successMessage,
+        title: 'Tournament created successfulyl',
         status: 'success',
         duration: 5000,
         isClosable: true,
         position: 'top-right',
       });
+      navigate(route.tournamentCreator({ id: newTournamentId }));
     },
     onError: (e) => {
       toast({
@@ -38,14 +40,12 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
     async (values) => {
       const newTournament = convertValuesForSending(values);
       newTournament.userId = auth.user.userId;
-      const newTournamentObject = await createTournament({
+      await createTournament({
         variables: newTournament,
       });
-      const newTournamentId = newTournamentObject.data.createTournament;
       onClose();
-      navigate(`/tournament-creator/${newTournamentId}`);
     },
-    [onClose]
+    [onClose, auth.user.userId, createTournament]
   );
 
   return (
