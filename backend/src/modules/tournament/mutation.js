@@ -56,6 +56,9 @@ export const createTournament = async (
   });
 
   const userId = Number(getUser(auth));
+  if (!userId) {
+    throw new Error('You are not logged in!');
+  }
 
   const selectQuery = await dbConnection.query(
     `SELECT userId FROM user WHERE userId = ?;`,
