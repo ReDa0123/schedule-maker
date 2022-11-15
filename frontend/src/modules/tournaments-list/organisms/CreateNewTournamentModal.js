@@ -1,16 +1,22 @@
-import { Modal } from '../../../shared/design-system/organisms';
+import { Modal } from 'src/shared/design-system/organisms';
 import CreateNewTournamentForm from './CreateNewTournamentForm';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { convertValuesForSending, CREATE_TOURNAMENT_MUTATION } from '../utils';
 import { useMutation } from '@apollo/client';
 import { useToast } from '@chakra-ui/react';
-import { route } from '../../../Routes';
-import { useNavigate } from 'react-router-dom';
+import { route } from 'src/Routes';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
   const toast = useToast();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    searchParams.get('create') === 'true' && onOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [createTournament] = useMutation(CREATE_TOURNAMENT_MUTATION, {
     onCompleted: ({ createTournament: newTournamentId }) => {
@@ -36,13 +42,12 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
 
   const onSubmit = useCallback(
     async (values) => {
-      const newTournament = convertValuesForSending(values);
+      const variables = convertValuesForSending(values);
       await createTournament({
-        variables: newTournament,
+        variables,
       });
-      onClose();
     },
-    [onClose, createTournament]
+    [createTournament]
   );
 
   return (
@@ -54,6 +59,7 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
       }}
       title="Create new tournament"
       modalBody={<CreateNewTournamentForm onSubmit={onSubmit} />}
+      headerText="Create new tournament"
     />
   );
 };
