@@ -10,7 +10,6 @@ export const typeDef = /* GraphQL */ `
       location: String!
       startDate: String!
       endDate: String!
-      userId: Int!
     ): Int!
     editTournament(
       tournamentId: Int!

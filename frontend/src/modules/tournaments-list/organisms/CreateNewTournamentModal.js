@@ -5,19 +5,17 @@ import { useCallback } from 'react';
 import { convertValuesForSending, CREATE_TOURNAMENT_MUTATION } from '../utils';
 import { useMutation } from '@apollo/client';
 import { useToast } from '@chakra-ui/react';
-import { useAuth } from '../../auth';
 import { route } from '../../../Routes';
 import { useNavigate } from 'react-router-dom';
 
 const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
-  const auth = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
 
   const [createTournament] = useMutation(CREATE_TOURNAMENT_MUTATION, {
     onCompleted: ({ createTournament: newTournamentId }) => {
       toast({
-        title: 'Tournament created successfulyl',
+        title: 'Tournament created successfully',
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -39,13 +37,12 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
   const onSubmit = useCallback(
     async (values) => {
       const newTournament = convertValuesForSending(values);
-      newTournament.userId = auth.user.userId;
       await createTournament({
         variables: newTournament,
       });
       onClose();
     },
-    [onClose, auth.user.userId, createTournament]
+    [onClose, createTournament]
   );
 
   return (

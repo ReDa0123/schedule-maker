@@ -45,7 +45,7 @@ export const deleteTournament = async (
 
 export const createTournament = async (
   _,
-  { name, location, startDate, endDate, userId },
+  { name, location, startDate, endDate },
   { dbConnection, auth }
 ) => {
   await newTournamentValidationSchema.validate({
@@ -53,11 +53,17 @@ export const createTournament = async (
     location,
     startDate,
     endDate,
-    userId,
   });
 
-  if (getUser(auth) !== userId) {
-    throw new Error('You are not authorized to create a tournament');
+  const userId = Number(getUser(auth));
+
+  const selectQuery = await dbConnection.query(
+    `SELECT userId FROM user WHERE userId = ?;`,
+    [userId]
+  );
+
+  if (!selectQuery[0]) {
+    throw new Error('User does not exist in the database');
   }
 
   const insertQuery = await dbConnection.query(
@@ -65,5 +71,5 @@ export const createTournament = async (
     [name, location, startDate, endDate, userId]
   );
 
-  return insertQuery.insertId;
+  return Number(insertQuery.insertId);
 };

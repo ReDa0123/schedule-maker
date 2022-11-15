@@ -22,14 +22,12 @@ export const CREATE_TOURNAMENT_MUTATION = gql`
     $location: String!
     $startDate: String!
     $endDate: String!
-    $userId: Int!
   ) {
     createTournament(
       name: $name
       location: $location
       startDate: $startDate
       endDate: $endDate
-      userId: $userId
     )
   }
 `;
