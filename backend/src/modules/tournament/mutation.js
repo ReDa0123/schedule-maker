@@ -1,4 +1,5 @@
 import getUser from '../user/helper';
+import { newTournamentValidationSchema } from './validationSchemas';
 
 export const deleteTournament = async (
   _,
@@ -40,4 +41,38 @@ export const deleteTournament = async (
   ]);
 
   return 'Tournament deleted';
+};
+
+export const createTournament = async (
+  _,
+  { name, location, startDate, endDate },
+  { dbConnection, auth }
+) => {
+  await newTournamentValidationSchema.validate({
+    name,
+    location,
+    startDate,
+    endDate,
+  });
+
+  const userId = Number(getUser(auth));
+  if (!userId) {
+    throw new Error('You are not logged in!');
+  }
+
+  const selectQuery = await dbConnection.query(
+    `SELECT userId FROM user WHERE userId = ?;`,
+    [userId]
+  );
+
+  if (!selectQuery[0]) {
+    throw new Error('User does not exist in the database');
+  }
+
+  const insertQuery = await dbConnection.query(
+    `INSERT INTO tournament (name, location, startDate, endDate, userId) VALUES (?, ?, ?, ?, ?);`,
+    [name, location, startDate, endDate, userId]
+  );
+
+  return Number(insertQuery.insertId);
 };

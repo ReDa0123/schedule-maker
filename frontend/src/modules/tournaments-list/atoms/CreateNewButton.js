@@ -1,10 +1,19 @@
 import { Button } from 'src/shared/design-system';
-import { useNavigate } from 'react-router-dom';
+import CreateNewTournamentModal from '../organisms/CreateNewTournamentModal';
+import { useDisclosure } from '@chakra-ui/react';
 
 const CreateNewButton = () => {
-  const navigate = useNavigate();
+  //Modal control hook
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Button onClick={() => navigate('/tournament-creator')}>Create new</Button>
+    <>
+      <Button onClick={onOpen}>Create new</Button>
+      <CreateNewTournamentModal
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
+      />
+    </>
   );
 };
 
