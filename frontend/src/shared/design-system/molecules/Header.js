@@ -71,15 +71,6 @@ const Header = (props) => {
                 Tournaments
               </RouterLink>
             </MenuItem>
-            <MenuItem>
-              <RouterLink
-                to={route.tournamentsList(true)}
-                w={'100%'}
-                h={'100%'}
-              >
-                Create Tournament
-              </RouterLink>
-            </MenuItem>
             {!auth.user ? (
               <>
                 <MenuItem>
@@ -94,14 +85,25 @@ const Header = (props) => {
                 </MenuItem>
               </>
             ) : (
-              <MenuItem
-                onClick={handleSignout}
-                w={'100%'}
-                h={'100%'}
-                color={'blue.600'}
-              >
-                Sign Out
-              </MenuItem>
+              <>
+                <MenuItem>
+                  <RouterLink
+                    to={route.tournamentsList(true)}
+                    w={'100%'}
+                    h={'100%'}
+                  >
+                    Create Tournament
+                  </RouterLink>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleSignout}
+                  w={'100%'}
+                  h={'100%'}
+                  color={'blue.600'}
+                >
+                  Sign Out
+                </MenuItem>
+              </>
             )}
           </MenuList>
         </Menu>
@@ -127,11 +129,13 @@ const Header = (props) => {
           </RouterLink>
         </Center>
 
-        <Center marginX={'15px'}>
-          <RouterLink to={route.tournamentsList(true)} color="white">
-            Create Tournament
-          </RouterLink>
-        </Center>
+        {auth.user && (
+          <Center marginX={'15px'}>
+            <RouterLink to={route.tournamentsList(true)} color="white">
+              Create Tournament
+            </RouterLink>
+          </Center>
+        )}
 
         <Spacer />
 

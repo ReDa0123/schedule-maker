@@ -28,6 +28,7 @@ const Block = ({ value, onChange, index, ...props }) => {
     () => sports.find(propEq('sportId', value.sportId))?.name,
     [sports, value]
   );
+  const blockDuration = calculateDuration(value);
 
   return (
     <Box
@@ -77,17 +78,21 @@ const Block = ({ value, onChange, index, ...props }) => {
         </>
       )}
       <Flex gap={2}>
-        <TimeTag time={calculateDuration(value)} />
+        <TimeTag time={blockDuration} />
         <PersonsTag numberOfPersons={value.persons} sex={value.sex} />
       </Flex>
       <Box color="blue.500" fontWeight="500">
         <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
           {sportsName} - {value.age}
         </Box>
-        <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-          {value.category}
-          {value.customParameter ? ` - ${value.customParameter}` : ''}
-        </Box>
+        {blockDuration >= 15 && (
+          <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
+            {value.category}
+            {value.customParameter
+              ? `${value.category ? ' - ' : ''}${value.customParameter}`
+              : ''}
+          </Box>
+        )}
       </Box>
     </Box>
   );
