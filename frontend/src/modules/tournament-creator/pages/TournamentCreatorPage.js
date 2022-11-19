@@ -1,6 +1,6 @@
 import { TournamentCreatorTemplate } from '../templates/TournamentCreatorTemplate';
 import { gql, useQuery } from '@apollo/client';
-import { ErrorText, Spinner } from '../../../shared/design-system';
+import { ErrorText, BigSpinner } from 'src/shared/design-system';
 
 const GET_TOURNAMENT_DETAILS = gql`
   query Tournament($tournamentId: Int!) {
@@ -25,9 +25,9 @@ export function TournamentCreatorPage() {
   return error ? (
     <ErrorText text={error.message} />
   ) : loading ? (
-    <Spinner />
+    <BigSpinner />
   ) : (
-    <TournamentCreatorTemplate data={data} />
+    <TournamentCreatorTemplate tournament={data.tournament} />
   );
 }
 

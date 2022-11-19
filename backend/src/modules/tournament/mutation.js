@@ -61,18 +61,18 @@ export const createTournament = async (_, value, { dbConnection, auth }) => {
   return Number(insertQuery.insertId);
 };
 
-
 export const editTournament = async (
   _,
-  { name, location, startDate, endDate, userId, tournamentId },
+  { name, location, startDate, endDate, tournamentId },
   { dbConnection, auth }
 ) => {
-  const value = { name, location, startDate, endDate, userId };
-  const realuserId = Number(getUser(auth));
+  const value = { name, location, startDate, endDate };
+  const userId = Number(getUser(auth));
 
   await validateTournament({
     value,
-    realuserId,
+    userId,
+    tournamentId,
     dbConnection,
   });
 

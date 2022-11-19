@@ -4,135 +4,48 @@ import {
   FormInput,
   FormSubmitButton,
 } from 'src/shared/react-hook-form/molecules';
-import { useToast } from '@chakra-ui/react';
 import * as yup from 'yup';
-import { format } from 'date-fns';
-import { convertToDate } from '../../../shared/utils';
-import { gql, useMutation } from '@apollo/client';
-import { useCallback } from 'react';
-
-let defaultValues = {
-  name: 'Some name',
-  location: '',
-  startDate: '',
-  endDate: '',
-};
+import PropTypes from 'prop-types';
 
 const validationSchema = yup.object().shape({
-  name: yup.string().required('Please enter tournament name'),
-  location: yup.string().required('Please enter location'),
+  name: yup
+    .string()
+    .required('Please enter tournament name')
+    .max(50, 'Tournament name must be less than 50 characters'),
+  location: yup
+    .string()
+    .required('Please enter tournament location')
+    .max(50, 'Tournament name must be less than 20 characters'),
   startDate: yup
     .date()
-    .required('Please enter start time')
+    .required('Please enter tournament start date')
     .test({
-      name: 'startDate-after-endDDate',
+      name: 'startDate-before-endDate',
       message: 'Start date must be before end date',
       test: (value, ctx) =>
         isNaN(ctx.parent.endDate) ? true : value <= ctx.parent.endDate,
     }),
   endDate: yup
     .date()
-    .required('Please enter end time')
+    .required('Please enter tournament end date')
     .test({
-      name: 'endDate-before-startDate',
+      name: 'endDate-after-startDate',
       message: 'End date must be after start date',
       test: (value, ctx) =>
         isNaN(ctx.parent.startDate) ? true : value >= ctx.parent.startDate,
     }),
 });
 
-const EDIT_TOURNAMENT_MUTATION = gql`
-  mutation editTournament(
-    $tournamentId: Int!
-    $name: String!
-    $location: String!
-    $startDate: String!
-    $endDate: String!
-    $userId: Int!
-  ) {
-    editTournament(
-      tournamentId: $tournamentId
-      name: $name
-      location: $location
-      startDate: $startDate
-      endDate: $endDate
-      userId: $userId
-    )
-  }
-`;
-
-const BasicTournamentForm = ({ data }) => {
-  //alert(data.tournament.startDate);
-  defaultValues.endDate = format(
-    convertToDate(Number(data.tournament.endDate)),
-    'yyyy-MM-dd'
-  );
-  defaultValues.startDate = format(
-    convertToDate(Number(data.tournament.startDate)),
-    'yyyy-MM-dd'
-  );
-  defaultValues.name = data.tournament.name;
-  defaultValues.location = data.tournament.location;
-  let tournamentToEdit = data.tournament;
-  //const converted = new Date(defaultValues.startDate).getTime()
-  //alert(converted);
-  //alert(format(
-  //  convertToDate(Number(converted)),
-  //  'yyyy-MM-dd'
-  //))
-
-  const toast = useToast();
-  const [editTournament] = useMutation(EDIT_TOURNAMENT_MUTATION, {
-    onCompleted: ({ createTournament: successMessage }) => {
-      toast({
-        title: successMessage,
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    },
-    onError: (e) => {
-      toast({
-        title: e.message,
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
-      });
-    },
-  });
-
-  const onSubmit = useCallback(
-    async (values) => {
-      alert(JSON.stringify(values));
-      let variables = {
-        name: String(values.name),
-        location: String(values.location),
-        startDate: format(
-          convertToDate(Number(values.startDate)),
-          'yyyy-MM-dd'
-        ).toString(),
-        //endDate: new Date(values.endDate).getTime().toString(),
-        endDate: format(
-          convertToDate(Number(values.endDate)),
-          'yyyy-MM-dd'
-        ).toString(),
-        tournamentId: Number(tournamentToEdit.tournamentId),
-        userId: Number(tournamentToEdit.userId),
-      };
-
-      alert(JSON.stringify(variables));
-
-      const returnmessage = await editTournament({ variables });
-      alert(returnmessage);
-    },
-    [editTournament]
-  );
+const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
   return (
     <Form
       onSubmit={onSubmit}
-      defaultValues={defaultValues}
+      defaultValues={{
+        name: defaultValues?.name || '',
+        location: defaultValues?.location || '',
+        startDate: defaultValues?.startDate || '',
+        endDate: defaultValues?.endDate || '',
+      }}
       resolver={yupResolver(validationSchema)}
       mode="onChange"
     >
@@ -143,6 +56,11 @@ const BasicTournamentForm = ({ data }) => {
       <FormSubmitButton title={'Save'} showAlert />
     </Form>
   );
+};
+
+BasicTournamentForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  defaultValues: PropTypes.object,
 };
 
 export default BasicTournamentForm;
