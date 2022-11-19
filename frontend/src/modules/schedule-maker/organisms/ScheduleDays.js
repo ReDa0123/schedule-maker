@@ -5,11 +5,18 @@ import { Heading, Tabs, TabList, Text, Link } from 'src/shared/design-system';
 import { WithTooltip } from 'src/shared/design-system/molecules';
 import { isNilOrEmpty } from 'ramda-extension';
 import { AddDay, DayTabContent } from '../molecules';
+import { useNavigate } from 'react-router-dom';
+import { route } from '../../../Routes';
 
 const ScheduleDays = () => {
-  const { days, detailMode } = useTournamentSchedule();
+  const {
+    days,
+    detailMode,
+    tournament: { tournamentId },
+  } = useTournamentSchedule();
   const [activeIndex, setActiveIndex] = useState(0);
   const selectedDay = useMemo(() => days[activeIndex], [days, activeIndex]);
+  const navigate = useNavigate();
 
   return !isNilOrEmpty(days) ? (
     <>
@@ -55,7 +62,15 @@ const ScheduleDays = () => {
       This tournament has no days yet.
       {!detailMode && (
         <Text>
-          You can add one <Link onClick={() => {}}>here</Link>.
+          You can add one{' '}
+          <Link
+            onClick={() => {
+              navigate(route.tournamentCreator({ id: tournamentId }));
+            }}
+          >
+            here
+          </Link>
+          .
         </Text>
       )}
     </>
