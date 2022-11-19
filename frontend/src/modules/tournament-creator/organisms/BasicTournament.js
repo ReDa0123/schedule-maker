@@ -1,4 +1,4 @@
-import { useToast } from '@chakra-ui/react';
+import { Heading, useToast } from '@chakra-ui/react';
 import { gql, useMutation } from '@apollo/client';
 import { useCallback, useMemo } from 'react';
 import { convertValuesForSending } from '../../tournaments-list/utils';
@@ -75,7 +75,12 @@ const BasicTournament = ({ tournament }) => {
   );
 
   return (
-    <BasicTournamentForm onSubmit={onSubmit} defaultValues={defaultValues} />
+    <>
+      <Heading as="h3" size="md" marginY={4}>
+        Tournament info
+      </Heading>
+      <BasicTournamentForm onSubmit={onSubmit} defaultValues={defaultValues} />
+    </>
   );
 };
 

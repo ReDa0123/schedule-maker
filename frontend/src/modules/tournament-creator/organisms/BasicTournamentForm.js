@@ -6,6 +6,7 @@ import {
 } from 'src/shared/react-hook-form/molecules';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
+import { Grid } from '@chakra-ui/react';
 
 const validationSchema = yup.object().shape({
   name: yup
@@ -49,11 +50,19 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
       resolver={yupResolver(validationSchema)}
       mode="onChange"
     >
-      <FormInput name={'name'} label={'Tournament name'} />
-      <FormInput name={'location'} label={'Location'} />
-      <FormInput name={'startDate'} label={'Start date'} type={'date'} />
-      <FormInput name={'endDate'} label={'End date'} type={'date'} />
-      <FormSubmitButton title={'Save'} showAlert />
+      <Grid
+        templateColumns={{
+          base: '1fr',
+          sm: '250px 250px',
+        }}
+        gap={4}
+      >
+        <FormInput name={'name'} label={'Tournament name'} />
+        <FormInput name={'location'} label={'Location'} />
+        <FormInput name={'startDate'} label={'Start date'} type={'date'} />
+        <FormInput name={'endDate'} label={'End date'} type={'date'} />
+        <FormSubmitButton title={'Save'} showAlert />
+      </Grid>
     </Form>
   );
 };

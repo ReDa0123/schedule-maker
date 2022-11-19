@@ -1,12 +1,11 @@
 import { FormInput } from 'src/shared/react-hook-form/molecules';
-import { Button, Stack } from 'src/shared/design-system';
+import { Button, Grid } from 'src/shared/design-system';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 import { useSubmitButton } from 'src/shared/react-hook-form/hooks';
-import { Box, Flex } from 'src/shared/design-system';
 
 const validationSchema = yup.object().shape({
   date: yup
@@ -71,9 +70,21 @@ const DayForm = ({ onSubmit, defaultValues }) => {
   });
 
   return (
-    <Box>
-      <Stack direction={{ base: 'column', md: 'row' }} marginY={4}>
+    <>
+      <Grid
+        templateColumns={{
+          base: '1fr',
+          md: '250px 250px',
+        }}
+        gap={4}
+      >
         <FormInput name={'date'} label={'Date'} type="date" control={control} />
+        <FormInput
+          name={'description'}
+          label={'Description'}
+          type="text"
+          control={control}
+        />
         <FormInput
           name={'startTime'}
           label={'Start time'}
@@ -86,25 +97,17 @@ const DayForm = ({ onSubmit, defaultValues }) => {
           type="time"
           control={control}
         />
-      </Stack>
+      </Grid>
 
-      <FormInput
-        name={'description'}
-        label={'Description'}
-        type="text"
-        control={control}
-      />
-      <Flex justifyContent="center">
-        <Button
-          onClick={onClickButton}
-          marginBlock={4}
-          disabled={isSubmitting}
-          type="submit"
-        >
-          {defaultValues ? 'Edit' : 'Add'}
-        </Button>
-      </Flex>
-    </Box>
+      <Button
+        onClick={onClickButton}
+        marginBlock={4}
+        disabled={isSubmitting}
+        type="submit"
+      >
+        {defaultValues ? 'Edit' : 'Add'}
+      </Button>
+    </>
   );
 };
 
