@@ -88,5 +88,5 @@ export const saveSports = async (
       )
   );
 
-  return 'Sports created successfully';
+  return 'Sports saved successfully';
 };
