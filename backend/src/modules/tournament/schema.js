@@ -17,9 +17,7 @@ export const typeDef = /* GraphQL */ `
       location: String!
       startDate: String!
       endDate: String!
-      userId: Int!
-      sports: [String!]!
-    ): Tournament!
+    ): String!
     deleteTournament(tournamentId: Int!): String!
   }
 

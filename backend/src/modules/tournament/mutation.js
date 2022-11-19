@@ -60,3 +60,26 @@ export const createTournament = async (_, value, { dbConnection, auth }) => {
 
   return Number(insertQuery.insertId);
 };
+
+export const editTournament = async (
+  _,
+  { name, location, startDate, endDate, tournamentId },
+  { dbConnection, auth }
+) => {
+  const value = { name, location, startDate, endDate };
+  const userId = Number(getUser(auth));
+
+  await validateTournament({
+    value,
+    userId,
+    tournamentId,
+    dbConnection,
+  });
+
+  await dbConnection.query(
+    `UPDATE tournament SET name = ?, location = ?, startDate = ?, endDate = ?, userId = ? WHERE tournamentId = ?;`,
+    [name, location, startDate, endDate, userId, tournamentId]
+  );
+
+  return 'Tournament edited';
+};
