@@ -1,12 +1,12 @@
 import SubHeader from 'src/shared/design-system/molecules/SubHeader';
 import { ContentBox, Heading, Flex, Button } from 'src/shared/design-system';
-import { AddAreas, AddSports, BasicTournamentForm, Days } from '../organisms';
+import { AddAreas, AddSports, BasicTournament, Days } from '../organisms';
 import { RouterLink } from 'src/shared/navigation';
 import { DeleteTournamentButton } from '../molecules';
 import { route } from 'src/Routes';
 import PropTypes from 'prop-types';
 
-export function TournamentCreatorTemplate({ tournamentId }) {
+export function TournamentCreatorTemplate({ tournament }) {
   return (
     <>
       <SubHeader title="Create Tournament" path="/tournaments-list" />
@@ -17,22 +17,22 @@ export function TournamentCreatorTemplate({ tournamentId }) {
             <RouterLink
               color="white"
               _hover={{ textDecoration: 'none' }}
-              to={route.scheduleMakerEdit({ id: tournamentId })}
+              to={route.scheduleMakerEdit({ id: tournament.tournamentId })}
             >
               <Button>Edit Tournament Schedule</Button>
             </RouterLink>
-            <DeleteTournamentButton tournamentId={tournamentId} />
+            <DeleteTournamentButton tournamentId={tournament.tournamentId} />
           </Flex>
         </Flex>
-        <BasicTournamentForm />
-        <AddSports tournamentId={tournamentId} />
-        <AddAreas tournamentId={tournamentId} />
-        <Days tournamentId={tournamentId} />
+        <BasicTournament tournament={tournament} />
+        <AddSports tournamentId={tournament.tournamentId} />
+        <AddAreas tournamentId={tournament.tournamentId} />
+        <Days tournamentId={tournament.tournamentId} />
       </ContentBox>
     </>
   );
 }
 
 TournamentCreatorTemplate.propTypes = {
-  tournamentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  tournament: PropTypes.object,
 };

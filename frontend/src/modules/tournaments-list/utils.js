@@ -12,8 +12,8 @@ export const convertValuesForSending = applySpec({
     (time) => format(time, 'yyyy-MM-dd'),
     convertPropToDate('startDate')
   ),
-  name: prop('tournamentName'),
-  location: prop('tournamentLocation'),
+  name: prop('name'),
+  location: prop('location'),
 });
 
 export const CREATE_TOURNAMENT_MUTATION = gql`

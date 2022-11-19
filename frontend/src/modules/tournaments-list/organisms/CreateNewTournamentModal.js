@@ -1,5 +1,4 @@
 import { Modal } from 'src/shared/design-system/organisms';
-import CreateNewTournamentForm from './CreateNewTournamentForm';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { convertValuesForSending, CREATE_TOURNAMENT_MUTATION } from '../utils';
@@ -7,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { useToast } from '@chakra-ui/react';
 import { route } from 'src/Routes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { BasicTournamentForm } from '../../tournament-creator/organisms';
 
 const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
   const toast = useToast();
@@ -58,7 +58,7 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
         onOpen();
       }}
       title="Create new tournament"
-      modalBody={<CreateNewTournamentForm onSubmit={onSubmit} />}
+      modalBody={<BasicTournamentForm onSubmit={onSubmit} />}
       headerText="Create new tournament"
     />
   );
