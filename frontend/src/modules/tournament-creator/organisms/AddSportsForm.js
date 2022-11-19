@@ -11,8 +11,8 @@ const validationSchema = yup.object().shape({
     .min(1, 'Please enter at least one sport')
     .required('Please enter at least one sport')
     .test({
-      name: 'areas-unique',
-      message: 'Areas must be unique',
+      name: 'sports-unique',
+      message: 'Sports must be unique',
       test: (value) => {
         const set = new Set(value.map((item) => item.value));
         return set.size === value.length;
