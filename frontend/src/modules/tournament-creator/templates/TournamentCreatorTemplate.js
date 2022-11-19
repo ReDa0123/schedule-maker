@@ -25,8 +25,8 @@ export function TournamentCreatorTemplate({ tournament }) {
           </Flex>
         </Flex>
         <BasicTournament tournament={tournament} />
-        <AddSports />
-        <AddAreas />
+        <AddSports tournamentId={tournament.tournamentId} />
+        <AddAreas tournamentId={tournament.tournamentId} />
         <Days tournamentId={tournament.tournamentId} />
       </ContentBox>
     </>

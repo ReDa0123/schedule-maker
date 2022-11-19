@@ -1,7 +1,99 @@
 import { AddSportsForm } from './';
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { pluck, prop } from 'ramda';
+import { useCallback } from 'react';
+import { ErrorText, Spinner } from 'src/shared/design-system';
+import { useToast } from '@chakra-ui/react';
+import { convertValuesToLabelValueObj } from 'src/shared/utils';
+import PropTypes from 'prop-types';
 
-const AddSports = () => {
-  return <AddSportsForm onSubmit={(data) => console.log(data)} sports={[]} />;
+const GET_SPORTS = gql`
+  query Sports($tournamentId: Int!) {
+    sportsWithSportsOfTournament(tournamentId: $tournamentId) {
+      sports {
+        sportId
+        name
+      }
+      sportsOfTournament {
+        sportId
+        name
+      }
+    }
+  }
+`;
+
+const SAVE_SPORTS_MUTATION = gql`
+  mutation saveSports($sports: [String!]!, $tournamentId: Int!) {
+    saveSports(tournamentId: $tournamentId, sports: $sports)
+  }
+`;
+
+const AddSports = ({ tournamentId }) => {
+  const { data, loading, error } = useQuery(GET_SPORTS, {
+    variables: { tournamentId: Number(tournamentId) },
+  });
+
+  const defaultValues = {
+    sports: convertValuesToLabelValueObj(
+      prop('name'),
+      prop('name')
+    )(data?.sportsWithSportsOfTournament?.sportsOfTournament ?? []),
+  };
+
+  const querySports = convertValuesToLabelValueObj(
+    prop('name'),
+    prop('name')
+  )(data?.sportsWithSportsOfTournament?.sports ?? []);
+
+  const toast = useToast();
+  const [saveSports] = useMutation(SAVE_SPORTS_MUTATION, {
+    onCompleted: ({ saveSports: successMessage }) => {
+      toast({
+        title: successMessage,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    },
+    onError: ({ message }) => {
+      toast({
+        title: message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'top-right',
+      });
+    },
+  });
+
+  const onSubmit = useCallback(
+    async ({ sports }) => {
+      const variables = {
+        sports: pluck('value', sports),
+        tournamentId: Number(tournamentId),
+      };
+      await saveSports({ variables });
+    },
+    [saveSports, tournamentId]
+  );
+
+  return error ? (
+    <ErrorText text={error?.message} />
+  ) : loading ? (
+    <Spinner />
+  ) : (
+    <AddSportsForm
+      onSubmit={onSubmit}
+      sports={querySports}
+      defaultValues={defaultValues}
+    />
+  );
+};
+
+AddSports.propTypes = {
+  tournamentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
 };
 
 export default AddSports;

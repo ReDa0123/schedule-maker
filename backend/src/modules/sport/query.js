@@ -23,3 +23,21 @@ export const sportsOfTournament = async (
     `SELECT * FROM sport JOIN tournament_sport USING (sportId) WHERE tournamentId = ?`,
     [tournamentId]
   );
+
+export const sportsWithSportsOfTournament = async (
+  _,
+  { tournamentId },
+  { dbConnection }
+) => {
+  const allSports = await sports(undefined, undefined, { dbConnection });
+  const tournamentSports = await sportsOfTournament(
+    undefined,
+    { tournamentId },
+    { dbConnection }
+  );
+
+  return {
+    sports: allSports,
+    sportsOfTournament: tournamentSports,
+  };
+};

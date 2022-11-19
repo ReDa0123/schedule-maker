@@ -3,16 +3,22 @@ export const typeDef = /* GraphQL */ `
     sports: [Sport!]!
     sport(sportId: Int!): Sport
     sportsOfTournament(tournamentId: Int!): [Sport!]!
+    sportsWithSportsOfTournament(
+      tournamentId: Int!
+    ): SportsWithSportsOfTournament!
   }
 
   type Mutation {
-    createSport(name: String!): Sport!
-    editSport(sportId: Int!, name: String!): Sport!
-    deleteSport(sportId: Int!): Sport!
+    saveSports(sports: [String!]!, tournamentId: Int!): String!
   }
 
   type Sport {
     sportId: Int!
     name: String!
+  }
+
+  type SportsWithSportsOfTournament {
+    sports: [Sport!]!
+    sportsOfTournament: [Sport!]!
   }
 `;
