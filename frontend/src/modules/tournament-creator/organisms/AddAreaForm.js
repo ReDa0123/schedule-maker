@@ -36,7 +36,7 @@ const AddAreasForm = ({ areas, defaultValues, onSubmit }) => {
           label={'Select area type'}
         />
       </Stack>
-      <FormSubmitButton title={'Add'} showAlert />
+      <FormSubmitButton title={'Set'} showAlert mt={4} />
     </Form>
   );
 };

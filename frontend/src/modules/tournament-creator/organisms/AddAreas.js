@@ -4,8 +4,9 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { convertValuesToLabelValueObj } from '../../../shared/utils';
 import { pluck, prop } from 'ramda';
 import { useToast } from '@chakra-ui/react';
-import { ErrorText, Spinner } from '../../../shared/design-system';
+import { ErrorText, Heading, Spinner } from '../../../shared/design-system';
 import PropTypes from 'prop-types';
+import { namePropCapitalize } from '../utils';
 
 const GET_AREAS = gql`
   query Areas($tournamentId: Int!) {
@@ -36,13 +37,13 @@ const AddAreas = ({ tournamentId }) => {
   const defaultValues = {
     areas: convertValuesToLabelValueObj(
       prop('name'),
-      prop('name')
+      namePropCapitalize
     )(data?.areasWithAreasOfTournament?.areasOfTournament ?? []),
   };
 
   const queryAreas = convertValuesToLabelValueObj(
     prop('name'),
-    prop('name')
+    namePropCapitalize
   )(data?.areasWithAreasOfTournament?.areas ?? []);
 
   const toast = useToast();
@@ -83,11 +84,16 @@ const AddAreas = ({ tournamentId }) => {
   ) : loading ? (
     <Spinner />
   ) : (
-    <AddAreasForm
-      onSubmit={onSubmit}
-      areas={queryAreas}
-      defaultValues={defaultValues}
-    />
+    <>
+      <Heading as="h3" size="md" marginY={4}>
+        Areas of the tournament
+      </Heading>
+      <AddAreasForm
+        onSubmit={onSubmit}
+        areas={queryAreas}
+        defaultValues={defaultValues}
+      />
+    </>
   );
 };
 

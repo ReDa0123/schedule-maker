@@ -2,10 +2,11 @@ import { AddSportsForm } from './';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { pluck, prop } from 'ramda';
 import { useCallback } from 'react';
-import { ErrorText, Spinner } from 'src/shared/design-system';
+import { ErrorText, Spinner, Heading } from 'src/shared/design-system';
 import { useToast } from '@chakra-ui/react';
 import { convertValuesToLabelValueObj } from 'src/shared/utils';
 import PropTypes from 'prop-types';
+import { namePropCapitalize } from '../utils';
 
 const GET_SPORTS = gql`
   query Sports($tournamentId: Int!) {
@@ -36,13 +37,13 @@ const AddSports = ({ tournamentId }) => {
   const defaultValues = {
     sports: convertValuesToLabelValueObj(
       prop('name'),
-      prop('name')
+      namePropCapitalize
     )(data?.sportsWithSportsOfTournament?.sportsOfTournament ?? []),
   };
 
   const querySports = convertValuesToLabelValueObj(
     prop('name'),
-    prop('name')
+    namePropCapitalize
   )(data?.sportsWithSportsOfTournament?.sports ?? []);
 
   const toast = useToast();
@@ -83,11 +84,16 @@ const AddSports = ({ tournamentId }) => {
   ) : loading ? (
     <Spinner />
   ) : (
-    <AddSportsForm
-      onSubmit={onSubmit}
-      sports={querySports}
-      defaultValues={defaultValues}
-    />
+    <>
+      <Heading as="h3" size="md" marginY={4}>
+        Sports of the tournament
+      </Heading>
+      <AddSportsForm
+        onSubmit={onSubmit}
+        sports={querySports}
+        defaultValues={defaultValues}
+      />
+    </>
   );
 };
 

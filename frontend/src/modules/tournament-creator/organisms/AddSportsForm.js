@@ -31,7 +31,7 @@ const AddSportsForm = ({ onSubmit, sports, defaultValues }) => {
       mode="onChange"
     >
       <FormCombobox name={'sports'} options={sports} label={'Select sport'} />
-      <FormSubmitButton title={'Add'} showAlert />
+      <FormSubmitButton title={'Set'} showAlert mt={4} />
     </Form>
   );
 };

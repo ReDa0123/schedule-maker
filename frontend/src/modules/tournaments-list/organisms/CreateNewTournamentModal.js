@@ -60,6 +60,9 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
       title="Create new tournament"
       modalBody={<BasicTournamentForm onSubmit={onSubmit} />}
       headerText="Create new tournament"
+      modalProps={{
+        size: 'xl',
+      }}
     />
   );
 };
