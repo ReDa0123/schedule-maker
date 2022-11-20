@@ -4,9 +4,11 @@ import { pluck, prop } from 'ramda';
 import { useCallback } from 'react';
 import { ErrorText, Spinner, Heading } from 'src/shared/design-system';
 import { useToast } from '@chakra-ui/react';
-import { convertValuesToLabelValueObj } from 'src/shared/utils';
+import {
+  convertValuesToLabelValueObj,
+  namePropCapitalize,
+} from 'src/shared/utils';
 import PropTypes from 'prop-types';
-import { namePropCapitalize } from '../utils';
 
 const GET_SPORTS = gql`
   query Sports($tournamentId: Int!) {

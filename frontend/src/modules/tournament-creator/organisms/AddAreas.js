@@ -1,12 +1,14 @@
 import { AddAreasForm } from './index';
 import { useCallback } from 'react';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { convertValuesToLabelValueObj } from '../../../shared/utils';
+import {
+  convertValuesToLabelValueObj,
+  namePropCapitalize,
+} from 'src/shared/utils';
 import { pluck, prop } from 'ramda';
 import { useToast } from '@chakra-ui/react';
-import { ErrorText, Heading, Spinner } from '../../../shared/design-system';
+import { ErrorText, Heading, Spinner } from 'src/shared/design-system';
 import PropTypes from 'prop-types';
-import { namePropCapitalize } from '../utils';
 
 const GET_AREAS = gql`
   query Areas($tournamentId: Int!) {

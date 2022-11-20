@@ -3,13 +3,10 @@ import { Box } from 'src/shared/design-system';
 import { Timeslot } from '../organisms';
 import { useAreaColumn, useDetailBlocksInArea } from '../hooks';
 import { TABLE_TOP_PADDING } from '../constants';
+import { namePropCapitalize } from 'src/shared/utils';
 
-const AreaColumnDetail = ({
-  area: { areaId, name },
-  startTime,
-  endTime,
-  dayId,
-}) => {
+const AreaColumnDetail = ({ area, startTime, endTime, dayId }) => {
+  const { areaId } = area;
   const blocksInArea = useDetailBlocksInArea({
     dayId,
     areaId,
@@ -26,7 +23,7 @@ const AreaColumnDetail = ({
     >
       {blocksInArea}
       <Box h={`${TABLE_TOP_PADDING}px`} textAlign="center" fontWeight="500">
-        {name}
+        {namePropCapitalize(area)}
       </Box>
       <Box>
         {timeslots.map((timeslot) => (

@@ -10,6 +10,8 @@ import {
   o,
   pluck,
   prop,
+  replace,
+  toUpper,
   values,
   when,
 } from 'ramda';
@@ -66,3 +68,5 @@ export const convertValuesToLabelValueObj = (
     value: valueFn,
     label: labelFn,
   });
+
+export const namePropCapitalize = o(replace(/^./, toUpper), prop('name'));

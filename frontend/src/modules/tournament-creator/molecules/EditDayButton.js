@@ -100,7 +100,7 @@ const EditDayButton = forwardRef(
               }}
             />
           }
-          modalProps={{ size: '3xl' }}
+          modalProps={{ size: 'xl' }}
         />
       </>
     );
