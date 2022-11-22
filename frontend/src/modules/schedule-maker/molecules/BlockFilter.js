@@ -20,7 +20,8 @@ const BlockFilter = () => {
     sportsToFilter,
     agesToFilter,
     customParamsToFilter,
-    filteredBlocks,
+    shouldShowNotFoundMessage,
+    shouldShwNoBlocksMessage,
   } = useScheduleDetail();
 
   return (
@@ -40,13 +41,13 @@ const BlockFilter = () => {
           <FormLabel>Category</FormLabel>
           <Combobox
             options={categoriesToFilter}
-            result={blockFilter.category}
-            setResult={(values) =>
+            value={blockFilter.category}
+            onChange={(values) =>
               setFilter({ ...blockFilter, category: values })
             }
-            allowCreation={false}
             notFoundText="Category not found"
-            placeholder="Type a category to filter"
+            placeholder="Select category to filter"
+            isNotCreatable
           />
         </GridItem>
         <GridItem maxW="250px">
@@ -70,37 +71,37 @@ const BlockFilter = () => {
           <FormLabel>Sport</FormLabel>
           <Combobox
             options={sportsToFilter}
-            result={blockFilter.sportId}
-            setResult={(values) =>
+            value={blockFilter.sportId}
+            onChange={(values) =>
               setFilter({ ...blockFilter, sportId: values })
             }
-            placeholder="Type a sport to filter"
-            allowCreation={false}
+            placeholder="Select sport to filter"
             notFoundText="Sport not found"
+            isNotCreatable
           />
         </GridItem>
         <GridItem maxW="250px">
           <FormLabel>Age</FormLabel>
           <Combobox
             options={agesToFilter}
-            result={blockFilter.age}
-            setResult={(values) => setFilter({ ...blockFilter, age: values })}
-            placeholder="Type an age to filter"
-            allowCreation={false}
+            value={blockFilter.age}
+            onChange={(values) => setFilter({ ...blockFilter, age: values })}
+            placeholder="Select age to filter"
             notFoundText="Age not found"
+            isNotCreatable
           />
         </GridItem>
         <GridItem maxW="250px">
           <FormLabel>Parameter</FormLabel>
           <Combobox
             options={customParamsToFilter}
-            result={blockFilter.customParameter}
-            setResult={(values) =>
+            value={blockFilter.customParameter}
+            onChange={(values) =>
               setFilter({ ...blockFilter, customParameter: values })
             }
-            placeholder="Type a parameter to filter"
-            allowCreation={false}
+            placeholder="Select parameter to filter"
             notFoundText="Parameter not found"
+            isNotCreatable
           />
         </GridItem>
         <Button
@@ -111,8 +112,14 @@ const BlockFilter = () => {
           Reset filter
         </Button>
       </Grid>
-      {filteredBlocks.length === 0 && (
-        <Text mt={4}>(There are no blocks using this filter)</Text>
+      {shouldShwNoBlocksMessage ? (
+        <Text mt={4}>
+          (There are no blocks assigned to this tournament yet)
+        </Text>
+      ) : (
+        shouldShowNotFoundMessage && (
+          <Text mt={4}>(There are no blocks using this filter)</Text>
+        )
       )}
     </>
   );

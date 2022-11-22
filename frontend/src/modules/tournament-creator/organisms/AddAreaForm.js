@@ -33,7 +33,10 @@ const AddAreasForm = ({ areas, defaultValues, onSubmit }) => {
         <FormCombobox
           name={'areas'}
           options={areas}
-          label={'Select area type'}
+          label={'Select areas'}
+          placeholder={'Select areas'}
+          formControlProps={{ w: '516px', maxW: '100%' }}
+          showClearIndicator
         />
       </Stack>
       <FormSubmitButton title={'Set'} showAlert mt={4} />

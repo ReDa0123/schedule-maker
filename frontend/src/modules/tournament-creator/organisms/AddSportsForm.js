@@ -30,7 +30,14 @@ const AddSportsForm = ({ onSubmit, sports, defaultValues }) => {
       resolver={yupResolver(validationSchema)}
       mode="onChange"
     >
-      <FormCombobox name={'sports'} options={sports} label={'Select sport'} />
+      <FormCombobox
+        name={'sports'}
+        options={sports}
+        label={'Select sport'}
+        placeholder={'Select sport'}
+        formControlProps={{ w: '516px', maxW: '100%' }}
+        showClearIndicator
+      />
       <FormSubmitButton title={'Set'} showAlert mt={4} />
     </Form>
   );

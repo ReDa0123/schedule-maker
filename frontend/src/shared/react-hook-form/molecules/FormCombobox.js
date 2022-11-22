@@ -9,15 +9,6 @@ import {
 } from '../../design-system';
 import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
-import {
-  compose,
-  equals,
-  filter,
-  flatten,
-  groupWith,
-  prop,
-  sortBy,
-} from 'ramda';
 
 const FormCombobox = ({
   name,
@@ -30,6 +21,7 @@ const FormCombobox = ({
   formErrorMessageProps,
   placeholder,
   options,
+  ...props
 }) => {
   return (
     <Controller
@@ -49,17 +41,10 @@ const FormCombobox = ({
             <Combobox
               options={options}
               onBlur={onBlur}
-              result={value}
-              setResult={(values) => {
-                const valuesToChange = compose(
-                  flatten,
-                  filter((value) => value.length === 1),
-                  groupWith(equals),
-                  sortBy(prop('value'))
-                )(values);
-                onChange(valuesToChange);
-              }}
+              value={value}
               placeholder={placeholder}
+              onChange={onChange}
+              {...props}
             />
           </Box>
           {error ? (

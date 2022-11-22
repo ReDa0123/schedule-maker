@@ -20,7 +20,7 @@
     "@emotion/react": "11.9.3",
     "@emotion/styled": "11.9.3",
     "@hookform/resolvers": "^2.9.7",
-    "chakra-ui-simple-autocomplete": "^2.2.0",
+    "chakra-react-select": "^4.4.0",
     "date-fns": "2.29.2",
     "framer-motion": "^7.3.1",
     "graphql": "^15.8.0",

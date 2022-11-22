@@ -7,6 +7,7 @@ import { route } from 'src/Routes';
 import PropTypes from 'prop-types';
 
 export function TournamentCreatorTemplate({ tournament }) {
+  const { tournamentId } = tournament;
   return (
     <>
       <SubHeader title="Create Tournament" path="/tournaments-list" />
@@ -17,17 +18,17 @@ export function TournamentCreatorTemplate({ tournament }) {
             <RouterLink
               color="white"
               _hover={{ textDecoration: 'none' }}
-              to={route.scheduleMakerEdit({ id: tournament.tournamentId })}
+              to={route.scheduleMakerEdit({ id: tournamentId })}
             >
               <Button>Edit Tournament Schedule</Button>
             </RouterLink>
-            <DeleteTournamentButton tournamentId={tournament.tournamentId} />
+            <DeleteTournamentButton tournamentId={tournamentId} />
           </Flex>
         </Flex>
         <BasicTournament tournament={tournament} />
-        <AddSports tournamentId={tournament.tournamentId} />
-        <AddAreas tournamentId={tournament.tournamentId} />
-        <Days tournamentId={tournament.tournamentId} />
+        <AddSports tournamentId={tournamentId} />
+        <AddAreas tournamentId={tournamentId} />
+        <Days tournamentId={tournamentId} />
       </ContentBox>
     </>
   );

@@ -1,6 +1,6 @@
 import { createContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { allPass, values, o, prop, toPairs, map } from 'ramda';
+import { allPass, values, o, prop, toPairs, map, propSatisfies } from 'ramda';
 import { SEXES } from '../constants';
 import {
   convertValuesToLabelValueObj,
@@ -9,6 +9,7 @@ import {
 } from 'src/shared/utils';
 import { useTournamentSchedule } from '../hooks';
 import { propUniqAndConvertToLabelValueObj } from '../utils/blocks';
+import { isNotNil } from 'ramda-extension';
 
 const filterFns = {
   category: propIsContainedInValues,
@@ -31,8 +32,13 @@ export const scheduleDetailContext = createContext(null);
 const ScheduleDetailProvider = scheduleDetailContext.Provider;
 
 const ScheduleDetailContext = ({ children }) => {
-  const { blocks, sports } = useTournamentSchedule();
+  const { blocks: allBlocks, sports } = useTournamentSchedule();
   const [filter, setFilter] = useState(filterDefaultValues);
+
+  const blocks = useMemo(
+    () => allBlocks.filter(propSatisfies(isNotNil, 'startTime')),
+    [allBlocks]
+  );
 
   const categoriesToFilter = useMemo(
     () => propUniqAndConvertToLabelValueObj('category')(blocks),
@@ -80,6 +86,8 @@ const ScheduleDetailContext = ({ children }) => {
         sportsToFilter,
         agesToFilter,
         customParamsToFilter,
+        shouldShwNoBlocksMessage: blocks.length === 0,
+        shouldShowNotFoundMessage: filteredBlocks.length === 0,
       }}
     >
       {children}
