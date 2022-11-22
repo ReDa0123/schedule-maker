@@ -1,11 +1,11 @@
-import { useToast } from '@chakra-ui/react';
+import { useToast } from 'src/shared/design-system';
 import { useCallback, useMemo } from 'react';
 import { keys, length } from 'ramda';
 
 const toastId = 'validationError';
 
 export const useSubmitButton = ({ onClick, showAlert, errors, isValid }) => {
-  const toast = useToast();
+  const { toastFn, toast } = useToast();
 
   const errorsCount = useMemo(() => length(keys(errors)), [errors]);
   const errorsCountBiggestThanZero = useMemo(
@@ -16,17 +16,14 @@ export const useSubmitButton = ({ onClick, showAlert, errors, isValid }) => {
   const onClickButton = useCallback(() => {
     onClick && onClick();
     if (!isValid && showAlert && !toast.isActive(toastId)) {
-      toast({
+      toastFn({
         title: 'Validation error',
         id: toastId,
         description: 'The form has validation errors. Please fix them.',
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     }
-  }, [isValid, showAlert, toast, onClick]);
+  }, [isValid, showAlert, toast, toastFn, onClick]);
 
   return {
     errorsCount,

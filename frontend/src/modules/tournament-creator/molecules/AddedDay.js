@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-import { Box, Flex } from 'src/shared/design-system';
+import { Box, Flex, useToast } from 'src/shared/design-system';
 import { convertToDate } from 'src/shared/utils';
 import { format } from 'date-fns';
 import { minutesToTime } from '../../schedule-maker/utils/blocks';
-import { useToast } from '@chakra-ui/react';
 import { WithTooltip } from 'src/shared/design-system/molecules';
 import { gql, useMutation } from '@apollo/client';
 import { DeleteDayButton, EditDayButton } from './';
@@ -16,25 +15,19 @@ const DELETER_DAY_MUTATION = gql`
 
 const AddedDay = ({ day, refetch }) => {
   const { dayId, date, startTime, endTime, description } = day;
-  const toast = useToast();
+  const { toastFn } = useToast();
   const [deleteDay] = useMutation(DELETER_DAY_MUTATION, {
     onCompleted: ({ deleteDay: successMessage }) => {
-      toast({
+      toastFn({
         title: successMessage,
         status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
       refetch();
     },
     onError: ({ message }) => {
-      toast({
+      toastFn({
         title: message,
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
   });

@@ -1,4 +1,4 @@
-import { Heading, useToast } from '@chakra-ui/react';
+import { Heading, useToast } from 'src/shared/design-system';
 import { gql, useMutation } from '@apollo/client';
 import { useCallback, useMemo } from 'react';
 import { convertValuesForSending } from '../../tournaments-list/utils';
@@ -26,24 +26,18 @@ const EDIT_TOURNAMENT_MUTATION = gql`
 `;
 
 const BasicTournament = ({ tournament }) => {
-  const toast = useToast();
+  const { toastFn } = useToast();
   const [editTournament] = useMutation(EDIT_TOURNAMENT_MUTATION, {
     onCompleted: ({ editTournament: successMessage }) => {
-      toast({
+      toastFn({
         title: successMessage,
         status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
     onError: (e) => {
-      toast({
+      toastFn({
         title: e.message,
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
   });

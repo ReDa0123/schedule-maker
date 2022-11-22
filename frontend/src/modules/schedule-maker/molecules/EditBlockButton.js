@@ -1,12 +1,12 @@
 import { WithTooltip } from 'src/shared/design-system/molecules';
-import { useDisclosure, useToast } from '@chakra-ui/react';
+import { useDisclosure, useToast } from 'src/shared/design-system';
 import { EditIcon } from '@chakra-ui/icons';
 import PropTypes from 'prop-types';
 import { EditBlockModal } from '../organisms';
 
 const EditBlockButton = ({ editBlock, block }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
+  const { toastFn } = useToast();
 
   return (
     <>
@@ -29,12 +29,10 @@ const EditBlockButton = ({ editBlock, block }) => {
         editBlock={(data) => {
           editBlock(data);
           onClose();
-          toast({
+          toastFn({
             title: 'Block edited',
             duration: 2000,
             status: 'success',
-            isClosable: true,
-            position: 'top-right',
           });
         }}
         block={block}

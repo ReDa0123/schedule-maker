@@ -6,7 +6,7 @@ import { AuthError } from '../../auth/atoms';
 import { route } from 'src/Routes';
 import { useParams } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import { useToast } from '@chakra-ui/react';
+import { useToast } from 'src/shared/design-system';
 import { convertBlocksForSending } from '../utils/blocks';
 
 const SAVE_BLOCKS_MUTATION = gql`
@@ -17,26 +17,20 @@ const SAVE_BLOCKS_MUTATION = gql`
 
 const ScheduleEdit = () => {
   const auth = useAuth();
-  const toast = useToast();
+  const { toastFn } = useToast();
   const [saveBlocksRequest, saveBlocksRequestState] = useMutation(
     SAVE_BLOCKS_MUTATION,
     {
       onCompleted: ({ saveBlocks: successMessage }) => {
-        toast({
+        toastFn({
           title: successMessage,
           status: 'success',
-          duration: 5000,
-          isClosable: true,
-          position: 'top-right',
         });
       },
       onError: ({ message }) => {
-        toast({
+        toastFn({
           title: message,
           status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top-right',
         });
       },
     }

@@ -1,4 +1,4 @@
-import { useToast } from '@chakra-ui/react';
+import { useToast } from 'src/shared/design-system';
 import { useMutation } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import {
@@ -14,25 +14,19 @@ import { useTournamentSchedule } from '../hooks';
 const AddDayModal = ({ onClose, isOpen, onOpen }) => {
   const { refetch } = useTournamentSchedule();
   const { tournamentId } = useParams();
-  const toast = useToast();
+  const { toastFn } = useToast();
   const [createDay] = useMutation(CREATE_DAY_MUTATION, {
     onCompleted: ({ createDay: successMessage }) => {
-      toast({
+      toastFn({
         title: successMessage,
         status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
       refetch();
     },
     onError: (e) => {
-      toast({
+      toastFn({
         title: e.message,
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
   });

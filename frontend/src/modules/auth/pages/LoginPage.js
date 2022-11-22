@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react';
 import { LoginTemplate } from '../templates';
 import { gql, useMutation } from '@apollo/client';
 import { useAuth } from '../auth-core';
-import { useToast } from '@chakra-ui/react';
+import { useToast } from 'src/shared/design-system';
 import { AuthError } from '../atoms';
 
 const LOGIN_MUTATION = gql`
@@ -24,18 +24,16 @@ const toastLoginId = 'loginError';
 const LoginPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
-  const toast = useToast();
+  const { toast, toastFn } = useToast();
   const toastErrorRef = useRef();
   const [loginRequest] = useMutation(LOGIN_MUTATION, {
     onCompleted: ({ login: { user, token } }) => {
       auth.login({ token, user });
       toast.isActive(toastLoginId) && toast.close(toastLoginId);
-      toast({
+      toastFn({
         title: 'Login successful',
         status: 'success',
         duration: 3000,
-        isClosable: true,
-        position: 'top-right',
       });
       navigate('/');
     },

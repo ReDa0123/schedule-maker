@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react';
 import { SignUpTemplate } from '../templates';
 import { gql, useMutation } from '@apollo/client';
 import { useAuth } from '../auth-core';
-import { useToast } from '@chakra-ui/react';
+import { useToast } from 'src/shared/design-system';
 import { AuthError } from '../atoms';
 
 const SIGNUP_MUTATION = gql`
@@ -24,19 +24,17 @@ const signUpErrorId = 'signUpError';
 const SignUpPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
-  const toast = useToast();
+  const { toast, toastFn } = useToast();
   const toastErrorRef = useRef();
   const [signUpRequest] = useMutation(SIGNUP_MUTATION, {
     onCompleted: ({ signup: { user, token } }) => {
       auth.login({ token, user });
       toast.isActive(signUpErrorId) && toast.close(signUpErrorId);
-      toast({
+      toastFn({
         title: 'Sign Up successful',
         description: 'You are now logged in',
         status: 'success',
         duration: 3000,
-        isClosable: true,
-        position: 'top-right',
       });
       navigate('/');
     },

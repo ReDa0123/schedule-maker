@@ -1,8 +1,12 @@
 import { DayForm } from './';
 import { AddedDay } from '../molecules';
-import { Heading, useToast } from '@chakra-ui/react';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { Spinner, ErrorText } from 'src/shared/design-system';
+import {
+  Spinner,
+  ErrorText,
+  Heading,
+  useToast,
+} from 'src/shared/design-system';
 import { convertDayValuesForSending, CREATE_DAY_MUTATION } from '../utils';
 import { useCallback } from 'react';
 import { isNilOrEmpty } from 'ramda-extension';
@@ -27,25 +31,19 @@ const Days = ({ tournamentId }) => {
     variables: { tournamentId: Number(tournamentId) },
   });
 
-  const toast = useToast();
+  const { toastFn } = useToast();
   const [createDay] = useMutation(CREATE_DAY_MUTATION, {
     onCompleted: ({ createDay: successMessage }) => {
-      toast({
+      toastFn({
         title: successMessage,
         status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
       refetch();
     },
     onError: ({ message }) => {
-      toast({
+      toastFn({
         title: message,
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
   });

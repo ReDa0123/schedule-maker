@@ -2,8 +2,12 @@ import { AddSportsForm } from './';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { pluck, prop } from 'ramda';
 import { useCallback } from 'react';
-import { ErrorText, Spinner, Heading } from 'src/shared/design-system';
-import { useToast } from '@chakra-ui/react';
+import {
+  ErrorText,
+  Spinner,
+  Heading,
+  useToast,
+} from 'src/shared/design-system';
 import {
   convertValuesToLabelValueObj,
   namePropCapitalize,
@@ -48,24 +52,18 @@ const AddSports = ({ tournamentId }) => {
     namePropCapitalize
   )(data?.sportsWithSportsOfTournament?.sports ?? []);
 
-  const toast = useToast();
+  const { toastFn } = useToast();
   const [saveSports] = useMutation(SAVE_SPORTS_MUTATION, {
     onCompleted: ({ saveSports: successMessage }) => {
-      toast({
+      toastFn({
         title: successMessage,
         status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
     onError: ({ message }) => {
-      toast({
+      toastFn({
         title: message,
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
   });

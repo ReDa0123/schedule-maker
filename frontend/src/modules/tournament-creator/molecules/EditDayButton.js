@@ -1,4 +1,4 @@
-import { IconButton, useDisclosure, useToast } from '@chakra-ui/react';
+import { IconButton, useDisclosure, useToast } from 'src/shared/design-system';
 import { EditIcon } from '@chakra-ui/icons';
 import { Modal } from 'src/shared/design-system/organisms';
 import { DayForm } from '../organisms';
@@ -38,26 +38,20 @@ const EditDayButton = forwardRef(
     ref
   ) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const toast = useToast();
+    const { toastFn } = useToast();
     const [editDay] = useMutation(EDIT_DAY_MUTATION, {
       onCompleted: ({ editDay: successMessage }) => {
-        toast({
+        toastFn({
           title: successMessage,
           status: 'success',
-          duration: 5000,
-          isClosable: true,
-          position: 'top-right',
         });
         onClose();
         refetch();
       },
       onError: ({ message }) => {
-        toast({
+        toastFn({
           title: message,
           status: 'error',
-          duration: 5000,
-          isClosable: true,
-          position: 'top-right',
         });
       },
     });

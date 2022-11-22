@@ -6,8 +6,12 @@ import {
   namePropCapitalize,
 } from 'src/shared/utils';
 import { pluck, prop } from 'ramda';
-import { useToast } from '@chakra-ui/react';
-import { ErrorText, Heading, Spinner } from 'src/shared/design-system';
+import {
+  ErrorText,
+  Heading,
+  Spinner,
+  useToast,
+} from 'src/shared/design-system';
 import PropTypes from 'prop-types';
 
 const GET_AREAS = gql`
@@ -48,24 +52,18 @@ const AddAreas = ({ tournamentId }) => {
     namePropCapitalize
   )(data?.areasWithAreasOfTournament?.areas ?? []);
 
-  const toast = useToast();
+  const { toastFn } = useToast();
   const [saveAreas] = useMutation(SAVE_AREAS_MUTATION, {
     onCompleted: ({ saveAreas: successMessage }) => {
-      toast({
+      toastFn({
         title: successMessage,
         status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
     onError: ({ message }) => {
-      toast({
+      toastFn({
         title: message,
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
   });

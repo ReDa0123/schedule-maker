@@ -1,8 +1,7 @@
-import { useDisclosure, useToast } from '@chakra-ui/react';
 import { gql, useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
-import { Button } from 'src/shared/design-system';
+import { Button, useDisclosure, useToast } from 'src/shared/design-system';
 import { AlertDialog } from 'src/shared/design-system/organisms';
 import PropTypes from 'prop-types';
 import { route } from 'src/Routes';
@@ -14,27 +13,21 @@ const DELETE_TOURNAMENT_MUTATION = gql`
 `;
 
 const DeleteTournamentButton = ({ tournamentId }) => {
-  const toast = useToast();
+  const { toastFn } = useToast();
   const { onOpen, onClose, isOpen } = useDisclosure();
   const navigate = useNavigate();
   const [deleteTournament] = useMutation(DELETE_TOURNAMENT_MUTATION, {
     onCompleted: ({ deleteTournament: successMessage }) => {
-      toast({
+      toastFn({
         title: successMessage,
         status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
       navigate(route.tournamentsList());
     },
     onError: ({ message }) => {
-      toast({
+      toastFn({
         title: message,
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
       onClose();
     },

@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { convertValuesForSending, CREATE_TOURNAMENT_MUTATION } from '../utils';
 import { useMutation } from '@apollo/client';
-import { useToast } from '@chakra-ui/react';
+import { useToast } from 'src/shared/design-system';
 import { route } from 'src/Routes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BasicTournamentForm } from '../../tournament-creator/organisms';
 
 const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
-  const toast = useToast();
+  const { toastFn } = useToast();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -20,22 +20,16 @@ const CreateNewTournamentModal = ({ isOpen, onClose, onOpen }) => {
 
   const [createTournament] = useMutation(CREATE_TOURNAMENT_MUTATION, {
     onCompleted: ({ createTournament: newTournamentId }) => {
-      toast({
+      toastFn({
         title: 'Tournament created successfully',
         status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
       navigate(route.tournamentCreator({ id: newTournamentId }));
     },
     onError: (e) => {
-      toast({
+      toastFn({
         title: e.message,
         status: 'error',
-        duration: 5000,
-        isClosable: true,
-        position: 'top-right',
       });
     },
   });

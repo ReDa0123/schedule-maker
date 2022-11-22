@@ -9,30 +9,28 @@ import {
   MenuList,
   Spacer,
   useToast,
-} from '@chakra-ui/react';
+} from 'src/shared/design-system';
 import { useAuth } from 'src/modules/auth';
 import { Button } from '../atoms';
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import Logo from '../svgs/Logo';
-import { route } from '../../../Routes';
+import { route } from 'src/Routes';
 
 const Header = (props) => {
   const auth = useAuth();
-  const toast = useToast();
+  const { toastFn } = useToast();
   const navigate = useNavigate();
   const handleSignout = useCallback(() => {
     auth.signout();
-    toast({
+    toastFn({
       title: 'You have been logged out',
       status: 'success',
       duration: 3000,
-      isClosable: true,
-      position: 'top-right',
     });
     navigate('/');
-  }, [auth, toast, navigate]);
+  }, [auth, toastFn, navigate]);
 
   return (
     <Flex bg="blue.600" minH="60px" {...props}>
