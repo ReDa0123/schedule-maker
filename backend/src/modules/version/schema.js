@@ -9,7 +9,7 @@ export const typeDef = /* GraphQL */ `
       tournamentId: Int!
       blocks: [BlockInput!]!
       from: Int
-    ): Int!
+    ): String!
     editVersion(name: String!): String!
     deleteVersion(versionId: Int!): String!
   }

@@ -35,5 +35,5 @@ export const createVersionWithBlocks = async (
     { dbConnection, auth }
   );
 
-  return versionId;
+  return `Version ${name} created`;
 };

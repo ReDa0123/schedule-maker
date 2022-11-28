@@ -9,6 +9,7 @@ import EditBlockButton from './EditBlockButton';
 import Block from './Block';
 import DayTabContent from './DayTabContent';
 import AddDay from './AddDay';
+import CreateVersionForm from './CreateVersionForm';
 
 export {
   BlockForm,
@@ -22,4 +23,5 @@ export {
   EditBlockButton,
   DayTabContent,
   AddDay,
+  CreateVersionForm,
 };
