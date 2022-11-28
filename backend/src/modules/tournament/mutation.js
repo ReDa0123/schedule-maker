@@ -83,3 +83,24 @@ export const editTournament = async (
 
   return 'Tournament edited';
 };
+
+export const setMainVersion = async (
+  _,
+  { versionId, tournamentId },
+  { dbConnection, auth }
+) => {
+  const userId = Number(getUser(auth));
+  await validateTournament({
+    userId,
+    tournamentId,
+    dbConnection,
+    versionId,
+  });
+
+  await dbConnection.query(
+    `UPDATE tournament SET versionId = ? WHERE tournamentId = ?`,
+    [versionId, tournamentId]
+  );
+
+  return 'Main version set successfully';
+};

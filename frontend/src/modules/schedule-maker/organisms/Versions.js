@@ -1,20 +1,15 @@
-import {
-  Flex,
-  useToast,
-  useDisclosure,
-  Button,
-} from 'src/shared/design-system';
+import { Flex, useToast, Button } from 'src/shared/design-system';
 import { useTournamentSchedule } from '../hooks';
 import { FormSelect } from 'src/shared/react-hook-form/molecules';
 import { useCallback, useMemo } from 'react';
 import { convertValuesToLabelValueObj } from 'src/shared/utils';
-import { prop } from 'ramda';
+import { find, o, prop, propEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-extension';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
 import { convertBlocksForSending } from '../utils/blocks';
-import { Modal } from 'src/shared/design-system/organisms';
-import { CreateVersionForm } from '../molecules';
+import { VersionModal } from '../molecules';
+import DeleteVersion from '../molecules/DeleteVersion';
 
 const CREATE_NEW_VERSION_WITH_BLOCKS = gql`
   mutation CreateVersionWithBlocks(
@@ -32,6 +27,18 @@ const CREATE_NEW_VERSION_WITH_BLOCKS = gql`
   }
 `;
 
+const SET_MAIN_VERSION = gql`
+  mutation SetMainVersion($tournamentId: Int!, $versionId: Int!) {
+    setMainVersion(tournamentId: $tournamentId, versionId: $versionId)
+  }
+`;
+
+const EDIT_VERSION = gql`
+  mutation EditVersion($name: String!, $versionId: Int!) {
+    editVersion(name: $name, versionId: $versionId)
+  }
+`;
+
 const Versions = () => {
   const {
     versions,
@@ -39,8 +46,10 @@ const Versions = () => {
     tournament: { tournamentId },
   } = useTournamentSchedule();
   const { toastFn } = useToast();
+  const selectedVersion = useWatch({
+    name: 'selectedVersion',
+  });
   const { getValues } = useFormContext();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [createVersionRequest] = useMutation(CREATE_NEW_VERSION_WITH_BLOCKS, {
     onCompleted: ({ createVersionWithBlocks: title }) => {
@@ -58,9 +67,42 @@ const Versions = () => {
     },
   });
 
-  const onSubmit = useCallback(
+  const [setMainVersionRequest, setMainVersionState] = useMutation(
+    SET_MAIN_VERSION,
+    {
+      onCompleted: ({ setMainVersion: title }) => {
+        toastFn({
+          title,
+          status: 'success',
+        });
+      },
+      onError: ({ message: title }) => {
+        toastFn({
+          title,
+          status: 'error',
+        });
+      },
+    }
+  );
+
+  const [editVersionRequest] = useMutation(EDIT_VERSION, {
+    onCompleted: ({ editVersion: title }) => {
+      toastFn({
+        title,
+        status: 'success',
+      });
+      refetch();
+    },
+    onError: ({ message }) => {
+      toastFn({
+        title: message,
+        status: 'error',
+      });
+    },
+  });
+
+  const onNewSubmit = useCallback(
     async ({ name }) => {
-      const selectedVersion = getValues('selectedVersion');
       const from = isNilOrEmpty(selectedVersion)
         ? null
         : Number(selectedVersion);
@@ -74,7 +116,16 @@ const Versions = () => {
         },
       });
     },
-    [tournamentId, createVersionRequest, getValues]
+    [tournamentId, createVersionRequest, getValues, selectedVersion]
+  );
+
+  const onEditSubmit = useCallback(
+    async ({ name }) => {
+      await editVersionRequest({
+        variables: { name, versionId: Number(selectedVersion) },
+      });
+    },
+    [editVersionRequest, selectedVersion]
   );
 
   const options = useMemo(
@@ -82,23 +133,48 @@ const Versions = () => {
       convertValuesToLabelValueObj(prop('versionId'), prop('name'))(versions),
     [versions]
   );
+
+  const versionName = useMemo(
+    () => o(prop('name'), find(propEq('versionId', selectedVersion)))(versions),
+    [versions, selectedVersion]
+  );
+
   return (
     <Flex gap={4} alignItems="flex-end" mb={4}>
       {!isNilOrEmpty(versions) && (
-        <FormSelect
-          name="selectedVersion"
-          options={options}
-          label="Versions"
-          createEmptyOption={false}
-        />
+        <>
+          <FormSelect
+            name="selectedVersion"
+            options={options}
+            label="Versions"
+            createEmptyOption={false}
+          />
+          <Button
+            onClick={async () => {
+              const selectedVersion = Number(getValues('selectedVersion'));
+              await setMainVersionRequest({
+                variables: {
+                  versionId: selectedVersion,
+                  tournamentId: Number(tournamentId),
+                },
+              });
+            }}
+            isLoading={setMainVersionState?.loading}
+            variant="outline"
+          >
+            Set as main version
+          </Button>
+          <VersionModal
+            onSubmit={onEditSubmit}
+            edit
+            defaultValues={{
+              name: versionName,
+            }}
+          />
+          <DeleteVersion />
+        </>
       )}
-      <Button onClick={onOpen}>Create new version</Button>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        onOpen={onOpen}
-        modalBody={<CreateVersionForm onSubmit={onSubmit} />}
-      />
+      <VersionModal onSubmit={onNewSubmit} />
     </Flex>
   );
 };

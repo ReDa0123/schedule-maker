@@ -41,3 +41,35 @@ export const validateVersion = async ({
 
   await versionNameValidationSchema.validate(name);
 };
+
+export const validateVersionEdit = async ({
+  auth,
+  dbConnection,
+  versionId,
+  name,
+}) => {
+  const versionQuery = await dbConnection.query(
+    `SELECT * FROM version WHERE versionId = ?`,
+    [versionId]
+  );
+  const version = versionQuery[0];
+
+  if (!version) {
+    throw new Error('Version does not exist');
+  }
+
+  const tournamentQuery = await dbConnection.query(
+    `SELECT * FROM tournament WHERE tournamentId = ?`,
+    [version.tournamentId]
+  );
+  const tournament = tournamentQuery[0];
+
+  const userId = getUser(auth);
+  if (tournament.userId !== userId) {
+    throw new Error('You do not have permission to edit this tournament.');
+  }
+
+  name && (await versionNameValidationSchema.validate(name));
+
+  return version;
+};

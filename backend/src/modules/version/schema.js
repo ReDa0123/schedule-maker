@@ -10,7 +10,7 @@ export const typeDef = /* GraphQL */ `
       blocks: [BlockInput!]!
       from: Int
     ): String!
-    editVersion(name: String!): String!
+    editVersion(name: String!, versionId: Int!): String!
     deleteVersion(versionId: Int!): String!
   }
 
