@@ -11,7 +11,7 @@ const TournamentScheduleContext = ({ children, tournament, edit, refetch }) => {
   const value = useMemo(() => {
     return {
       tournament: omit(
-        ['sports', 'areas', 'days', 'blocks'],
+        ['sports', 'areas', 'days', 'blocks', 'versions'],
         defaultToEmptyObject(tournament)
       ),
       detailMode: !edit,
@@ -19,6 +19,7 @@ const TournamentScheduleContext = ({ children, tournament, edit, refetch }) => {
       days: tournament?.days,
       sports: tournament?.sports,
       areas: tournament?.areas,
+      versions: tournament?.versions,
       refetch,
     };
   }, [edit, tournament, refetch]);

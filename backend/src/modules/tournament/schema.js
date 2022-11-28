@@ -19,6 +19,7 @@ export const typeDef = /* GraphQL */ `
       endDate: String!
     ): String!
     deleteTournament(tournamentId: Int!): String!
+    setMainVersion(tournamentId: Int!, versionId: Int!): String!
   }
 
   type Tournament {
@@ -41,5 +42,7 @@ export const typeDef = /* GraphQL */ `
     areas: [Area!]!
     days: [Day!]!
     blocks: [Block!]!
+    versions: [Version!]!
+    versionId: Int
   }
 `;

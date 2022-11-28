@@ -5,6 +5,7 @@ export const validateTournament = async ({
   userId,
   dbConnection,
   tournamentId,
+  versionId,
 }) => {
   if (!userId) {
     throw new Error('You are not logged in!');
@@ -30,5 +31,16 @@ export const validateTournament = async ({
     }
   }
 
-  await newTournamentValidationSchema.validate(value);
+  if (versionId) {
+    const version = await dbConnection.query(
+      `SELECT versionId FROM version WHERE versionId = ? AND tournamentId = ?`,
+      [versionId, tournamentId]
+    );
+
+    if (!version[0]) {
+      throw new Error('Version does not exist in this tournament.');
+    }
+  }
+
+  value && (await newTournamentValidationSchema.validate(value));
 };

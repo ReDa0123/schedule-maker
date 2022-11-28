@@ -2,7 +2,7 @@ import { useWatch, Controller } from 'react-hook-form';
 import { BLOCK_DND_NAME, SCHEDULE_FORM_NAME } from '../constants';
 import { useDrop } from 'react-dnd';
 import { Flex } from 'src/shared/design-system';
-import { useFieldArrayProps } from '../hooks';
+import { useFieldArrayProps, useSelectedVersion } from '../hooks';
 import { propEq } from 'ramda';
 import { Block } from '../molecules';
 import { isNilOrEmpty } from 'ramda-extension';
@@ -13,6 +13,7 @@ const NOT_ASSIGNED_BLOCKS_HEIGHT = 200;
 const NotAssignedBlocks = () => {
   const { fields } = useFieldArrayProps();
   const values = useWatch({ name: SCHEDULE_FORM_NAME, defaultValue: [] });
+  const selectedVersion = useSelectedVersion();
 
   const [{ isOver }, drop] = useDrop({
     accept: BLOCK_DND_NAME,
@@ -34,7 +35,8 @@ const NotAssignedBlocks = () => {
       if (isNilOrEmpty(values)) return null;
       const correspondingValue = values.find(propEq('blockId', field.blockId));
       return (
-        !correspondingValue?.startTime && (
+        !correspondingValue?.startTime &&
+        correspondingValue.versionId === selectedVersion && (
           <Controller
             key={field.id}
             name={`schedule.${index}`}
@@ -45,7 +47,7 @@ const NotAssignedBlocks = () => {
         )
       );
     });
-  }, [fields, values]);
+  }, [fields, values, selectedVersion]);
 
   return (
     <Flex

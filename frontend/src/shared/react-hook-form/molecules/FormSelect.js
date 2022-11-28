@@ -17,6 +17,7 @@ const FormSelect = ({
   disabled,
   helperText,
   options,
+  createEmptyOption = true,
   emptyOptionLabel,
   formControlProps,
   formLabelProps,
@@ -53,7 +54,7 @@ const FormSelect = ({
         w="100%"
         {...inputProps}
       >
-        <option value="">{emptyOptionLabel}</option>
+        {createEmptyOption && <option value="">{emptyOptionLabel}</option>}
         {options.map(({ value, label }) => (
           <option key={value} value={value}>
             {label}
@@ -96,6 +97,7 @@ FormSelect.propTypes = {
   formErrorMessageProps: PropTypes.object,
   inputProps: PropTypes.object,
   control: PropTypes.object,
+  createEmptyOption: PropTypes.bool,
 };
 
 export default FormSelect;

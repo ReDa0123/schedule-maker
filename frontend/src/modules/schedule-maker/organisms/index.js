@@ -7,6 +7,7 @@ import DayResetButton from './DayResetButton';
 import Timeslot from './Timeslot';
 import EditBlockModal from './EditBlockModal';
 import AddDayModal from './AddDayModal';
+import Versions from './Versions';
 
 export {
   DayResetButton,
@@ -18,4 +19,5 @@ export {
   Schedule,
   Timeslot,
   AddDayModal,
+  Versions,
 };

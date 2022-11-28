@@ -30,6 +30,7 @@ export const convertBlocksForSending = mapplySpec({
   sportId: convertPropToNumberIfNotNil('sportId'),
   age: prop('age'),
   customParameter: nilIfEmptyProp('customParameter'),
+  versionId: convertPropToNumberIfNotNil('versionId'),
 });
 
 export const propUniqAndConvertToLabelValueObj = (propName) =>

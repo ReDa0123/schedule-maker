@@ -9,6 +9,7 @@ const blockDef = `
   sportId: Int!
   age: String!
   customParameter: String
+  versionId: Int
 `;
 
 export const typeDef = /* GraphQL */ `

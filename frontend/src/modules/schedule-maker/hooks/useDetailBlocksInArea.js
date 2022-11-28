@@ -9,6 +9,7 @@ import { Block } from '../molecules';
 
 export const useDetailBlocksInArea = ({ areaId, dayId, startTime }) => {
   const { filteredBlocks: blocks } = useScheduleDetail();
+  //TODO: Verze
   const blocksInArea = blocks.filter(
     (block) => block.areaId === areaId && block.dayId === dayId
   );

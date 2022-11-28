@@ -7,17 +7,19 @@ import {
   BLOCK_OFFSET,
   BLOCK_SCALE,
   MINUTES_IN_BLOCK,
+  SCHEDULE_FORM_NAME,
   TABLE_TOP_PADDING,
 } from '../constants';
-import { useFieldArrayProps } from './';
+import { useFieldArrayProps, useSelectedVersion } from './';
 import { mapplySpec } from 'src/shared/utils';
 
 export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
   const { fields } = useFieldArrayProps();
   const values = useWatch({
-    name: 'schedule',
+    name: SCHEDULE_FORM_NAME,
     defaultValue: [],
   });
+  const selectedVersion = useSelectedVersion();
 
   const startTimesInThisDayAndArena = useMemo(
     () =>
@@ -27,9 +29,15 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
           endTime: o(calculateEndTime, pick(['startTime', 'persons'])),
           blockId: prop('blockId'),
         }),
-        filter(allPass([propEq('dayId', dayId), propEq('areaId', areaId)]))
+        filter(
+          allPass([
+            propEq('dayId', dayId),
+            propEq('areaId', areaId),
+            propEq('versionId', selectedVersion),
+          ])
+        )
       )(values),
-    [values, areaId, dayId]
+    [values, areaId, dayId, selectedVersion]
   );
 
   return {
@@ -39,6 +47,7 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
       const shouldDisplay = allPass([
         propEq('dayId', dayId),
         propEq('areaId', areaId),
+        propEq('versionId', selectedVersion),
       ])(correspondingValue);
       return (
         shouldDisplay && (

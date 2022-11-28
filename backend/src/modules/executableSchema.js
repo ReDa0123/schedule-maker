@@ -5,6 +5,7 @@ import { typeDef as Area, resolvers as areaResolvers } from './area/';
 import { typeDef as Day, resolvers as dayResolvers } from './day/';
 import { typeDef as Block, resolvers as blockResolvers } from './block/';
 import { typeDef as Sport, resolvers as sportResolvers } from './sport/';
+import { typeDef as Version, resolvers as versionResolvers } from './version/';
 import {
   typeDef as Tournament,
   resolvers as tournamentResolvers,
@@ -26,7 +27,17 @@ const Mutation = /* GraphQL */ `
 const resolvers = {};
 
 export const schema = makeExecutableSchema({
-  typeDefs: [Query, Mutation, User, Area, Day, Block, Sport, Tournament],
+  typeDefs: [
+    Query,
+    Mutation,
+    User,
+    Area,
+    Day,
+    Block,
+    Sport,
+    Tournament,
+    Version,
+  ],
   resolvers: merge(
     resolvers,
     userResolvers,
@@ -34,6 +45,7 @@ export const schema = makeExecutableSchema({
     dayResolvers,
     blockResolvers,
     sportResolvers,
+    versionResolvers,
     tournamentResolvers
   ),
 });
