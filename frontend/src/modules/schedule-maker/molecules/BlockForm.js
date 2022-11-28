@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { Grid, Button, Flex, Heading } from 'src/shared/design-system';
 import {
   FormInput,
@@ -7,12 +7,17 @@ import {
 } from 'src/shared/react-hook-form/molecules';
 import { map, o, values } from 'ramda';
 import { useTournamentSchedule } from '../hooks';
-import { SEXES, tournamentStyles } from '../constants';
+import {
+  SCHEDULE_FORM_VERSION_NAME,
+  SEXES,
+  tournamentStyles,
+} from '../constants';
 import { useSubmitButton } from 'src/shared/react-hook-form/hooks';
 import { useCallback } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
+import { isNilOrEmpty } from 'ramda-extension';
 
 const validationSchema = yup.object().shape({
   category: yup.string().max(50, `Category can't be longer than 50 characters`),
@@ -43,6 +48,9 @@ const validationSchema = yup.object().shape({
 
 const BlockForm = ({ onSubmit, defaultValues }) => {
   const { sports } = useTournamentSchedule();
+  const selectedVersion = useWatch({
+    name: SCHEDULE_FORM_VERSION_NAME,
+  });
   const {
     handleSubmit,
     control,
@@ -66,10 +74,17 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
   const onClick = useCallback(
     () =>
       handleSubmit((data) => {
-        onSubmit(data);
+        const versionId = isNilOrEmpty(selectedVersion)
+          ? null
+          : Number(selectedVersion);
+        const enhancedData = {
+          ...data,
+          versionId,
+        };
+        onSubmit(enhancedData);
         reset();
       })(),
-    [onSubmit, handleSubmit, reset]
+    [onSubmit, handleSubmit, reset, selectedVersion]
   );
 
   const { onClickButton } = useSubmitButton({

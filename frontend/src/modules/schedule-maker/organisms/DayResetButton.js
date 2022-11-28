@@ -5,17 +5,18 @@ import { Button, useDisclosure } from 'src/shared/design-system';
 import { AlertDialog } from 'src/shared/design-system/organisms';
 import { WithTooltip } from 'src/shared/design-system/molecules';
 import PropTypes from 'prop-types';
-import { propEq } from 'ramda';
+import { allPass, propEq } from 'ramda';
+import { useSelectedVersion } from '../hooks';
 
 const DayResetButton = ({ dayId }) => {
   const { setValue } = useFormContext();
   const values = useWatch({ name: SCHEDULE_FORM_NAME, defaultValue: [] });
+  const selectedVersion = useSelectedVersion();
   const { onOpen, isOpen, onClose } = useDisclosure();
 
   const resetDay = useCallback(() => {
     values.forEach((value, index) => {
-      //TODO: Verze
-      if (value.dayId === dayId) {
+      if (value.dayId === dayId && value.versionId === selectedVersion) {
         setValue(`${SCHEDULE_FORM_NAME}[${index}]`, {
           ...value,
           dayId: null,
@@ -25,12 +26,14 @@ const DayResetButton = ({ dayId }) => {
       }
     });
     onClose();
-  }, [dayId, values, setValue, onClose]);
+  }, [dayId, values, setValue, onClose, selectedVersion]);
 
-  //TODO: Verze
   const noValuesInThisDay = useMemo(
-    () => values.filter(propEq('dayId', dayId)).length === 0,
-    [values, dayId]
+    () =>
+      values.filter(
+        allPass([propEq('dayId', dayId), propEq('versionId', selectedVersion)])
+      ).length === 0,
+    [values, dayId, selectedVersion]
   );
 
   return (

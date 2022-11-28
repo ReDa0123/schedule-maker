@@ -4,6 +4,7 @@ import { useEditBlocksInArea } from './useEditBlocksInArea';
 import { useDetailBlocksInArea } from './useDetailBlocksInArea';
 import { useAreaColumn } from './useAreaColumn';
 import { useFieldArrayProps } from './useFieldArrayProps';
+import { useSelectedVersion } from './useSelectedVersion';
 
 export {
   useEditBlocksInArea,
@@ -12,4 +13,5 @@ export {
   useDetailBlocksInArea,
   useAreaColumn,
   useFieldArrayProps,
+  useSelectedVersion,
 };

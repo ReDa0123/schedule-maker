@@ -10,6 +10,7 @@ import { gql, useMutation } from '@apollo/client';
 import { convertBlocksForSending } from '../utils/blocks';
 import { VersionModal } from '../molecules';
 import DeleteVersion from '../molecules/DeleteVersion';
+import { SCHEDULE_FORM_NAME, SCHEDULE_FORM_VERSION_NAME } from '../constants';
 
 const CREATE_NEW_VERSION_WITH_BLOCKS = gql`
   mutation CreateVersionWithBlocks(
@@ -47,7 +48,7 @@ const Versions = () => {
   } = useTournamentSchedule();
   const { toastFn } = useToast();
   const selectedVersion = useWatch({
-    name: 'selectedVersion',
+    name: SCHEDULE_FORM_VERSION_NAME,
   });
   const { getValues } = useFormContext();
 
@@ -106,7 +107,7 @@ const Versions = () => {
       const from = isNilOrEmpty(selectedVersion)
         ? null
         : Number(selectedVersion);
-      const blocks = convertBlocksForSending(getValues('schedule'));
+      const blocks = convertBlocksForSending(getValues(SCHEDULE_FORM_NAME));
       await createVersionRequest({
         variables: {
           name,
@@ -151,7 +152,9 @@ const Versions = () => {
           />
           <Button
             onClick={async () => {
-              const selectedVersion = Number(getValues('selectedVersion'));
+              const selectedVersion = Number(
+                getValues(SCHEDULE_FORM_VERSION_NAME)
+              );
               await setMainVersionRequest({
                 variables: {
                   versionId: selectedVersion,

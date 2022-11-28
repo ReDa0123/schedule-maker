@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 import { useTournamentSchedule } from '../hooks';
 import { AlertDialog } from '../../../shared/design-system/organisms';
 import { useFormContext } from 'react-hook-form';
+import { SCHEDULE_FORM_VERSION_NAME } from '../constants';
 
 const DELETE_VERSION = gql`
   mutation DeleteVersion($versionId: Int!) {
@@ -50,7 +51,7 @@ const DeleteVersion = () => {
         onConfirm={async () => {
           await deleteVersionRequest({
             variables: {
-              versionId: getValues('selectedVersion'),
+              versionId: Number(getValues(SCHEDULE_FORM_VERSION_NAME)),
             },
           });
           onClose();

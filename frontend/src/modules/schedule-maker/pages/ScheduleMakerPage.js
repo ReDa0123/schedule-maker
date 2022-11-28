@@ -15,6 +15,7 @@ const GET_TOURNAMENT_QUERY = gql`
       startDate
       endDate
       userId
+      versionId
       sports {
         sportId
         name

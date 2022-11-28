@@ -23,7 +23,6 @@ const ScheduleFormContent = () => {
 
   const onBlockFormSubmit = useCallback(
     (data) => {
-      //TODO: Přidat version
       append(assoc('blockId', uuid(), data));
     },
     [append]

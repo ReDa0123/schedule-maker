@@ -19,4 +19,6 @@ export const SEXES = keyMirror({
 
 export const SCHEDULE_FORM_NAME = 'schedule';
 
+export const SCHEDULE_FORM_VERSION_NAME = 'selectedVersion';
+
 export const BLOCK_DND_NAME = 'block';

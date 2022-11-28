@@ -9,7 +9,7 @@ import {
 } from 'src/shared/utils';
 import { useTournamentSchedule } from '../hooks';
 import { propUniqAndConvertToLabelValueObj } from '../utils/blocks';
-import { isNotNil } from 'ramda-extension';
+import { isNilOrEmpty, isNotNil } from 'ramda-extension';
 
 const filterFns = {
   category: propIsContainedInValues,
@@ -32,12 +32,26 @@ export const scheduleDetailContext = createContext(null);
 const ScheduleDetailProvider = scheduleDetailContext.Provider;
 
 const ScheduleDetailContext = ({ children }) => {
-  const { blocks: allBlocks, sports } = useTournamentSchedule();
+  const {
+    blocks: allBlocks,
+    sports,
+    tournament: { versionId },
+  } = useTournamentSchedule();
   const [filter, setFilter] = useState(filterDefaultValues);
+  const version = useMemo(
+    () => (isNilOrEmpty(versionId) ? null : Number(versionId)),
+    [versionId]
+  );
 
   const blocks = useMemo(
-    () => allBlocks.filter(propSatisfies(isNotNil, 'startTime')),
-    [allBlocks]
+    () =>
+      allBlocks.filter(
+        allPass([
+          propSatisfies(isNotNil, 'startTime'),
+          propEqOrIsEmptyOrNil('versionId', version),
+        ])
+      ),
+    [allBlocks, version]
   );
 
   const categoriesToFilter = useMemo(
