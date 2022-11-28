@@ -36,6 +36,7 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
     startTimesInThisDayAndArena,
     blocksInArea: fields.map((field, index) => {
       const correspondingValue = values.find(propEq('blockId', field.blockId));
+      //TODO: Verze
       const shouldDisplay = allPass([
         propEq('dayId', dayId),
         propEq('areaId', areaId),

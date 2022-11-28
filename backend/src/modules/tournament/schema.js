@@ -41,5 +41,6 @@ export const typeDef = /* GraphQL */ `
     areas: [Area!]!
     days: [Day!]!
     blocks: [Block!]!
+    versions: [Version!]!
   }
 `;

@@ -1,6 +1,11 @@
 import * as yup from 'yup';
 
-export const getBlockValidationSchema = ({ sportIds, dayIds, areaIds }) =>
+export const getBlockValidationSchema = ({
+  sportIds,
+  dayIds,
+  areaIds,
+  versionIds,
+}) =>
   yup.object().shape({
     startTime: yup.number().integer().positive().max(1440).nullable(true),
     persons: yup.number().integer().positive().required(),
@@ -22,5 +27,11 @@ export const getBlockValidationSchema = ({ sportIds, dayIds, areaIds }) =>
       .integer()
       .positive()
       .oneOf([...areaIds, null])
+      .nullable(true),
+    versionId: yup
+      .number()
+      .integer()
+      .positive()
+      .oneOf([...versionIds, null])
       .nullable(true),
   });

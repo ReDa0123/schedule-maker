@@ -14,25 +14,31 @@ export const tournament = async (_, { tournamentId }, { dbConnection }) => {
     throw new Error('Tournament not found');
   }
 
-  const sportsOfTournament = await dbConnection.query(
-    `SELECT * FROM sport JOIN tournament_sport USING (sportId) WHERE tournamentId = ?`,
-    [tournamentId]
-  );
-
-  const areasOfTournament = await dbConnection.query(
-    `SELECT * FROM area JOIN tournament_area USING (areaId) WHERE tournamentId = ?`,
-    [tournamentId]
-  );
-
-  const daysOfTournament = await dbConnection.query(
-    `SELECT * FROM day WHERE tournamentId = ?`,
-    [tournamentId]
-  );
-
-  const blocksOfTournament = await dbConnection.query(
-    `SELECT * FROM block WHERE tournamentId = ?`,
-    [tournamentId]
-  );
+  const [
+    sportsOfTournament,
+    areasOfTournament,
+    daysOfTournament,
+    blocksOfTournament,
+    versionsOfTournament,
+  ] = await Promise.all([
+    dbConnection.query(
+      `SELECT * FROM sport JOIN tournament_sport USING (sportId) WHERE tournamentId = ?`,
+      [tournamentId]
+    ),
+    dbConnection.query(
+      `SELECT * FROM area JOIN tournament_area USING (areaId) WHERE tournamentId = ?`,
+      [tournamentId]
+    ),
+    dbConnection.query(`SELECT * FROM day WHERE tournamentId = ?`, [
+      tournamentId,
+    ]),
+    dbConnection.query(`SELECT * FROM block WHERE tournamentId = ?`, [
+      tournamentId,
+    ]),
+    dbConnection.query(`SELECT * FROM version WHERE tournamentId = ?`, [
+      tournamentId,
+    ]),
+  ]);
 
   return {
     ...tournament,
@@ -40,5 +46,6 @@ export const tournament = async (_, { tournamentId }, { dbConnection }) => {
     areas: areasOfTournament,
     days: daysOfTournament,
     blocks: blocksOfTournament,
+    versions: versionsOfTournament,
   };
 };

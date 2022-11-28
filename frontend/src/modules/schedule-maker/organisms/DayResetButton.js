@@ -14,6 +14,7 @@ const DayResetButton = ({ dayId }) => {
 
   const resetDay = useCallback(() => {
     values.forEach((value, index) => {
+      //TODO: Verze
       if (value.dayId === dayId) {
         setValue(`${SCHEDULE_FORM_NAME}[${index}]`, {
           ...value,
@@ -26,6 +27,7 @@ const DayResetButton = ({ dayId }) => {
     onClose();
   }, [dayId, values, setValue, onClose]);
 
+  //TODO: Verze
   const noValuesInThisDay = useMemo(
     () => values.filter(propEq('dayId', dayId)).length === 0,
     [values, dayId]

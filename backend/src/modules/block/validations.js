@@ -26,25 +26,28 @@ export const validateBlocks = async ({
     throw new Error('You are not authorized to edit this tournament');
   }
 
-  const sports = await dbConnection.query(
-    `SELECT sportId FROM tournament_sport WHERE tournamentId = ?`,
-    [tournamentId]
-  );
-
-  const areas = await dbConnection.query(
-    `SELECT * FROM area JOIN tournament_area USING (areaId) WHERE tournamentId = ?`,
-    [tournamentId]
-  );
-
-  const days = await dbConnection.query(
-    `SELECT dayId FROM day WHERE tournamentId = ?`,
-    [tournamentId]
-  );
+  const [sports, areas, days, versions] = await Promise.all([
+    dbConnection.query(
+      `SELECT sportId FROM tournament_sport WHERE tournamentId = ?`,
+      [tournamentId]
+    ),
+    dbConnection.query(
+      `SELECT * FROM area JOIN tournament_area USING (areaId) WHERE tournamentId = ?`,
+      [tournamentId]
+    ),
+    dbConnection.query(`SELECT dayId FROM day WHERE tournamentId = ?`, [
+      tournamentId,
+    ]),
+    dbConnection.query(`SELECT versionId FROM version WHERE tournamentId = ?`, [
+      tournamentId,
+    ]),
+  ]);
 
   const validationSchema = getBlockValidationSchema({
     sportIds: pluckAndValues('sportId')(sports),
     areaIds: pluckAndValues('areaId')(areas),
     dayIds: pluckAndValues('dayId')(days),
+    versionIds: pluckAndValues('versionId')(versions),
   });
 
   await Promise.all(

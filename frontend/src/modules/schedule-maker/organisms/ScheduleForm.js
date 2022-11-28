@@ -2,17 +2,18 @@ import { Form } from 'src/shared/react-hook-form/organisms';
 import { FieldArrayContext } from '../contexts';
 import { Flex, Heading, ContentBox, Button } from 'src/shared/design-system';
 import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
-import { ScheduleDays } from './';
+import { ScheduleDays, Versions } from './';
 import { BlockForm, NotAssignedBlocks } from '../molecules';
 import { SCHEDULE_FORM_NAME } from '../constants';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 import PropTypes from 'prop-types';
 import { LoadingModal } from 'src/shared/design-system/molecules';
 import { useCallback } from 'react';
-import { assoc } from 'ramda';
+import { assoc, last } from 'ramda';
 import uuid from 'react-uuid';
-import { RouterLink } from '../../../shared/navigation';
-import { route } from '../../../Routes';
+import { RouterLink } from 'src/shared/navigation';
+import { route } from 'src/Routes';
+import { isNilOrEmpty } from 'ramda-extension';
 
 const ScheduleFormContent = () => {
   const { append } = useFieldArrayProps();
@@ -22,6 +23,7 @@ const ScheduleFormContent = () => {
 
   const onBlockFormSubmit = useCallback(
     (data) => {
+      //TODO: Přidat version
       append(assoc('blockId', uuid(), data));
     },
     [append]
@@ -47,6 +49,7 @@ const ScheduleFormContent = () => {
       </ContentBox>
       <NotAssignedBlocks />
       <ContentBox minW="70%">
+        <Versions />
         <ScheduleDays />
         <FormSubmitButton
           minW="250px"
@@ -58,11 +61,16 @@ const ScheduleFormContent = () => {
     </Flex>
   );
 };
-const ScheduleForm = ({ onSubmit, isSaving }) => {
-  const { blocks } = useTournamentSchedule();
 
+const ScheduleForm = ({ onSubmit, isSaving }) => {
+  const { blocks, versions } = useTournamentSchedule();
   return (
-    <Form onSubmit={onSubmit}>
+    <Form
+      onSubmit={onSubmit}
+      defaultValues={{
+        selectedVersion: isNilOrEmpty(versions) ? '' : last(versions).versionId,
+      }}
+    >
       <FieldArrayContext name={SCHEDULE_FORM_NAME} initialData={blocks}>
         <ScheduleFormContent />
       </FieldArrayContext>
