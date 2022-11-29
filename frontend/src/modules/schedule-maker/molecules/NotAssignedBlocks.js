@@ -36,7 +36,7 @@ const NotAssignedBlocks = () => {
       const correspondingValue = values.find(propEq('blockId', field.blockId));
       return (
         !correspondingValue?.startTime &&
-        correspondingValue.versionId === selectedVersion && (
+        correspondingValue?.versionId === selectedVersion && (
           <Controller
             key={field.id}
             name={`schedule.${index}`}
