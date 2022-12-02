@@ -15,6 +15,7 @@ const EDIT_TOURNAMENT_MUTATION = gql`
     $startDate: String!
     $endDate: String!
     $preferredStyle: String
+    $buffer: Float
   ) {
     editTournament(
       tournamentId: $tournamentId
@@ -22,6 +23,7 @@ const EDIT_TOURNAMENT_MUTATION = gql`
       location: $location
       startDate: $startDate
       endDate: $endDate
+      buffer: $buffer
       preferredStyle: $preferredStyle
     )
   }
@@ -56,6 +58,7 @@ const BasicTournament = ({ tournament }) => {
     },
     [editTournament, tournament.tournamentId]
   );
+
   const defaultValues = useMemo(
     () => ({
       name: tournament.name,
@@ -66,6 +69,7 @@ const BasicTournament = ({ tournament }) => {
       ),
       endDate: format(convertToDate(Number(tournament.endDate)), 'yyyy-MM-dd'),
       preferredStyle: tournament.preferredStyle,
+      buffer: tournament.buffer,
     }),
     [tournament]
   );

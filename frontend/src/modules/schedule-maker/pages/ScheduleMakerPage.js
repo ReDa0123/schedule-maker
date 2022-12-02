@@ -17,6 +17,7 @@ const GET_TOURNAMENT_QUERY = gql`
       userId
       versionId
       preferredStyle
+      buffer
       sports {
         sportId
         name

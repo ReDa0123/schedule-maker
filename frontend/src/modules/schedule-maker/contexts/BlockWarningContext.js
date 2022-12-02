@@ -4,6 +4,7 @@ import { SCHEDULE_FORM_NAME } from '../constants';
 import { calculateEndTime } from '../utils/blocks';
 import { between, defaultToEmptyString, isNotNil } from 'ramda-extension';
 import PropTypes from 'prop-types';
+import { useTournamentSchedule } from '../hooks';
 
 export const blockWarningContext = createContext([]);
 
@@ -12,6 +13,9 @@ const BlockWarningProvider = blockWarningContext.Provider;
 const BlockWarningContext = ({ children }) => {
   const [warnings, setWarnings] = useState([]);
   const values = useWatch({ name: SCHEDULE_FORM_NAME, defaultValue: [] });
+  const {
+    tournament: { buffer },
+  } = useTournamentSchedule();
 
   useEffect(() => {
     const newWarnings = [];
@@ -25,7 +29,7 @@ const BlockWarningContext = ({ children }) => {
 
       const { startTime, age, sex, customParameter, dayId, areaId, versionId } =
         values[i];
-      const endTime = calculateEndTime(values[i]);
+      const endTime = calculateEndTime(values[i], buffer);
 
       for (let j = i + 1; j < values.length; j++) {
         const {
@@ -37,7 +41,7 @@ const BlockWarningContext = ({ children }) => {
           areaId: areaId2,
           versionId: versionId2,
         } = values[j];
-        const endTime2 = calculateEndTime(values[j]);
+        const endTime2 = calculateEndTime(values[j], buffer);
         if (
           isNotNil(startTime) &&
           (between(startTime, endTime - 0.01, startTime2) ||
@@ -60,7 +64,7 @@ const BlockWarningContext = ({ children }) => {
     }
 
     setWarnings(newWarnings);
-  }, [values]);
+  }, [values, buffer]);
 
   return (
     <BlockWarningProvider value={warnings}>{children}</BlockWarningProvider>

@@ -11,6 +11,7 @@ const GET_TOURNAMENT_DETAILS = gql`
       startDate
       endDate
       userId
+      buffer
       preferredStyle
     }
   }

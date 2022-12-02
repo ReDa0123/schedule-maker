@@ -58,7 +58,7 @@ const SetMainVersionButton = ({ selectedVersion, versionId, tournamentId }) => {
 
 SetMainVersionButton.propTypes = {
   selectedVersion: PropTypes.number.isRequired,
-  versionId: PropTypes.number.isRequired,
+  versionId: PropTypes.number,
   tournamentId: PropTypes.number.isRequired,
 };
 

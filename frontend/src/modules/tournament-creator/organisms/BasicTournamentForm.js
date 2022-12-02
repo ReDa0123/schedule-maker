@@ -12,6 +12,9 @@ import { tournamentStyles } from '../../schedule-maker/constants';
 import { o, values } from 'ramda';
 import { convertValuesToLabelValueObj } from 'src/shared/utils';
 
+const bufferOptions = ['0.0', '0.01', '0.05', '0.1', '0.25', '0.5'];
+const bufferOptionsNumber = bufferOptions.map((value) => parseFloat(value));
+
 const validationSchema = yup.object().shape({
   name: yup
     .string()
@@ -43,6 +46,7 @@ const validationSchema = yup.object().shape({
     .string()
     .max(50)
     .oneOf([...values(tournamentStyles), '']),
+  buffer: yup.mixed().oneOf([...bufferOptions, ...bufferOptionsNumber, '']),
 });
 
 const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
@@ -55,6 +59,7 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
         startDate: defaultValues?.startDate || '',
         endDate: defaultValues?.endDate || '',
         preferredStyle: defaultValues?.preferredStyle || '',
+        buffer: defaultValues?.buffer || '0.0',
       }}
       resolver={yupResolver(validationSchema)}
       mode="onChange"
@@ -71,14 +76,25 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
         <FormInput name={'startDate'} label={'Start date'} type={'date'} />
         <FormInput name={'endDate'} label={'End date'} type={'date'} />
         {defaultValues && (
-          <FormSelect
-            name="preferredStyle"
-            label={'Prefered style'}
-            options={o(
-              convertValuesToLabelValueObj(),
-              values
-            )(tournamentStyles)}
-          />
+          <>
+            <FormSelect
+              name={'buffer'}
+              label={'Buffer'}
+              options={bufferOptions.map((value) => ({
+                value: value,
+                label: (value * 100).toString() + '%',
+              }))}
+              createEmptyOption={false}
+            />
+            <FormSelect
+              name="preferredStyle"
+              label={'Preferred style'}
+              options={o(
+                convertValuesToLabelValueObj(),
+                values
+              )(tournamentStyles)}
+            />
+          </>
         )}
         <FormSubmitButton title={'Save'} showAlert />
       </Grid>

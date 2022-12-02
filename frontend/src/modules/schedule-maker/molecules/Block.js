@@ -27,20 +27,23 @@ const Block = ({ value, onChange, index, ...props }) => {
       isDragging: !!monitor.isDragging(),
     }),
   });
-  const { sports, detailMode } = useTournamentSchedule();
+  const {
+    sports,
+    detailMode,
+    tournament: { buffer },
+  } = useTournamentSchedule();
   const fieldArrayProps = useFieldArrayProps();
   const warning = useBlockWarning(index);
   const sportsName = useMemo(
     () => sports.find(propEq('sportId', value.sportId))?.name,
     [sports, value]
   );
-  const blockDuration = calculateDuration(value);
+  const blockDuration = calculateDuration(value, buffer);
 
   return (
     <Box
       h={`${
-        (calculateDuration(value) / MINUTES_IN_BLOCK) * BLOCK_SCALE -
-        BLOCK_OFFSET * 2
+        (blockDuration / MINUTES_IN_BLOCK) * BLOCK_SCALE - BLOCK_OFFSET * 2
       }px`}
       w={{ md: '250px', base: '200px' }}
       borderWidth={2}
