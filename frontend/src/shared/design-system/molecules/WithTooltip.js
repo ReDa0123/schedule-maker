@@ -8,6 +8,7 @@ const WithTooltip = ({
   standalone,
   label,
   icon,
+  iconProps,
   ...props
 }) =>
   standalone ? (
@@ -16,10 +17,10 @@ const WithTooltip = ({
       <Tooltip placement="bottom" hasArrow label={label} {...tooltipProps}>
         {icon ? (
           <Square>
-            <Icon as={icon} color="blue.500" />
+            <Icon as={icon} color="blue.500" {...iconProps} />
           </Square>
         ) : (
-          <QuestionIcon color="blue.500" />
+          <QuestionIcon color="blue.500" {...iconProps} />
         )}
       </Tooltip>
     </Flex>
@@ -30,11 +31,12 @@ const WithTooltip = ({
   );
 
 WithTooltip.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   tooltipProps: PropTypes.object,
   standalone: PropTypes.bool,
   label: PropTypes.string.isRequired,
   icon: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  iconProps: PropTypes.object,
 };
 
 export default WithTooltip;

@@ -14,6 +14,7 @@ import uuid from 'react-uuid';
 import { RouterLink } from 'src/shared/navigation';
 import { route } from 'src/Routes';
 import { isNilOrEmpty } from 'ramda-extension';
+import BlockWarningContext from '../contexts/BlockWarningContext';
 
 const ScheduleFormContent = () => {
   const { append } = useFieldArrayProps();
@@ -71,7 +72,9 @@ const ScheduleForm = ({ onSubmit, isSaving }) => {
       }}
     >
       <FieldArrayContext name={SCHEDULE_FORM_NAME} initialData={blocks}>
-        <ScheduleFormContent />
+        <BlockWarningContext>
+          <ScheduleFormContent />
+        </BlockWarningContext>
       </FieldArrayContext>
       {isSaving && <LoadingModal message="Saving blocks" />}
     </Form>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { calculateDuration } from '../utils/blocks';
-import { Box, Flex } from 'src/shared/design-system';
+import { Box, Flex, WithTooltip } from 'src/shared/design-system';
 import { useDrag } from 'react-dnd';
 import {
   BLOCK_DND_NAME,
@@ -10,9 +10,14 @@ import {
 } from '../constants';
 import { PersonsTag, TimeTag, ResetBlockButton } from '../atoms';
 import { DeleteBlockButton, EditBlockButton } from './';
-import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
+import {
+  useBlockWarning,
+  useFieldArrayProps,
+  useTournamentSchedule,
+} from '../hooks';
 import { useMemo } from 'react';
 import { propEq } from 'ramda';
+import { RiErrorWarningFill as WarningIcon } from 'react-icons/ri';
 
 const Block = ({ value, onChange, index, ...props }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -24,6 +29,7 @@ const Block = ({ value, onChange, index, ...props }) => {
   });
   const { sports, detailMode } = useTournamentSchedule();
   const fieldArrayProps = useFieldArrayProps();
+  const warning = useBlockWarning(index);
   const sportsName = useMemo(
     () => sports.find(propEq('sportId', value.sportId))?.name,
     [sports, value]
@@ -38,7 +44,7 @@ const Block = ({ value, onChange, index, ...props }) => {
       }px`}
       w={{ md: '250px', base: '200px' }}
       borderWidth={2}
-      borderColor="blue.500"
+      borderColor={warning ? 'yellow.500' : 'blue.500'}
       p={2}
       bg="orange.100"
       position="relative"
@@ -52,6 +58,32 @@ const Block = ({ value, onChange, index, ...props }) => {
       pointerEvents={isDragging ? 'none' : 'all'}
       {...props}
     >
+      {warning && (
+        <>
+          <Box
+            position="absolute"
+            top="-15px"
+            left="-15px"
+            cursor="auto"
+            bg="white"
+            w={7}
+            h={7}
+            borderRadius="full"
+          />
+          <WithTooltip
+            standalone
+            icon={WarningIcon}
+            label={
+              'Take notice: There is another colliding block in this day in another area with the same age group, sex group and custom parameter.'
+            }
+            position="absolute"
+            top="-15px"
+            left="-15px"
+            cursor="auto"
+            iconProps={{ color: 'yellow.500', width: 7, height: 7 }}
+          />
+        </>
+      )}
       {!detailMode && (
         <>
           {value.startTime && (
@@ -103,6 +135,7 @@ Block.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   index: PropTypes.number,
+  error: PropTypes.string,
 };
 
 export default Block;

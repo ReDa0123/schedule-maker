@@ -5,6 +5,7 @@ import { useDetailBlocksInArea } from './useDetailBlocksInArea';
 import { useAreaColumn } from './useAreaColumn';
 import { useFieldArrayProps } from './useFieldArrayProps';
 import { useSelectedVersion } from './useSelectedVersion';
+import { useBlockWarning } from './useBlockWarning';
 
 export {
   useEditBlocksInArea,
@@ -14,4 +15,5 @@ export {
   useAreaColumn,
   useFieldArrayProps,
   useSelectedVersion,
+  useBlockWarning,
 };
