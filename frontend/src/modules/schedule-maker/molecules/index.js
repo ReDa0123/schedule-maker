@@ -12,6 +12,7 @@ import AddDay from './AddDay';
 import CreateVersionForm from './CreateVersionForm';
 import VersionModal from './VersionModal';
 import DeleteVersion from './DeleteVersion';
+import SetMainVersionButton from './SetMainVersionButton';
 
 export {
   BlockForm,
@@ -28,4 +29,5 @@ export {
   CreateVersionForm,
   VersionModal,
   DeleteVersion,
+  SetMainVersionButton,
 };

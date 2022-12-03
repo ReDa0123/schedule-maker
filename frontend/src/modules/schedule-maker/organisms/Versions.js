@@ -1,16 +1,16 @@
-import { Flex, useToast, Button } from 'src/shared/design-system';
-import { useTournamentSchedule } from '../hooks';
+import { Flex, useToast } from 'src/shared/design-system';
+import { useSelectedVersion, useTournamentSchedule } from '../hooks';
 import { FormSelect } from 'src/shared/react-hook-form/molecules';
 import { useCallback, useMemo } from 'react';
 import { convertValuesToLabelValueObj } from 'src/shared/utils';
 import { find, o, prop, propEq } from 'ramda';
 import { isNilOrEmpty } from 'ramda-extension';
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { gql, useMutation } from '@apollo/client';
 import { convertBlocksForSending } from '../utils/blocks';
-import { VersionModal } from '../molecules';
+import { SetMainVersionButton, VersionModal } from '../molecules';
 import DeleteVersion from '../molecules/DeleteVersion';
-import { SCHEDULE_FORM_NAME, SCHEDULE_FORM_VERSION_NAME } from '../constants';
+import { SCHEDULE_FORM_NAME } from '../constants';
 
 const CREATE_NEW_VERSION_WITH_BLOCKS = gql`
   mutation CreateVersionWithBlocks(
@@ -28,12 +28,6 @@ const CREATE_NEW_VERSION_WITH_BLOCKS = gql`
   }
 `;
 
-const SET_MAIN_VERSION = gql`
-  mutation SetMainVersion($tournamentId: Int!, $versionId: Int!) {
-    setMainVersion(tournamentId: $tournamentId, versionId: $versionId)
-  }
-`;
-
 const EDIT_VERSION = gql`
   mutation EditVersion($name: String!, $versionId: Int!) {
     editVersion(name: $name, versionId: $versionId)
@@ -44,12 +38,10 @@ const Versions = () => {
   const {
     versions,
     refetch,
-    tournament: { tournamentId },
+    tournament: { tournamentId, versionId },
   } = useTournamentSchedule();
   const { toastFn } = useToast();
-  const selectedVersion = useWatch({
-    name: SCHEDULE_FORM_VERSION_NAME,
-  });
+  const selectedVersion = useSelectedVersion();
   const { getValues } = useFormContext();
 
   const [createVersionRequest] = useMutation(CREATE_NEW_VERSION_WITH_BLOCKS, {
@@ -67,24 +59,6 @@ const Versions = () => {
       });
     },
   });
-
-  const [setMainVersionRequest, setMainVersionState] = useMutation(
-    SET_MAIN_VERSION,
-    {
-      onCompleted: ({ setMainVersion: title }) => {
-        toastFn({
-          title,
-          status: 'success',
-        });
-      },
-      onError: ({ message: title }) => {
-        toastFn({
-          title,
-          status: 'error',
-        });
-      },
-    }
-  );
 
   const [editVersionRequest] = useMutation(EDIT_VERSION, {
     onCompleted: ({ editVersion: title }) => {
@@ -150,23 +124,11 @@ const Versions = () => {
             label="Versions"
             createEmptyOption={false}
           />
-          <Button
-            onClick={async () => {
-              const selectedVersion = Number(
-                getValues(SCHEDULE_FORM_VERSION_NAME)
-              );
-              await setMainVersionRequest({
-                variables: {
-                  versionId: selectedVersion,
-                  tournamentId: Number(tournamentId),
-                },
-              });
-            }}
-            isLoading={setMainVersionState?.loading}
-            variant="outline"
-          >
-            Set as main version
-          </Button>
+          <SetMainVersionButton
+            tournamentId={Number(tournamentId)}
+            selectedVersion={selectedVersion}
+            versionId={versionId}
+          />
           <VersionModal
             onSubmit={onEditSubmit}
             edit
