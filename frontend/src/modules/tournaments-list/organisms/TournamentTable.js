@@ -8,12 +8,13 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import { useTable, useGlobalFilter } from 'react-table';
+import { useTable, useGlobalFilter, usePagination } from 'react-table';
 import { NameCell, TournamentListHeading } from '../atoms';
 import PropTypes from 'prop-types';
 import { ActionLinksCell } from '../molecules';
 import { format } from 'date-fns';
 import { convertStringToDate } from 'src/shared/utils';
+import { Pagination } from 'src/shared/react-table';
 
 const columns = [
   {
@@ -52,12 +53,23 @@ function TournamentTable({ data, setFilter }) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize, globalFilter },
     prepareRow,
-    state,
     setGlobalFilter,
-  } = useTable({ columns, data }, useGlobalFilter);
-  const { globalFilter } = state;
+  } = useTable(
+    { columns, data, initialState: { pageIndex: 0, pageSize: 10 } },
+    useGlobalFilter,
+    usePagination
+  );
 
   useEffect(() => {
     setFilter({
@@ -86,7 +98,7 @@ function TournamentTable({ data, setFilter }) {
             ))}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
                 <Tr key={row.id}>
@@ -102,6 +114,20 @@ function TournamentTable({ data, setFilter }) {
             })}
           </Tbody>
         </Table>
+        <Pagination
+          {...{
+            canPreviousPage,
+            canNextPage,
+            pageOptions,
+            pageCount,
+            gotoPage,
+            nextPage,
+            previousPage,
+            pageIndex,
+            pageSize,
+            setPageSize,
+          }}
+        />
       </TableContainer>
     </>
   );
