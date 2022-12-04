@@ -80,7 +80,7 @@ const SignUp = () => {
       <FormInput
         name="password"
         label="Password"
-        helperText="Choose your password. The length should be between 6 and 16 characters"
+        helperText="Choose your password. The length should be between 6 and 32 characters"
         type="password"
         onChange={async () => {
           if (repeatPassword !== '') {

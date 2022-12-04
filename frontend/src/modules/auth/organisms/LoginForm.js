@@ -7,6 +7,7 @@ import {
   FormSubmitButton,
 } from 'src/shared/react-hook-form/molecules';
 import PropTypes from 'prop-types';
+import ResetPasswordLink from '../atoms/ResetPasswordLink';
 
 const defaultValues = {
   email: '',
@@ -41,6 +42,7 @@ const LoginForm = ({ onSubmit }) => (
         helperText="Fill in your password"
         type="password"
       />
+      <ResetPasswordLink />
       <FormSubmitButton title="Login" showAlert />
     </Flex>
   </Form>
