@@ -1,6 +1,6 @@
 import { applySpec, o, prop } from 'ramda';
 import { format } from 'date-fns';
-import { convertPropToDate } from '../../shared/utils';
+import { convertPropToDate, nilIfEmptyProp } from '../../shared/utils';
 import { gql } from '@apollo/client';
 
 export const convertValuesForSending = applySpec({
@@ -14,6 +14,7 @@ export const convertValuesForSending = applySpec({
   ),
   name: prop('name'),
   location: prop('location'),
+  preferredStyle: nilIfEmptyProp('preferredStyle'),
 });
 
 export const CREATE_TOURNAMENT_MUTATION = gql`

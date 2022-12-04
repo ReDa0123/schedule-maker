@@ -2,6 +2,8 @@ import { keyMirror } from 'ramda-extension';
 
 export const tournamentStyles = keyMirror({
   TEST: null,
+  SPIDER: null,
+  EPIC: null,
 });
 
 export const BLOCK_SCALE = 35;

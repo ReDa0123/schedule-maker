@@ -98,6 +98,7 @@ FormSelect.propTypes = {
   inputProps: PropTypes.object,
   control: PropTypes.object,
   createEmptyOption: PropTypes.bool,
+  value: PropTypes.string,
 };
 
 export default FormSelect;

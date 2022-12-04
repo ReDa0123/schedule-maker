@@ -1,5 +1,4 @@
-import { compose, multiply, o, pluck, prop, uniq, values } from 'ramda';
-import { MINUTES_IN_BLOCK } from '../constants';
+import { compose, pluck, prop, uniq, values } from 'ramda';
 import {
   convertPropToNumberIfNotNil,
   convertValuesToLabelValueObj,
@@ -7,6 +6,7 @@ import {
   nilIfEmptyProp,
 } from 'src/shared/utils';
 import { rejectNil } from 'ramda-extension';
+import { formulas } from './blockDurationFormulas';
 
 export const minutesToTime = (minutes) => {
   const hours = Math.floor(minutes / 60);
@@ -14,10 +14,11 @@ export const minutesToTime = (minutes) => {
   return `${hours < 10 ? '0' : ''}${hours}:${mins < 10 ? '0' : ''}${mins}`;
 };
 
-export const calculateDuration = o(multiply(MINUTES_IN_BLOCK), prop('persons'));
+export const calculateDuration = ({ persons, style }) =>
+  formulas[style](persons);
 
-export const calculateEndTime = ({ startTime, persons }) =>
-  calculateDuration({ persons }) + startTime;
+export const calculateEndTime = ({ startTime, persons, style }) =>
+  calculateDuration({ persons, style }) + startTime;
 
 export const convertBlocksForSending = mapplySpec({
   startTime: convertPropToNumberIfNotNil('startTime'),

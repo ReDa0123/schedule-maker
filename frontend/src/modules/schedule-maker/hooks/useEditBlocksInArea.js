@@ -26,7 +26,7 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
       o(
         mapplySpec({
           startTime: prop('startTime'),
-          endTime: o(calculateEndTime, pick(['startTime', 'persons'])),
+          endTime: o(calculateEndTime, pick(['startTime', 'persons', 'style'])),
           blockId: prop('blockId'),
         }),
         filter(

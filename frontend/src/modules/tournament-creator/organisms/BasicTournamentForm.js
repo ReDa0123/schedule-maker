@@ -2,11 +2,15 @@ import { Form } from 'src/shared/react-hook-form/organisms';
 import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import {
   FormInput,
+  FormSelect,
   FormSubmitButton,
 } from 'src/shared/react-hook-form/molecules';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import { Grid } from '@chakra-ui/react';
+import { tournamentStyles } from '../../schedule-maker/constants';
+import { o, values } from 'ramda';
+import { convertValuesToLabelValueObj } from 'src/shared/utils';
 
 const validationSchema = yup.object().shape({
   name: yup
@@ -35,6 +39,10 @@ const validationSchema = yup.object().shape({
       test: (value, ctx) =>
         isNaN(ctx.parent.startDate) ? true : value >= ctx.parent.startDate,
     }),
+  preferredStyle: yup
+    .string()
+    .max(50)
+    .oneOf([...values(tournamentStyles), '']),
 });
 
 const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
@@ -46,6 +54,7 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
         location: defaultValues?.location || '',
         startDate: defaultValues?.startDate || '',
         endDate: defaultValues?.endDate || '',
+        preferredStyle: defaultValues?.preferredStyle || '',
       }}
       resolver={yupResolver(validationSchema)}
       mode="onChange"
@@ -61,6 +70,16 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
         <FormInput name={'location'} label={'Location'} />
         <FormInput name={'startDate'} label={'Start date'} type={'date'} />
         <FormInput name={'endDate'} label={'End date'} type={'date'} />
+        {defaultValues && (
+          <FormSelect
+            name="preferredStyle"
+            label={'Prefered style'}
+            options={o(
+              convertValuesToLabelValueObj(),
+              values
+            )(tournamentStyles)}
+          />
+        )}
         <FormSubmitButton title={'Save'} showAlert />
       </Grid>
     </Form>
@@ -70,6 +89,7 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
 BasicTournamentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   defaultValues: PropTypes.object,
+  tournament: PropTypes.object,
 };
 
 export default BasicTournamentForm;

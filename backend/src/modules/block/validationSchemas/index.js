@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { STYLES } from '../../constants';
 
 export const getBlockValidationSchema = ({
   sportIds,
@@ -9,8 +10,7 @@ export const getBlockValidationSchema = ({
   yup.object().shape({
     startTime: yup.number().integer().positive().max(1440).nullable(true),
     persons: yup.number().integer().positive().required(),
-    //TODO: style is one of predefined values
-    style: yup.string().required(),
+    style: yup.string().required().oneOf(STYLES),
     category: yup.string().max(50).nullable(true),
     sex: yup.string().oneOf(['M', 'F', null]).nullable(true),
     age: yup.string().required().max(50),

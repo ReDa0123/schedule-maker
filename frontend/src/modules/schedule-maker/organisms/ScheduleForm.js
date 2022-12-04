@@ -19,7 +19,7 @@ import BlockWarningContext from '../contexts/BlockWarningContext';
 const ScheduleFormContent = () => {
   const { append } = useFieldArrayProps();
   const {
-    tournament: { tournamentId },
+    tournament: { tournamentId, preferredStyle },
   } = useTournamentSchedule();
 
   const onBlockFormSubmit = useCallback(
@@ -28,6 +28,8 @@ const ScheduleFormContent = () => {
     },
     [append]
   );
+
+  const defaultValues = { style: preferredStyle };
 
   return (
     <Flex gap={4} flexDir="column" w="100%">
@@ -44,7 +46,7 @@ const ScheduleFormContent = () => {
         >
           <Button>Edit tournament</Button>
         </RouterLink>
-        <BlockForm onSubmit={onBlockFormSubmit} />
+        <BlockForm onSubmit={onBlockFormSubmit} defaultValues={defaultValues} />
         <Heading fontSize={24}>Not assigned blocks</Heading>
       </ContentBox>
       <NotAssignedBlocks />

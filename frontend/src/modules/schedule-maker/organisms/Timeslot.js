@@ -38,10 +38,11 @@ const TimeslotDrop = ({
   );
 
   const canDropFn = useCallback(
-    ({ value: { persons, blockId } }) => {
+    ({ value: { persons, blockId, style } }) => {
       const endTimeOfDraggedBlock = calculateEndTime({
         startTime: timeslot,
         persons,
+        style,
       });
       const isOverlapping = startTimesInThisDayAndArena.some(
         ({ startTime, endTime, blockId: checkedBlockId }) =>
