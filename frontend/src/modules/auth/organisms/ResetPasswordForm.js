@@ -20,7 +20,11 @@ const ResetPasswordForm = ({ onSubmit }) => {
       }}
       resolver={yupResolver(validationSchema)}
     >
-      <FormInput name={'email'} placeholder="Enter your email address" />
+      <FormInput
+        label="Email address"
+        name={'email'}
+        placeholder="Enter your email address"
+      />
       <FormSubmitButton title={'Reset password'} />
     </Form>
   );
