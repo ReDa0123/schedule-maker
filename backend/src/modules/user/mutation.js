@@ -1,6 +1,6 @@
 import * as argon2 from 'argon2';
 import { createToken } from '../../libs/token';
-import sendResetEmail from './password_reset_mailer';
+import sendResetEmail from './passwordResetMailer';
 import {
   emailPasswordValidationSchema,
   emailValidationSchema,
@@ -86,10 +86,7 @@ export const requestPasswordReset = async (_, { email }, { dbConnection }) => {
 
     requestedPasswordResetsMap.set(email, passwordCode);
     console.log(
-      'Starting email reset procedure for ' +
-        email +
-        ', was set to ' +
-        passwordCode
+      `Starting email reset procedure for ${email}, was set to ${passwordCode}`
     );
     sendResetEmail(email, passwordCode);
 

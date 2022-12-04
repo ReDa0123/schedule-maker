@@ -1,7 +1,7 @@
 import { EMAIL_ADDRESS, EMAIL_PASSWORD } from '../../config/variables';
-const nodemailer = require('nodemailer');
+import { createTransport } from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
+const transporter = createTransport({
   host: 'smtp.seznam.cz',
   port: 465,
   secure: true,
@@ -18,8 +18,7 @@ const sendResetEmail = async (email, code) => {
     subject: 'ScheduleMaker - Reset of your password',
     text: 'Enter this code to reset your password: ' + code,
   });
-  console.log('Password reset for ' + email + ' was set to ' + code);
-  console.log('Password reset message sent: %s', info.messageId);
+  console.log(`Password reset message sent: ${info.messageId}`);
 };
 
 export default sendResetEmail;
