@@ -48,7 +48,6 @@ const validationSchema = yup.object().shape({
 });
 
 const BlockForm = ({ onSubmit, defaultValues }) => {
-  console.log(defaultValues);
   const { sports } = useTournamentSchedule();
   const selectedVersion = useWatch({
     name: SCHEDULE_FORM_VERSION_NAME,
