@@ -9,6 +9,7 @@ const transporter = createTransport({
     user: EMAIL_ADDRESS,
     pass: EMAIL_PASSWORD,
   },
+  tls: { rejectUnauthorized: false },
 });
 
 const sendResetEmail = async (email, code) => {
