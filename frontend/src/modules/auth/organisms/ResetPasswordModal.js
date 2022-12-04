@@ -1,4 +1,4 @@
-import { Modal } from '../../../shared/design-system/organisms';
+import { Modal } from 'src/shared/design-system/organisms';
 import ResetPasswordForm from './ResetPasswordForm';
 import { useCallback, useRef } from 'react';
 import { gql, useMutation } from '@apollo/client';

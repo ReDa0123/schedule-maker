@@ -110,13 +110,15 @@ const Block = ({ value, onChange, index, ...props }) => {
         </>
       )}
       <Flex gap={2}>
-        <TimeTag time={blockDuration} />
+        <TimeTag time={Math.round(blockDuration * 10) / 10} />
         <PersonsTag numberOfPersons={value.persons} sex={value.sex} />
       </Flex>
       <Box color="blue.500" fontWeight="500">
-        <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-          {sportsName} - {value.age}
-        </Box>
+        {blockDuration >= 10 && (
+          <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
+            {sportsName} - {value.age}
+          </Box>
+        )}
         {blockDuration >= 15 && (
           <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
             {value.category}

@@ -88,7 +88,7 @@ export const requestPasswordReset = async (_, { email }, { dbConnection }) => {
     console.log(
       `Starting email reset procedure for ${email}, was set to ${passwordCode}`
     );
-    sendResetEmail(email, passwordCode);
+    await sendResetEmail(email, passwordCode);
 
     return 'Password reset email will be sent!';
   } else {
@@ -110,15 +110,15 @@ export const passwordReset = async (
         email,
       ]);
       requestedPasswordResetsMap.delete(email);
-      console.log(
-        'Password for ' + email + ' was successfully reseted to a new one!'
-      );
-      return 'Password was successfully reseted!';
+      console.log(`Password for ${email} was successfully reset to a new one!`);
+      return 'Password was successfully reset!';
     } else {
       requestedPasswordResetsMap.delete(email);
-      throw new Error('The inserted code is wrong!');
+      throw new Error(
+        'The inserted code is wrong! You will have to request a new one!'
+      );
     }
   } else {
-    throw new Error('Password reset for ' + email + ' was not requested!');
+    throw new Error(`Password reset for ${email} was not requested!`);
   }
 };

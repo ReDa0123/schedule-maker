@@ -1,4 +1,4 @@
-import { Modal } from '../../../shared/design-system/organisms';
+import { Modal } from 'src/shared/design-system/organisms';
 import PropTypes from 'prop-types';
 import ConfirmPasswordResetForm from './ConfirmPasswordResetForm';
 import { useCallback } from 'react';
@@ -30,7 +30,7 @@ export const ConfirmPasswordResetModal = ({
     onError: ({ message }) => {
       toastFn({
         title: message,
-        satus: 'error',
+        status: 'error',
       });
     },
   });
@@ -46,9 +46,7 @@ export const ConfirmPasswordResetModal = ({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      onOpen={() => {
-        onOpen();
-      }}
+      onOpen={onOpen}
       title="Reset password"
       modalBody={
         <ConfirmPasswordResetForm email={email.current} onSubmit={onSubmit} />

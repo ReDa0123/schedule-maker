@@ -61,6 +61,7 @@ export {
   Text,
   Textarea,
   Tooltip,
+  VStack,
 } from '@chakra-ui/react';
 
 export { Button } from './Button';

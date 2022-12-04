@@ -1,4 +1,4 @@
-import { Link, useDisclosure } from '@chakra-ui/react';
+import { Link, useDisclosure } from 'src/shared/design-system';
 import ResetPasswordModal from '../organisms/ResetPasswordModal';
 
 const ResetPasswordLink = () => {
@@ -6,7 +6,7 @@ const ResetPasswordLink = () => {
   return (
     <>
       <Link color="gray.500" onClick={onOpen}>
-        I forgot my passwerd
+        I forgot my password
       </Link>
       <ResetPasswordModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
     </>

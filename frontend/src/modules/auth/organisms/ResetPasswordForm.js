@@ -1,10 +1,10 @@
-import FormSubmitButton from '../../../shared/react-hook-form/molecules/FormSubmitButton';
-import { FormInput } from '../../../shared/react-hook-form/molecules';
-import { Form } from '../../../shared/react-hook-form/organisms';
+import FormSubmitButton from 'src/shared/react-hook-form/molecules/FormSubmitButton';
+import { FormInput } from 'src/shared/react-hook-form/molecules';
+import { Form } from 'src/shared/react-hook-form/organisms';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
-import { VStack } from '@chakra-ui/react';
+import { VStack } from 'src/shared/design-system';
 
 const validationSchema = yup.object().shape({
   email: yup
