@@ -75,7 +75,6 @@ const Versions = () => {
       });
     },
   });
-
   const onNewSubmit = useCallback(
     async ({ name }) => {
       const from = isNilOrEmpty(selectedVersion)

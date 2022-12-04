@@ -30,7 +30,8 @@ const validationSchema = yup.object().shape({
   style: yup
     .string()
     .required('Please specify the style of the competition')
-    .max(50, `Style can't be longer than 50 characters`),
+    .max(50, `Style can't be longer than 50 characters`)
+    .oneOf(values(tournamentStyles), 'Style must be from predetermined array'),
   sportId: yup
     .number()
     .typeError('Please select sport')
@@ -47,6 +48,7 @@ const validationSchema = yup.object().shape({
 });
 
 const BlockForm = ({ onSubmit, defaultValues }) => {
+  console.log(defaultValues);
   const { sports } = useTournamentSchedule();
   const selectedVersion = useWatch({
     name: SCHEDULE_FORM_VERSION_NAME,
@@ -93,7 +95,6 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
     errors,
     isValid,
   });
-
   return (
     <>
       <Heading fontSize={24} mb={4}>
@@ -113,11 +114,13 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
           name="persons"
           label="Persons"
           type="number"
+          disabled={!isNilOrEmpty(defaultValues?.startTime)}
           control={control}
         />
         <FormSelect
           name="style"
           label="Style"
+          disabled={!isNilOrEmpty(defaultValues?.startTime)}
           control={control}
           options={values(tournamentStyles).map((style) => ({
             value: style,
@@ -173,6 +176,7 @@ BlockForm.propTypes = {
     age: PropTypes.string,
     customParameter: PropTypes.string,
     sex: PropTypes.string,
+    startTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
 };
 

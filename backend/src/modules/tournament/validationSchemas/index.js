@@ -1,6 +1,11 @@
 import * as yup from 'yup';
+import { STYLES } from '../../constants';
 
 export const newTournamentValidationSchema = yup.object().shape({
+  preferredStyle: yup
+    .string()
+    .oneOf([...STYLES, null])
+    .nullable(),
   name: yup.string().required().max(50),
   location: yup.string().required().max(50),
   startDate: yup

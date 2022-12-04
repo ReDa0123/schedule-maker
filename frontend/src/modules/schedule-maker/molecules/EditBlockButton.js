@@ -7,7 +7,6 @@ import { EditBlockModal } from '../organisms';
 const EditBlockButton = ({ editBlock, block }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { toastFn } = useToast();
-
   return (
     <>
       <WithTooltip label={'Edit block'}>
