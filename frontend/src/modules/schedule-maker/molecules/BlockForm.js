@@ -31,7 +31,7 @@ const validationSchema = yup.object().shape({
     .string()
     .required('Please specify the style of the competition')
     .max(50, `Style can't be longer than 50 characters`)
-    .oneOf(values(tournamentStyles), 'Style must be from predetermined array'),
+    .oneOf(tournamentStyles, 'Style must be from predetermined array'),
   sportId: yup
     .number()
     .typeError('Please select sport')
@@ -121,7 +121,7 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
           label="Style"
           disabled={!isNilOrEmpty(defaultValues?.startTime)}
           control={control}
-          options={values(tournamentStyles).map((style) => ({
+          options={tournamentStyles.map((style) => ({
             value: style,
             label: style,
           }))}
