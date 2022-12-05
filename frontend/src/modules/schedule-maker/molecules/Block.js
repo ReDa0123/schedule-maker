@@ -45,7 +45,7 @@ const Block = ({ value, onChange, index, ...props }) => {
       h={`${
         (blockDuration / MINUTES_IN_BLOCK) * BLOCK_SCALE - BLOCK_OFFSET * 2
       }px`}
-      w={{ md: '250px', base: '200px' }}
+      w={{ md: '275px', base: '200px' }}
       borderWidth={2}
       borderColor={warning ? 'yellow.500' : 'blue.500'}
       p={2}
