@@ -26,6 +26,7 @@ const validationSchema = yup.object().shape({
   startDate: yup
     .date()
     .required('Please enter tournament start date')
+    .typeError('Please enter tournament start date')
     .test({
       name: 'startDate-before-endDate',
       message: 'Start date must be before end date',
@@ -35,6 +36,7 @@ const validationSchema = yup.object().shape({
   endDate: yup
     .date()
     .required('Please enter tournament end date')
+    .typeError('Please enter tournament end date')
     .test({
       name: 'endDate-after-startDate',
       message: 'End date must be after start date',
