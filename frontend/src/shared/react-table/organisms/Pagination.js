@@ -14,7 +14,17 @@ const Pagination = ({
   pageSize,
 }) => {
   return (
-    <Flex justifyContent="center" alignItems="center" width="100%" paddingY={2}>
+    <Flex
+      flexDirection={{
+        md: 'row',
+        base: 'column',
+      }}
+      justifyContent="center"
+      alignItems="center"
+      width="100%"
+      paddingY={2}
+      gap={2}
+    >
       <Flex gap={2} justifyContent="flex-start" alignItems="center" flex={1}>
         <Text>Items per page: </Text>
         <Select
@@ -72,7 +82,13 @@ const Pagination = ({
           {'>>'}
         </Button>
       </Flex>
-      <Flex flex={1} />
+      <Flex
+        flex={1}
+        display={{
+          md: 'flex',
+          base: 'none',
+        }}
+      />
     </Flex>
   );
 };

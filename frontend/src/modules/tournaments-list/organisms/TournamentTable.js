@@ -86,7 +86,7 @@ function TournamentTable({ data, setFilter }) {
       </TournamentListHeading>
 
       <TableContainer>
-        <Table variant="simple" {...getTableProps()}>
+        <Table variant="simple" {...getTableProps()} w="1000px">
           <Thead>
             {headerGroups.map((group, index) => (
               // eslint-disable-next-line react/no-array-index-key
@@ -114,21 +114,21 @@ function TournamentTable({ data, setFilter }) {
             })}
           </Tbody>
         </Table>
-        <Pagination
-          {...{
-            canPreviousPage,
-            canNextPage,
-            pageOptions,
-            pageCount,
-            gotoPage,
-            nextPage,
-            previousPage,
-            pageIndex,
-            pageSize,
-            setPageSize,
-          }}
-        />
       </TableContainer>
+      <Pagination
+        {...{
+          canPreviousPage,
+          canNextPage,
+          pageOptions,
+          pageCount,
+          gotoPage,
+          nextPage,
+          previousPage,
+          pageIndex,
+          pageSize,
+          setPageSize,
+        }}
+      />
     </>
   );
 }

@@ -157,7 +157,7 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
       </Grid>
       <Flex justifyContent="center">
         <Button onClick={onClickButton} marginBlock={4} disabled={isSubmitting}>
-          {defaultValues ? 'Edit' : 'Create'}
+          {defaultValues?.blockId ? 'Edit' : 'Create'}
         </Button>
       </Flex>
     </>
