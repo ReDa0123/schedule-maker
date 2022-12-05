@@ -1,6 +1,6 @@
 import { useWatch, Controller } from 'react-hook-form';
 import { useMemo } from 'react';
-import { allPass, filter, o, pick, prop, propEq } from 'ramda';
+import { allPass, filter, o, prop, propEq } from 'ramda';
 import { calculateEndTime } from '../utils/blocks';
 import { Block } from '../molecules';
 import {
@@ -10,10 +10,17 @@ import {
   SCHEDULE_FORM_NAME,
   TABLE_TOP_PADDING,
 } from '../constants';
-import { useFieldArrayProps, useSelectedVersion } from './';
+import {
+  useFieldArrayProps,
+  useSelectedVersion,
+  useTournamentSchedule,
+} from './';
 import { mapplySpec } from 'src/shared/utils';
 
 export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
+  const {
+    tournament: { buffer },
+  } = useTournamentSchedule();
   const { fields } = useFieldArrayProps();
   const values = useWatch({
     name: SCHEDULE_FORM_NAME,
@@ -26,7 +33,7 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
       o(
         mapplySpec({
           startTime: prop('startTime'),
-          endTime: o(calculateEndTime, pick(['startTime', 'persons', 'style'])),
+          endTime: (value) => calculateEndTime(value, buffer),
           blockId: prop('blockId'),
         }),
         filter(
@@ -37,7 +44,7 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
           ])
         )
       )(values),
-    [values, areaId, dayId, selectedVersion]
+    [values, areaId, dayId, selectedVersion, buffer]
   );
 
   return {

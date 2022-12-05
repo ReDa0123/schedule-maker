@@ -15,6 +15,7 @@ const TimeslotDrop = ({
   dayId,
   areaId,
   startTimesInThisDayAndArena,
+  buffer,
 }) => {
   const [dropPreview, setDropPreview] = useState(null);
   const onDrop = useCallback(
@@ -39,11 +40,14 @@ const TimeslotDrop = ({
 
   const canDropFn = useCallback(
     ({ value: { persons, blockId, style } }) => {
-      const endTimeOfDraggedBlock = calculateEndTime({
-        startTime: timeslot,
-        persons,
-        style,
-      });
+      const endTimeOfDraggedBlock = calculateEndTime(
+        {
+          startTime: timeslot,
+          persons,
+          style,
+        },
+        buffer
+      );
       const isOverlapping = startTimesInThisDayAndArena.some(
         ({ startTime, endTime, blockId: checkedBlockId }) =>
           (between(startTime, endTime, endTimeOfDraggedBlock - 0.01) ||
@@ -52,7 +56,7 @@ const TimeslotDrop = ({
       );
       return endTimeOfDraggedBlock <= dayEnd && !isOverlapping;
     },
-    [startTimesInThisDayAndArena, timeslot, dayEnd]
+    [startTimesInThisDayAndArena, timeslot, dayEnd, buffer]
   );
 
   const [{ isOver, canDrop }, drop] = useDrop({
@@ -91,7 +95,10 @@ const TimeslotDrop = ({
 
 const Timeslot = (props) => {
   const { timeslot } = props;
-  const { detailMode } = useTournamentSchedule();
+  const {
+    detailMode,
+    tournament: { buffer },
+  } = useTournamentSchedule();
   const refForView = useRef(null);
   const isInView = useIsInViewport(refForView);
   const topBorder = useMemo(() => {
@@ -119,7 +126,7 @@ const Timeslot = (props) => {
       borderTopWidth="2px"
       {...topBorder}
     >
-      {!detailMode && isInView && <TimeslotDrop {...props} />}
+      {!detailMode && isInView && <TimeslotDrop {...props} buffer={buffer} />}
     </Box>
   );
 };
@@ -134,6 +141,7 @@ TimeslotDrop.propTypes = {
   dayId: PropTypes.number.isRequired,
   areaId: PropTypes.number.isRequired,
   startTimesInThisDayAndArena: PropTypes.array.isRequired,
+  buffer: PropTypes.number.isRequired,
 };
 
 export default memo(Timeslot);
