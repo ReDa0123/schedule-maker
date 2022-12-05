@@ -9,7 +9,6 @@ import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import { Grid } from '@chakra-ui/react';
 import { tournamentStyles } from '../../schedule-maker/constants';
-import { o, values } from 'ramda';
 import { convertValuesToLabelValueObj } from 'src/shared/utils';
 
 const bufferOptions = ['0.0', '0.01', '0.05', '0.1', '0.25', '0.5'];
@@ -45,7 +44,7 @@ const validationSchema = yup.object().shape({
   preferredStyle: yup
     .string()
     .max(50)
-    .oneOf([...values(tournamentStyles), '']),
+    .oneOf([...tournamentStyles, '']),
   buffer: yup.mixed().oneOf([...bufferOptions, ...bufferOptionsNumber, '']),
 });
 
@@ -89,10 +88,7 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
             <FormSelect
               name="preferredStyle"
               label={'Preferred style'}
-              options={o(
-                convertValuesToLabelValueObj(),
-                values
-              )(tournamentStyles)}
+              options={convertValuesToLabelValueObj()(tournamentStyles)}
             />
           </>
         )}

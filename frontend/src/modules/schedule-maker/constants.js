@@ -1,10 +1,18 @@
 import { keyMirror } from 'ramda-extension';
 
-export const tournamentStyles = keyMirror({
-  TEST: null,
-  SPIDER: null,
-  EPIC: null,
-});
+export const INDIVIDUAL_TYPE = 'Individual performances';
+export const SINGLE_TYPE = 'Single elimination';
+export const DOUBLE_TYPE = 'Double elimination';
+export const THREE_GAME_TYPE = '3 Game guarantee';
+export const ROBIN_TYPE = 'Round robin';
+
+export const tournamentStyles = [
+  INDIVIDUAL_TYPE,
+  SINGLE_TYPE,
+  DOUBLE_TYPE,
+  THREE_GAME_TYPE,
+  ROBIN_TYPE,
+];
 
 export const BLOCK_SCALE = 35;
 
