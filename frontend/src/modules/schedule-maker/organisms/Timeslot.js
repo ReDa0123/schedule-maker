@@ -85,7 +85,7 @@ const TimeslotDrop = ({
         <Block
           value={dropPreview}
           pointerEvents="none"
-          opacity="0.4"
+          opacity="0.8"
           marginX="auto"
         />
       )}
