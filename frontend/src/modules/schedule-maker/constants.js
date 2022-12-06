@@ -32,3 +32,7 @@ export const SCHEDULE_FORM_NAME = 'schedule';
 export const SCHEDULE_FORM_VERSION_NAME = 'selectedVersion';
 
 export const BLOCK_DND_NAME = 'block';
+
+export const SCHEDULE_AGENDA_DISPLAY = 'agenda';
+
+export const SCHEDULE_DETAILED_DISPLAY = 'detailed';

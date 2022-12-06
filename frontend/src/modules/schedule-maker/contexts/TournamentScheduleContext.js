@@ -1,7 +1,7 @@
 import { createContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { omit } from 'ramda';
-import { defaultToEmptyObject } from 'ramda-extension';
+import { omit, sort } from 'ramda';
+import { defaultToEmptyObject, defaultToZero } from 'ramda-extension';
 
 export const tournamentScheduleContext = createContext(null);
 
@@ -15,7 +15,11 @@ const TournamentScheduleContext = ({ children, tournament, edit, refetch }) => {
         defaultToEmptyObject(tournament)
       ),
       detailMode: !edit,
-      blocks: tournament?.blocks,
+      blocks: tournament
+        ? sort(
+            (a, b) => defaultToZero(a.startTime) - defaultToZero(b.startTime)
+          )(tournament.blocks)
+        : [],
       days: tournament?.days,
       sports: tournament?.sports,
       areas: tournament?.areas,

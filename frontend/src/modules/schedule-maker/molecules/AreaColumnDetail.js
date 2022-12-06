@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
 import { Box } from 'src/shared/design-system';
 import { Timeslot } from '../organisms';
-import { useAreaColumn, useDetailBlocksInArea } from '../hooks';
-import { TABLE_TOP_PADDING } from '../constants';
+import {
+  useAreaColumn,
+  useDetailBlocksInArea,
+  useScheduleDisplayMode,
+} from '../hooks';
+import { SCHEDULE_DETAILED_DISPLAY, TABLE_TOP_PADDING } from '../constants';
 import { namePropCapitalize } from 'src/shared/utils';
+import { AgendaColumn } from './';
 
 const AreaColumnDetail = ({ area, startTime, endTime, dayId }) => {
   const { areaId } = area;
@@ -12,6 +17,7 @@ const AreaColumnDetail = ({ area, startTime, endTime, dayId }) => {
     areaId,
     startTime,
   });
+  const { displayMode } = useScheduleDisplayMode();
 
   const timeslots = useAreaColumn({ startTime, endTime });
   return (
@@ -21,21 +27,27 @@ const AreaColumnDetail = ({ area, startTime, endTime, dayId }) => {
       borderRightWidth="2px"
       position="relative"
     >
-      {blocksInArea}
       <Box h={`${TABLE_TOP_PADDING}px`} textAlign="center" fontWeight="500">
         {namePropCapitalize(area)}
       </Box>
-      <Box>
-        {timeslots.map((timeslot) => (
-          <Timeslot
-            key={timeslot}
-            timeslot={timeslot}
-            dayId={dayId}
-            areaId={areaId}
-            dayEnd={endTime}
-          />
-        ))}
-      </Box>
+      {displayMode === SCHEDULE_DETAILED_DISPLAY ? (
+        <>
+          {blocksInArea}
+          <Box>
+            {timeslots.map((timeslot) => (
+              <Timeslot
+                key={timeslot}
+                timeslot={timeslot}
+                dayId={dayId}
+                areaId={areaId}
+                dayEnd={endTime}
+              />
+            ))}
+          </Box>
+        </>
+      ) : (
+        <AgendaColumn>{blocksInArea}</AgendaColumn>
+      )}
     </Box>
   );
 };

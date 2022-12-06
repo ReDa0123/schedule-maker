@@ -42,3 +42,6 @@ export const propUniqAndConvertToLabelValueObj = (propName) =>
     values,
     pluck(propName)
   );
+
+export const roundToDecimal = (number, decimalPlaces) =>
+  Math.round(number * 10 ** decimalPlaces) / 10 ** decimalPlaces;

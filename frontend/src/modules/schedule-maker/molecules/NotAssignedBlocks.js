@@ -41,7 +41,12 @@ const NotAssignedBlocks = () => {
             key={field.id}
             name={`schedule.${index}`}
             render={({ field: { onChange, value } }) => (
-              <Block onChange={onChange} value={value} index={index} />
+              <Block
+                onChange={onChange}
+                value={value}
+                index={index}
+                isDetailedDisplay
+              />
             )}
           />
         )

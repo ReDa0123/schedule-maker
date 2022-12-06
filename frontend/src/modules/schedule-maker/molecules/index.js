@@ -13,6 +13,8 @@ import CreateVersionForm from './CreateVersionForm';
 import VersionModal from './VersionModal';
 import DeleteVersion from './DeleteVersion';
 import SetMainVersionButton from './SetMainVersionButton';
+import DisplayChangeButtons from './DisplayChangeButtons';
+import AgendaColumn from './AgendaColumn';
 
 export {
   BlockForm,
@@ -30,4 +32,6 @@ export {
   VersionModal,
   DeleteVersion,
   SetMainVersionButton,
+  DisplayChangeButtons,
+  AgendaColumn,
 };

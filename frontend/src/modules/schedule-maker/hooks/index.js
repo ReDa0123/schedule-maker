@@ -6,6 +6,7 @@ import { useAreaColumn } from './useAreaColumn';
 import { useFieldArrayProps } from './useFieldArrayProps';
 import { useSelectedVersion } from './useSelectedVersion';
 import { useBlockWarning } from './useBlockWarning';
+import { useScheduleDisplayMode } from './useScheduleDisplayMode';
 
 export {
   useEditBlocksInArea,
@@ -16,4 +17,5 @@ export {
   useFieldArrayProps,
   useSelectedVersion,
   useBlockWarning,
+  useScheduleDisplayMode,
 };

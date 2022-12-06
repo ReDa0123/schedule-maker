@@ -1,4 +1,4 @@
-import { useTournamentSchedule } from '../hooks';
+import { useScheduleDisplayMode, useTournamentSchedule } from '../hooks';
 import { Box, Flex } from 'src/shared/design-system';
 import PropTypes from 'prop-types';
 import {
@@ -10,10 +10,12 @@ import { useMemo } from 'react';
 import { DayResetButton } from '../organisms';
 import { isNilOrEmpty } from 'ramda-extension';
 import { Text } from '@chakra-ui/react';
-import { RouterLink } from '../../../shared/navigation';
-import { route } from '../../../Routes';
+import { RouterLink } from 'src/shared/navigation';
+import { route } from 'src/Routes';
+import { SCHEDULE_DETAILED_DISPLAY } from '../constants';
 
 const Schedule = ({ dayId, startTime, endTime }) => {
+  const { displayMode } = useScheduleDisplayMode();
   const {
     areas,
     detailMode,
@@ -37,7 +39,9 @@ const Schedule = ({ dayId, startTime, endTime }) => {
         position="relative"
       >
         {!detailMode && <DayResetButton dayId={dayId} />}
-        <ScheduleTimeColumn startTime={startTime} endTime={endTime} />
+        {displayMode === SCHEDULE_DETAILED_DISPLAY && (
+          <ScheduleTimeColumn startTime={startTime} endTime={endTime} />
+        )}
         {isNilOrEmpty(areas) ? (
           <Box w="100%" textAlign="center">
             There are no areas in this tournament yet.

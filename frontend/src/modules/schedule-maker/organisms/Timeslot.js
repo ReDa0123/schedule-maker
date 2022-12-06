@@ -77,6 +77,12 @@ const TimeslotDrop = ({
 
   useEffect(() => {
     if (!isOver) setDropPreview(null);
+    const interval = setInterval(() => {
+      if (!isOver) {
+        setDropPreview(null);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
   }, [isOver]);
 
   return (
@@ -87,6 +93,7 @@ const TimeslotDrop = ({
           pointerEvents="none"
           opacity="0.8"
           marginX="auto"
+          isDetailedDisplay
         />
       )}
     </Box>

@@ -4,6 +4,7 @@ import { useTournamentSchedule } from '../hooks';
 import SubHeader from 'src/shared/design-system/molecules/SubHeader';
 import PropTypes from 'prop-types';
 import { BigSpinner, ErrorText } from 'src/shared/design-system';
+import DisplayModeContext from '../contexts/DisplayModeContext';
 
 const ScheduleMakerTemplate = ({ isLoading, error }) => {
   const { detailMode } = useTournamentSchedule();
@@ -20,7 +21,9 @@ const ScheduleMakerTemplate = ({ isLoading, error }) => {
       ) : error ? (
         <ErrorText text={error.message} />
       ) : (
-        <ComponentToRender />
+        <DisplayModeContext>
+          <ComponentToRender />
+        </DisplayModeContext>
       )}
     </>
   );
