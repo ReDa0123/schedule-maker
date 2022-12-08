@@ -11,6 +11,7 @@ import {
 } from '../../design-system';
 import PropTypes from 'prop-types';
 import { useFormField } from '../hooks';
+import { identity } from 'ramda';
 
 const FormNumberInput = ({
   name,
@@ -28,6 +29,9 @@ const FormNumberInput = ({
   inputProps,
   control,
   step,
+  viewParser = identity,
+  changeParser = identity,
+  inputDisabled,
 }) => {
   const { isInvalid, field, fieldState, onBlurField, onChangeData } =
     useFormField({
@@ -55,11 +59,20 @@ const FormNumberInput = ({
         w="100%"
         {...inputProps}
         step={step}
+        format={viewParser}
+        parse={changeParser}
       >
         <NumberInputField
           borderWidth={2}
           borderColor="blue.500"
-          _hover={{ borderColor: 'blue.700' }}
+          _hover={{
+            borderColor: 'blue.700',
+          }}
+          _disabled={{
+            opacity: disabled ? 0.4 : 1,
+            cursor: 'not-allowed',
+          }}
+          disabled={inputDisabled || disabled}
         />
         <NumberInputStepper>
           <NumberIncrementStepper color="blue.600" border="none" />
@@ -95,6 +108,9 @@ FormNumberInput.propTypes = {
   inputProps: PropTypes.object,
   control: PropTypes.object,
   step: PropTypes.number,
+  viewParser: PropTypes.func,
+  changeParser: PropTypes.func,
+  inputDisabled: PropTypes.bool,
 };
 
 export default FormNumberInput;

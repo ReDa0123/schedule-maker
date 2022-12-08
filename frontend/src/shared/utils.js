@@ -57,6 +57,11 @@ export const convertTimeToMinutes = (time) => {
   return Number(hours) * 60 + Number(minutes);
 };
 
+export const convertTimeToMinutesString = (time) => {
+  const [hours, minutes] = time.split(':');
+  return `${Number(hours) * 60 + Number(minutes)}`;
+};
+
 export const convertPropToMinutes = (propName) =>
   o(convertTimeToMinutes, prop(propName));
 

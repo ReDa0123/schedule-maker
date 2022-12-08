@@ -18,6 +18,10 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import PropTypes from 'prop-types';
 import { isNilOrEmpty } from 'ramda-extension';
+import {
+  blockDurationChangeParser,
+  blockDurationValueParser,
+} from '../utils/blocks';
 
 const validationSchema = yup.object().shape({
   category: yup.string().max(50, `Category can't be longer than 50 characters`),
@@ -168,6 +172,9 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
           disabled={!isNilOrEmpty(defaultValues?.startTime)}
           control={control}
           step={15}
+          viewParser={blockDurationValueParser}
+          changeParser={blockDurationChangeParser}
+          inputDisabled
         />
       </Grid>
       <Flex justifyContent="center">
