@@ -15,7 +15,7 @@ export const minutesToTime = (minutes) => {
 };
 
 export const calculateDuration = ({ persons, style, matchDuration }, buffer) =>
-  formulas[style](persons, matchDuration) * (1 + buffer);
+  (formulas[style](persons) * (1 + buffer) * matchDuration) / 60;
 
 export const calculateEndTime = (
   { startTime, persons, style, matchDuration },
