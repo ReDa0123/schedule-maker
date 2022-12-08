@@ -10,6 +10,7 @@ const blockDef = `
   age: String!
   customParameter: String
   versionId: Int
+  matchDuration: Int!
 `;
 
 export const typeDef = /* GraphQL */ `

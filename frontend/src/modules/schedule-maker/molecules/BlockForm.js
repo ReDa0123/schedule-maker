@@ -45,6 +45,12 @@ const validationSchema = yup.object().shape({
   customParameter: yup
     .string()
     .max(50, `Custom parameter can't be longer than 50 characters`),
+  matchDuration: yup
+    .number()
+    .typeError('Please input the number of seconds of a single match')
+    .integer('The number of seconds must be a positive integer')
+    .positive('The number of seconds must be a positive integer')
+    .required('Please input the number of seconds of a single match'),
 });
 
 const BlockForm = ({ onSubmit, defaultValues }) => {
@@ -67,6 +73,7 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
       sex: defaultValues?.sex || '',
       age: defaultValues?.age || '',
       customParameter: defaultValues?.customParameter || '',
+      matchDuration: defaultValues?.matchDuration || '',
     },
     resolver: yupResolver(validationSchema),
     mode: 'onBlur',
@@ -154,6 +161,14 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
           label="Custom parameter"
           control={control}
         />
+        <FormNumberInput
+          name="matchDuration"
+          label="Match duration"
+          type="number"
+          disabled={!isNilOrEmpty(defaultValues?.startTime)}
+          control={control}
+          step={15}
+        />
       </Grid>
       <Flex justifyContent="center">
         <Button onClick={onClickButton} marginBlock={4} disabled={isSubmitting}>
@@ -176,6 +191,7 @@ BlockForm.propTypes = {
     customParameter: PropTypes.string,
     sex: PropTypes.string,
     startTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    matchDuration: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
 };
 

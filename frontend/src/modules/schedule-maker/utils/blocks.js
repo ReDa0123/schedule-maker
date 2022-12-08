@@ -14,11 +14,13 @@ export const minutesToTime = (minutes) => {
   return `${hours < 10 ? '0' : ''}${hours}:${mins < 10 ? '0' : ''}${mins}`;
 };
 
-export const calculateDuration = ({ persons, style }, buffer) =>
-  formulas[style](persons) * (1 + buffer);
+export const calculateDuration = ({ persons, style, matchDuration }, buffer) =>
+  formulas[style](persons) * (1 + buffer) * (matchDuration / 60);
 
-export const calculateEndTime = ({ startTime, persons, style }, buffer) =>
-  calculateDuration({ persons, style }, buffer) + startTime;
+export const calculateEndTime = (
+  { startTime, persons, style, matchDuration },
+  buffer
+) => calculateDuration({ persons, style, matchDuration }, buffer) + startTime;
 
 export const convertBlocksForSending = mapplySpec({
   startTime: convertPropToNumberIfNotNil('startTime'),
@@ -32,6 +34,7 @@ export const convertBlocksForSending = mapplySpec({
   age: prop('age'),
   customParameter: nilIfEmptyProp('customParameter'),
   versionId: convertPropToNumberIfNotNil('versionId'),
+  matchDuration: convertPropToNumberIfNotNil('matchDuration'),
 });
 
 export const propUniqAndConvertToLabelValueObj = (propName) =>

@@ -24,12 +24,13 @@ export const saveBlocks = async (
         age,
         customParameter,
         versionId,
+        matchDuration,
       }) =>
         await dbConnection.query(
           `INSERT INTO block (
         startTime, persons, style, category, sex, tournamentId, 
-        dayId, areaId, sportId, age, customParameter, versionId
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+        dayId, areaId, sportId, age, customParameter, versionId, matchDuration
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
           [
             startTime,
             persons,
@@ -43,6 +44,7 @@ export const saveBlocks = async (
             age,
             customParameter,
             versionId,
+            matchDuration,
           ]
         )
     )

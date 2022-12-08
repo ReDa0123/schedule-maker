@@ -47,6 +47,7 @@ const GET_TOURNAMENT_QUERY = gql`
         areaId
         sportId
         versionId
+        matchDuration
       }
       versions {
         versionId
