@@ -27,6 +27,7 @@ const FormNumberInput = ({
   formErrorMessageProps,
   inputProps,
   control,
+  step,
 }) => {
   const { isInvalid, field, fieldState, onBlurField, onChangeData } =
     useFormField({
@@ -53,6 +54,7 @@ const FormNumberInput = ({
         min={0}
         w="100%"
         {...inputProps}
+        step={step}
       >
         <NumberInputField
           borderWidth={2}
@@ -92,6 +94,7 @@ FormNumberInput.propTypes = {
   formErrorMessageProps: PropTypes.object,
   inputProps: PropTypes.object,
   control: PropTypes.object,
+  step: PropTypes.number,
 };
 
 export default FormNumberInput;

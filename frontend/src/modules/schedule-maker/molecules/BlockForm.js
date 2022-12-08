@@ -167,6 +167,7 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
           type="number"
           disabled={!isNilOrEmpty(defaultValues?.startTime)}
           control={control}
+          step={15}
         />
       </Grid>
       <Flex justifyContent="center">

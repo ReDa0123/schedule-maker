@@ -39,12 +39,13 @@ const TimeslotDrop = ({
   );
 
   const canDropFn = useCallback(
-    ({ value: { persons, blockId, style } }) => {
+    ({ value: { persons, blockId, style, matchDuration } }) => {
       const endTimeOfDraggedBlock = calculateEndTime(
         {
           startTime: timeslot,
           persons,
           style,
+          matchDuration,
         },
         buffer
       );

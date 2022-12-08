@@ -40,6 +40,7 @@ const DayResetButton = ({ dayId }) => {
     <>
       <WithTooltip label="Reset blocks for this day">
         <Button
+          zIndex={10}
           onClick={onOpen}
           variant="outline"
           colorScheme="red"

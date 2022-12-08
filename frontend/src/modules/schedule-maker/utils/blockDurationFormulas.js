@@ -5,18 +5,27 @@ import {
   SINGLE_TYPE,
   THREE_GAME_TYPE,
 } from '../constants';
-import { identity } from 'ramda';
 
-export const individualFormula = identity;
+const convertedDuration = (matchDuration) => matchDuration / 60;
+export const individualFormula = (noOfPersons, matchDuration) =>
+  noOfPersons * convertedDuration(matchDuration);
 
-export const singleFormula = (noOfPersons) => noOfPersons - 1;
+export const singleFormula = (noOfPersons, matchDuration) =>
+  noOfPersons * convertedDuration(matchDuration) -
+  1 * convertedDuration(matchDuration);
 
-export const doubleFormula = (noOfPersons) => 2 * noOfPersons - 1;
+export const doubleFormula = (noOfPersons, matchDuration) =>
+  2 * noOfPersons * convertedDuration(matchDuration) -
+  1 * convertedDuration(matchDuration);
 
-export const threeGameFormula = (noOfPersons) => 3 * noOfPersons + 1;
+export const threeGameFormula = (noOfPersons, matchDuration) =>
+  3 * noOfPersons * convertedDuration(matchDuration) +
+  1 * convertedDuration(matchDuration);
 
-export const robinFormula = (noOfPersons) =>
-  (noOfPersons / 2) * (noOfPersons - 1);
+export const robinFormula = (noOfPersons, matchDuration) =>
+  ((noOfPersons * convertedDuration(matchDuration)) / 2) *
+  (noOfPersons * convertedDuration(matchDuration) -
+    1 * convertedDuration(matchDuration));
 
 export const formulas = {
   [INDIVIDUAL_TYPE]: individualFormula,
