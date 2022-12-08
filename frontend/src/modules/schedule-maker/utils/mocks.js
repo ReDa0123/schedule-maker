@@ -14,6 +14,7 @@ export const blocks = [
     sex: 'M',
     sportId: 1,
     tournamentId: 1,
+    matchDuration: 15,
   },
   {
     blockId: 1,
@@ -28,6 +29,7 @@ export const blocks = [
     sex: 'M',
     sportId: 1,
     tournamentId: 1,
+    matchDuration: 15,
   },
   {
     blockId: 2,
@@ -42,6 +44,7 @@ export const blocks = [
     sex: 'F',
     sportId: 1,
     tournamentId: 1,
+    matchDuration: 30,
   },
   {
     blockId: 3,
@@ -56,6 +59,7 @@ export const blocks = [
     sex: 'M',
     sportId: 2,
     tournamentId: 1,
+    matchDuration: 15,
   },
   {
     blockId: 4,
@@ -70,6 +74,7 @@ export const blocks = [
     sex: 'M',
     sportId: 1,
     tournamentId: 1,
+    matchDuration: 45,
   },
   {
     blockId: 5,
@@ -84,6 +89,7 @@ export const blocks = [
     sex: 'F',
     sportId: 2,
     tournamentId: 1,
+    matchDuration: 15,
   },
   {
     blockId: 6,
@@ -97,6 +103,7 @@ export const blocks = [
     customParameter: '70 kg',
     sportId: 2,
     tournamentId: 1,
+    matchDuration: 15,
   },
   {
     blockId: 7,
@@ -111,6 +118,7 @@ export const blocks = [
     sex: 'M',
     sportId: 1,
     tournamentId: 1,
+    matchDuration: 15,
   },
   {
     blockId: 8,
@@ -125,6 +133,7 @@ export const blocks = [
     sex: 'F',
     sportId: 1,
     tournamentId: 1,
+    matchDuration: 15,
   },
 ];
 
