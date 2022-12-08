@@ -7,7 +7,7 @@ import {
 } from '../constants';
 import { identity } from 'ramda';
 
-export const individualFormula = identity();
+export const individualFormula = identity;
 
 export const singleFormula = (noOfPersons) => noOfPersons - 1;
 
