@@ -1,4 +1,4 @@
-import { Flex, useToast } from 'src/shared/design-system';
+import { Flex, Heading, useToast } from 'src/shared/design-system';
 import { useSelectedVersion, useTournamentSchedule } from '../hooks';
 import { FormSelect } from 'src/shared/react-hook-form/molecules';
 import { useCallback, useMemo } from 'react';
@@ -114,32 +114,37 @@ const Versions = () => {
   );
 
   return (
-    <Flex gap={4} alignItems="flex-end" mb={4}>
-      {!isNilOrEmpty(versions) && (
-        <>
-          <FormSelect
-            name="selectedVersion"
-            options={options}
-            label="Versions"
-            createEmptyOption={false}
-          />
-          <SetMainVersionButton
-            tournamentId={Number(tournamentId)}
-            selectedVersion={selectedVersion}
-            versionId={versionId}
-          />
-          <VersionModal
-            onSubmit={onEditSubmit}
-            edit
-            defaultValues={{
-              name: versionName,
-            }}
-          />
-          <DeleteVersion />
-        </>
-      )}
-      <VersionModal onSubmit={onNewSubmit} />
-    </Flex>
+    <>
+      <Heading fontSize="24px" mb={4}>
+        Versions
+      </Heading>
+      <Flex gap={4} alignItems="flex-end" mb={4}>
+        {!isNilOrEmpty(versions) && (
+          <>
+            <FormSelect
+              name="selectedVersion"
+              options={options}
+              label="Versions"
+              createEmptyOption={false}
+            />
+            <SetMainVersionButton
+              tournamentId={Number(tournamentId)}
+              selectedVersion={selectedVersion}
+              versionId={versionId}
+            />
+            <VersionModal
+              onSubmit={onEditSubmit}
+              edit
+              defaultValues={{
+                name: versionName,
+              }}
+            />
+            <DeleteVersion />
+          </>
+        )}
+        <VersionModal onSubmit={onNewSubmit} />
+      </Flex>
+    </>
   );
 };
 

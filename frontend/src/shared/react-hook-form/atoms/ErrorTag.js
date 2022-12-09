@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box } from 'src/shared/design-system';
 import PropTypes from 'prop-types';
 
 const ErrorTag = ({ value, children }) => (

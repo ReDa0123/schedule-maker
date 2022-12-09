@@ -1,6 +1,6 @@
 import { Form } from 'src/shared/react-hook-form/organisms';
 import { FieldArrayContext } from '../contexts';
-import { Flex, Heading, ContentBox, Button } from 'src/shared/design-system';
+import { Flex, ContentBox, Button } from 'src/shared/design-system';
 import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
 import { ScheduleDays, Versions } from './';
 import { BlockForm, NotAssignedBlocks } from '../molecules';
@@ -47,7 +47,6 @@ const ScheduleFormContent = () => {
           <Button>Edit tournament</Button>
         </RouterLink>
         <BlockForm onSubmit={onBlockFormSubmit} defaultValues={defaultValues} />
-        <Heading fontSize={24}>Not assigned blocks</Heading>
       </ContentBox>
       <NotAssignedBlocks />
       <ContentBox minW="70%">
