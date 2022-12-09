@@ -26,25 +26,22 @@ const NotAssignedBlocksTag = ({ value, ...props }) => {
       top="-10px"
       right="-10px"
       zIndex={1}
-      sx={
-        hasAfter
-          ? {
-              '::after': {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                bg: 'green.500',
-                opacity: 0.5,
-                zIndex: -1,
-                borderRadius: 'lg',
-                transform: 'scale(1.5)',
-              },
-            }
-          : undefined
-      }
+      sx={{
+        '::after': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          bg: 'green.500',
+          opacity: 0.5,
+          zIndex: -1,
+          borderRadius: 'lg',
+          transform: `scale(${hasAfter ? '1.5' : '1'})`,
+          transition: 'transform 250ms',
+        },
+      }}
       {...props}
     >
       {value}

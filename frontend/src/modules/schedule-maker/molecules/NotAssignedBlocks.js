@@ -74,6 +74,9 @@ const NotAssignedBlocks = () => {
           icon={open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           colorScheme="blue"
           onClick={() => setOpen((prev) => !prev)}
+          h="100px"
+          borderBottomLeftRadius="none"
+          borderTopLeftRadius="none"
         />
         <NotAssignedBlocksTag
           value={notAssignedBlocks.filter((e) => e).length}
