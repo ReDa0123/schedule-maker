@@ -15,6 +15,7 @@ import DeleteVersion from './DeleteVersion';
 import SetMainVersionButton from './SetMainVersionButton';
 import DisplayChangeButtons from './DisplayChangeButtons';
 import AgendaColumn from './AgendaColumn';
+import NotAssignedBlocksButton from './NotAssignedBlocksButton';
 
 export {
   BlockForm,
@@ -34,4 +35,5 @@ export {
   SetMainVersionButton,
   DisplayChangeButtons,
   AgendaColumn,
+  NotAssignedBlocksButton,
 };

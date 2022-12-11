@@ -1,14 +1,14 @@
 import { useWatch, Controller } from 'react-hook-form';
 import { BLOCK_DND_NAME, SCHEDULE_FORM_NAME } from '../constants';
 import { useDrop } from 'react-dnd';
-import { Box, Flex, Text, IconButton } from 'src/shared/design-system';
+import { Box, Flex, Text } from 'src/shared/design-system';
 import { useFieldArrayProps, useSelectedVersion } from '../hooks';
 import { propEq } from 'ramda';
-import { Block } from '../molecules';
+import { Block, NotAssignedBlocksButton } from '../molecules';
 import { isNilOrEmpty } from 'ramda-extension';
 import { useMemo, useState } from 'react';
-import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
-import { NotAssignedBlocksTag } from '../atoms';
+
+const WIDTH = 315;
 
 const NotAssignedBlocks = () => {
   const [open, setOpen] = useState(false);
@@ -49,6 +49,7 @@ const NotAssignedBlocks = () => {
                   onChange={onChange}
                   value={value}
                   index={index}
+                  marginX="auto"
                   isDetailedDisplay
                 />
               )}
@@ -64,22 +65,15 @@ const NotAssignedBlocks = () => {
       <Box
         position="fixed"
         top="50%"
-        left="305px"
-        transform={`translate(${open ? 0 : -305}px, -50%)`}
+        left={`${WIDTH + 5}px`}
+        transform={`translate(${open ? 0 : -(WIDTH + 5)}px, -50%)`}
         transition="transform 500ms ease-out"
         zIndex={1000}
       >
-        <IconButton
-          aria-label="open-close-not-assigned"
-          icon={open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          colorScheme="blue"
-          onClick={() => setOpen((prev) => !prev)}
-          h="100px"
-          borderBottomLeftRadius="none"
-          borderTopLeftRadius="none"
-        />
-        <NotAssignedBlocksTag
-          value={notAssignedBlocks.filter((e) => e).length}
+        <NotAssignedBlocksButton
+          setOpen={setOpen}
+          numberOfBlocks={notAssignedBlocks.filter((e) => e).length}
+          open={open}
         />
       </Box>
       <Flex
@@ -96,9 +90,9 @@ const NotAssignedBlocks = () => {
         h="90vh"
         overflow="auto"
         zIndex={1000}
-        w="300px"
+        w={`${WIDTH}px`}
         borderRadius="lg"
-        transform={`translateX(${open ? 0 : -101.5}%)`}
+        transform={`translateX(${open ? 0 : -(WIDTH + 5)}px)`}
         transition="transform 500ms ease-out"
       >
         <Text
