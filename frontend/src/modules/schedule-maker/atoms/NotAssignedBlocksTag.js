@@ -8,7 +8,7 @@ const NotAssignedBlocksTag = ({ value, ...props }) => {
     setHasAfter(true);
     const timeout = setTimeout(() => {
       setHasAfter(false);
-    }, 1000);
+    }, 2000);
 
     return () => {
       clearTimeout(timeout);
@@ -38,7 +38,7 @@ const NotAssignedBlocksTag = ({ value, ...props }) => {
           opacity: 0.5,
           zIndex: -1,
           borderRadius: 'lg',
-          transform: `scale(${hasAfter ? '1.5' : '1'})`,
+          transform: `scale(${hasAfter ? '2' : '1'})`,
           transition: 'transform 250ms',
         },
       }}

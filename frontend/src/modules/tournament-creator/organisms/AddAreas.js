@@ -6,13 +6,9 @@ import {
   namePropCapitalize,
 } from 'src/shared/utils';
 import { pluck, prop } from 'ramda';
-import {
-  ErrorText,
-  Heading,
-  Spinner,
-  useToast,
-} from 'src/shared/design-system';
+import { ErrorText, Spinner, useToast } from 'src/shared/design-system';
 import PropTypes from 'prop-types';
+import { FormSection } from '../atoms';
 
 const GET_AREAS = gql`
   query Areas($tournamentId: Int!) {
@@ -84,16 +80,13 @@ const AddAreas = ({ tournamentId }) => {
   ) : loading ? (
     <Spinner />
   ) : (
-    <>
-      <Heading as="h3" size="md" marginY={4}>
-        Areas of the tournament
-      </Heading>
+    <FormSection title="Areas of the tournament">
       <AddAreasForm
         onSubmit={onSubmit}
         areas={queryAreas}
         defaultValues={defaultValues}
       />
-    </>
+    </FormSection>
   );
 };
 

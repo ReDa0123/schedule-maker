@@ -10,7 +10,7 @@ import {
 import { convertDayValuesForSending, CREATE_DAY_MUTATION } from '../utils';
 import { useCallback } from 'react';
 import { isNilOrEmpty } from 'ramda-extension';
-import { AddedDaysHeader } from '../atoms';
+import { AddedDaysHeader, FormSection } from '../atoms';
 import PropTypes from 'prop-types';
 
 const GET_DAYS_OF_TOURNAMENT = gql`
@@ -26,7 +26,7 @@ const GET_DAYS_OF_TOURNAMENT = gql`
   }
 `;
 
-const Days = ({ tournamentId }) => {
+const Days = ({ tournamentId, startDate }) => {
   const { data, loading, error, refetch } = useQuery(GET_DAYS_OF_TOURNAMENT, {
     variables: { tournamentId: Number(tournamentId) },
   });
@@ -64,10 +64,7 @@ const Days = ({ tournamentId }) => {
   ) : loading ? (
     <Spinner />
   ) : (
-    <>
-      <Heading as="h3" size="md" marginY={4}>
-        Days of the tournament
-      </Heading>
+    <FormSection title="Days of the tournament">
       {!isNilOrEmpty(data.daysOfTournament) && <AddedDaysHeader />}
       {data?.daysOfTournament.map((day) => (
         <AddedDay key={day.dayId} day={day} refetch={refetch} />
@@ -75,14 +72,15 @@ const Days = ({ tournamentId }) => {
       <Heading as="h4" size="sm" marginY={4}>
         Add new day
       </Heading>
-      <DayForm onSubmit={onSubmit} />
-    </>
+      <DayForm onSubmit={onSubmit} date={startDate} />
+    </FormSection>
   );
 };
 
 Days.propTypes = {
   tournamentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     .isRequired,
+  startDate: PropTypes.string.isRequired,
 };
 
 export default Days;

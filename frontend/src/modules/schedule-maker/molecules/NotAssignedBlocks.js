@@ -50,7 +50,6 @@ const NotAssignedBlocks = () => {
                   value={value}
                   index={index}
                   marginX="auto"
-                  isDetailedDisplay
                 />
               )}
             />

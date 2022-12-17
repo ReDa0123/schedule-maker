@@ -54,6 +54,7 @@ function TournamentTable({ data, setFilter }) {
     getTableBodyProps,
     headerGroups,
     page,
+    rows,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -75,9 +76,9 @@ function TournamentTable({ data, setFilter }) {
     setFilter({
       globalFilter,
       setGlobalFilter,
+      rowsLength: rows.length,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [globalFilter, setGlobalFilter, rows.length, setFilter]);
 
   return (
     <>

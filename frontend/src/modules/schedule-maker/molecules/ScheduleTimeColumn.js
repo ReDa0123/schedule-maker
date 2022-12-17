@@ -10,7 +10,8 @@ const ScheduleTimeColumn = ({ startTime, endTime }) => {
   useEffect(() => {
     const times = [];
     for (let i = startTime; i < endTime; i += MINUTES_IN_BLOCK) {
-      const isDivisibleBy15 = i % 15 === 0;
+      const remainder = startTime % 5;
+      const isDivisibleBy15 = (i - remainder) % 15 === 0;
       times.push({
         formattedTime: minutesToTime(i),
         shouldDisplayTime: isDivisibleBy15,

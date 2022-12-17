@@ -23,6 +23,7 @@ import {
 import { useMemo } from 'react';
 import { propEq } from 'ramda';
 import { RiErrorWarningFill as WarningIcon } from 'react-icons/ri';
+import { isNilOrEmpty } from 'ramda-extension';
 
 const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
   const [{ isDragging }, drag, preview] = useDrag({
@@ -45,117 +46,147 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
   );
   const blockDuration = calculateDuration(value, buffer);
 
+  const infoRow1 = useMemo(
+    () => `${sportsName} - ${value.age}`,
+    [sportsName, value.age]
+  );
+
+  const infoRow2 = useMemo(
+    () =>
+      `${value.category ?? ''}${
+        value.customParameter
+          ? `${value.category ? ' - ' : ''}${value.customParameter}`
+          : ''
+      }`,
+    [value.category, value.customParameter]
+  );
+
   return (
     <>
       <Box ref={preview} />
-      <Box
-        h={
-          isDetailedDisplay
-            ? `${
-                (blockDuration / MINUTES_IN_BLOCK) * BLOCK_SCALE -
-                BLOCK_OFFSET * 2
-              }px`
-            : '125px'
+      <WithTooltip
+        label={
+          blockDuration >= 15 || !isDetailedDisplay
+            ? ''
+            : `${infoRow1}${isNilOrEmpty(infoRow2) ? '' : `, ${infoRow2}`}`
         }
-        w={{ md: '275px', base: '200px' }}
-        borderWidth={2}
-        borderColor={warning ? 'yellow.500' : 'blue.500'}
-        p={2}
-        bg="orange.100"
-        position="relative"
-        zIndex={20}
-        ref={detailMode ? null : drag}
-        opacity={isDragging ? 0.4 : 1}
-        flexShrink={0}
-        borderRadius="md"
-        boxShadow="lg"
-        cursor={detailMode ? 'default' : 'grab'}
-        pointerEvents={isDragging ? 'none' : 'all'}
-        {...props}
       >
-        {warning && (
-          <>
+        <Box
+          h={
+            isDetailedDisplay
+              ? `${
+                  (blockDuration / MINUTES_IN_BLOCK) * BLOCK_SCALE -
+                  BLOCK_OFFSET * 2
+                }px`
+              : '125px'
+          }
+          w={{ md: '275px', base: '200px' }}
+          borderWidth={2}
+          borderColor={warning ? 'yellow.500' : 'blue.500'}
+          p={2}
+          bg="orange.100"
+          position="relative"
+          zIndex={20}
+          ref={detailMode ? null : drag}
+          opacity={isDragging ? 0.4 : 1}
+          flexShrink={0}
+          borderRadius="md"
+          boxShadow="lg"
+          cursor={detailMode ? 'default' : 'grab'}
+          pointerEvents={isDragging ? 'none' : 'all'}
+          {...props}
+        >
+          {warning && (
+            <>
+              <Box
+                position="absolute"
+                top="-15px"
+                left="-15px"
+                cursor="auto"
+                bg="white"
+                w={7}
+                h={7}
+                borderRadius="full"
+              />
+              <WithTooltip
+                standalone
+                icon={WarningIcon}
+                label={
+                  'Take notice: There is another colliding block in this day in another area with the same age group, sex group and custom parameter.'
+                }
+                position="absolute"
+                top="-15px"
+                left="-15px"
+                cursor="auto"
+                iconProps={{ color: 'yellow.500', width: 7, height: 7 }}
+              />
+            </>
+          )}
+          {!detailMode && (
+            <>
+              {value.startTime && (
+                <ResetBlockButton
+                  resetBlock={() =>
+                    onChange({
+                      ...value,
+                      arenaId: null,
+                      dayId: null,
+                      startTime: null,
+                    })
+                  }
+                />
+              )}
+              <EditBlockButton
+                editBlock={(data) => onChange({ ...value, ...data })}
+                block={value}
+              />
+              <DeleteBlockButton
+                deleteBlock={() => fieldArrayProps.remove(index)}
+                sportsName={sportsName}
+                age={value.age}
+              />
+            </>
+          )}
+          <Flex gap={2}>
+            <TimeTag time={roundToDecimal(blockDuration, 2)} />
+            <PersonsTag numberOfPersons={value.persons} sex={value.sex} />
+          </Flex>
+          <Box color="blue.500" fontWeight="500">
+            {(blockDuration >= 10 || !isDetailedDisplay) && (
+              <Box
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+              >
+                {infoRow1}
+              </Box>
+            )}
+            {(blockDuration >= 15 || !isDetailedDisplay) && (
+              <Box
+                overflow="hidden"
+                textOverflow="ellipsis"
+                whiteSpace="nowrap"
+              >
+                {infoRow2}
+              </Box>
+            )}
+          </Box>
+          {!isDetailedDisplay && value.startTime && (
             <Box
               position="absolute"
-              top="-15px"
-              left="-15px"
-              cursor="auto"
-              bg="white"
-              w={7}
-              h={7}
-              borderRadius="full"
-            />
-            <WithTooltip
-              standalone
-              icon={WarningIcon}
-              label={
-                'Take notice: There is another colliding block in this day in another area with the same age group, sex group and custom parameter.'
-              }
-              position="absolute"
-              top="-15px"
-              left="-15px"
-              cursor="auto"
-              iconProps={{ color: 'yellow.500', width: 7, height: 7 }}
-            />
-          </>
-        )}
-        {!detailMode && (
-          <>
-            {value.startTime && (
-              <ResetBlockButton
-                resetBlock={() =>
-                  onChange({
-                    ...value,
-                    arenaId: null,
-                    dayId: null,
-                    startTime: null,
-                  })
-                }
-              />
-            )}
-            <EditBlockButton
-              editBlock={(data) => onChange({ ...value, ...data })}
-              block={value}
-            />
-            <DeleteBlockButton
-              deleteBlock={() => fieldArrayProps.remove(index)}
-              sportsName={sportsName}
-              age={value.age}
-            />
-          </>
-        )}
-        <Flex gap={2}>
-          <TimeTag time={roundToDecimal(blockDuration, 2)} />
-          <PersonsTag numberOfPersons={value.persons} sex={value.sex} />
-        </Flex>
-        <Box color="blue.500" fontWeight="500">
-          {(blockDuration >= 10 || !isDetailedDisplay) && (
-            <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-              {sportsName} - {value.age}
-            </Box>
-          )}
-          {(blockDuration >= 15 || !isDetailedDisplay) && (
-            <Box overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-              {value.category}
-              {value.customParameter
-                ? `${value.category ? ' - ' : ''}${value.customParameter}`
-                : ''}
+              bottom="8px"
+              left="8px"
+              color="blue.700"
+              fontSize="md"
+            >
+              {minutesToTime(value.startTime)} -{' '}
+              {minutesToTime(
+                roundToDecimal(calculateEndTime(value, buffer), 0)
+              )}
             </Box>
           )}
         </Box>
-        {!isDetailedDisplay && value.startTime && (
-          <Box
-            position="absolute"
-            bottom="8px"
-            left="8px"
-            color="blue.700"
-            fontSize="md"
-          >
-            {minutesToTime(value.startTime)} -{' '}
-            {minutesToTime(roundToDecimal(calculateEndTime(value, buffer), 0))}
-          </Box>
-        )}
-      </Box>
+      </WithTooltip>
     </>
   );
 };

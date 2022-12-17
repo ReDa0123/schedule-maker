@@ -2,17 +2,13 @@ import { AddSportsForm } from './';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { pluck, prop } from 'ramda';
 import { useCallback } from 'react';
-import {
-  ErrorText,
-  Spinner,
-  Heading,
-  useToast,
-} from 'src/shared/design-system';
+import { ErrorText, Spinner, useToast } from 'src/shared/design-system';
 import {
   convertValuesToLabelValueObj,
   namePropCapitalize,
 } from 'src/shared/utils';
 import PropTypes from 'prop-types';
+import { FormSection } from '../atoms';
 
 const GET_SPORTS = gql`
   query Sports($tournamentId: Int!) {
@@ -84,16 +80,13 @@ const AddSports = ({ tournamentId }) => {
   ) : loading ? (
     <Spinner />
   ) : (
-    <>
-      <Heading as="h3" size="md" marginY={4}>
-        Sports of the tournament
-      </Heading>
+    <FormSection title="Sports of the tournament">
       <AddSportsForm
         onSubmit={onSubmit}
         sports={querySports}
         defaultValues={defaultValues}
       />
-    </>
+    </FormSection>
   );
 };
 

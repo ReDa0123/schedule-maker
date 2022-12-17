@@ -1,6 +1,5 @@
 import { useToast } from 'src/shared/design-system';
 import { useMutation } from '@apollo/client';
-import { useParams } from 'react-router-dom';
 import {
   convertDayValuesForSending,
   CREATE_DAY_MUTATION,
@@ -12,8 +11,10 @@ import PropTypes from 'prop-types';
 import { useTournamentSchedule } from '../hooks';
 
 const AddDayModal = ({ onClose, isOpen, onOpen }) => {
-  const { refetch } = useTournamentSchedule();
-  const { tournamentId } = useParams();
+  const {
+    refetch,
+    tournament: { tournamentId, startDate },
+  } = useTournamentSchedule();
   const { toastFn } = useToast();
   const [createDay] = useMutation(CREATE_DAY_MUTATION, {
     onCompleted: ({ createDay: successMessage }) => {
@@ -51,7 +52,7 @@ const AddDayModal = ({ onClose, isOpen, onOpen }) => {
         onOpen();
       }}
       headerText="Add Day"
-      modalBody={<DayForm onSubmit={onSubmit} />}
+      modalBody={<DayForm onSubmit={onSubmit} date={startDate} />}
       modalProps={{ size: 'xl' }}
     />
   );

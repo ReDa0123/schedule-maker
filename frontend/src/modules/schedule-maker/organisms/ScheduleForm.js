@@ -44,7 +44,7 @@ const ScheduleFormContent = () => {
           right="0"
           top="16px"
         >
-          <Button>Edit tournament</Button>
+          <Button>Edit Tournament Parameters</Button>
         </RouterLink>
         <BlockForm onSubmit={onBlockFormSubmit} defaultValues={defaultValues} />
       </ContentBox>

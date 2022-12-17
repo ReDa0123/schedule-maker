@@ -70,14 +70,14 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
   } = useForm({
     defaultValues: {
       category: defaultValues?.category || '',
-      persons: defaultValues?.persons || '',
+      persons: defaultValues?.persons || '0',
       style: defaultValues?.style || '',
       blockId: defaultValues?.blockId || '',
       sportId: defaultValues?.sportId || '',
       sex: defaultValues?.sex || '',
       age: defaultValues?.age || '',
       customParameter: defaultValues?.customParameter || '',
-      matchDuration: defaultValues?.matchDuration || '',
+      matchDuration: defaultValues?.matchDuration || '60',
     },
     resolver: yupResolver(validationSchema),
     mode: 'onBlur',
@@ -119,7 +119,14 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
         gap={4}
         w="100%"
       >
-        <FormInput name="category" label="Category" control={control} />
+        <FormInput
+          name="category"
+          label="Category"
+          control={control}
+          inputProps={{
+            placeholder: 'Name of category/block',
+          }}
+        />
         <FormNumberInput
           name="persons"
           label="Persons"
@@ -136,6 +143,7 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
             value: style,
             label: style,
           }))}
+          emptyOptionLabel="Select style"
         />
         <FormSelect
           name="sportId"
@@ -145,6 +153,7 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
           }))}
           control={control}
           label="Sport"
+          emptyOptionLabel="Select sport"
         />
         <FormSelect
           name="sex"
@@ -159,15 +168,25 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
           label="Sex"
           emptyOptionLabel="Both"
         />
-        <FormInput name="age" label="Age" control={control} />
+        <FormInput
+          name="age"
+          label="Age"
+          control={control}
+          inputProps={{
+            placeholder: 'Define age division',
+          }}
+        />
         <FormInput
           name="customParameter"
           label="Custom parameter"
           control={control}
+          inputProps={{
+            placeholder: 'Additional parameter ',
+          }}
         />
         <FormNumberInput
           name="matchDuration"
-          label="Match duration"
+          label="Duration of one match"
           type="number"
           disabled={!isNilOrEmpty(defaultValues?.startTime)}
           control={control}

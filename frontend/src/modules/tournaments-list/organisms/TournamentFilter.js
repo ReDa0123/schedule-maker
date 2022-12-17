@@ -4,13 +4,20 @@ import { TournamentListHeading } from '../atoms';
 import { useMemo, useRef } from 'react';
 import { SelectiveFiltering } from '../molecules';
 import { o, pluck, uniq } from 'ramda';
+import { isNilOrEmpty } from 'ramda-extension';
 
-const TournamentFilter = ({ filter, setFilter, tournaments }) => {
+const TournamentFilter = ({
+  filter = '',
+  setFilter,
+  tournaments,
+  rowsLength,
+}) => {
   const selectRef = useRef('');
   const locations = useMemo(
     () => o(uniq, pluck('location'))(tournaments),
     [tournaments]
   );
+
   return (
     <Box mb="50px" mt="30px">
       <TournamentListHeading>Filter</TournamentListHeading>
@@ -21,14 +28,20 @@ const TournamentFilter = ({ filter, setFilter, tournaments }) => {
         setFilter={setFilter}
         locations={locations}
       />
-      <TournamentListHeading mb={4}>Search</TournamentListHeading>
+      <TournamentListHeading mb={4}>
+        {`Search${
+          !isNilOrEmpty(filter)
+            ? ` (Currently showing ${rowsLength} tournaments)`
+            : ''
+        }`}
+      </TournamentListHeading>
       <Input
         value={filter}
         onChange={(e) => {
           setFilter(e.target.value);
           selectRef.current.value = '';
         }}
-        placeholder="Search"
+        placeholder="Search by title or location"
         maxW="600px"
       />
     </Box>
@@ -39,6 +52,7 @@ TournamentFilter.propTypes = {
   filter: PropTypes.any,
   setFilter: PropTypes.any,
   tournaments: PropTypes.array,
+  rowsLength: PropTypes.number,
 };
 
 export default TournamentFilter;

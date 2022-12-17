@@ -7,7 +7,7 @@ import { route } from 'src/Routes';
 import PropTypes from 'prop-types';
 
 export function TournamentCreatorTemplate({ tournament }) {
-  const { tournamentId } = tournament;
+  const { tournamentId, startDate } = tournament;
   return (
     <>
       <SubHeader title="Create Tournament" path="/tournaments-list" />
@@ -28,7 +28,7 @@ export function TournamentCreatorTemplate({ tournament }) {
         <BasicTournament tournament={tournament} />
         <AddSports tournamentId={tournamentId} />
         <AddAreas tournamentId={tournamentId} />
-        <Days tournamentId={tournamentId} />
+        <Days tournamentId={tournamentId} startDate={startDate} />
       </ContentBox>
     </>
   );

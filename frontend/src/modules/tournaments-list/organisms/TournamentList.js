@@ -6,7 +6,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TournamentList = ({ tournaments }) => {
-  const [{ globalFilter, setGlobalFilter }, setFilter] = useState({});
+  const [{ globalFilter, setGlobalFilter, rowsLength }, setFilter] = useState({
+    globalFilter: '',
+  });
   return (
     <>
       <Box my={3}>
@@ -16,6 +18,7 @@ const TournamentList = ({ tournaments }) => {
         filter={globalFilter}
         setFilter={setGlobalFilter}
         tournaments={tournaments}
+        rowsLength={rowsLength}
       />
       <TournamentTable data={tournaments} setFilter={setFilter} />
     </>

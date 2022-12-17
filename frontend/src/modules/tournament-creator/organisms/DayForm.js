@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 import { useSubmitButton } from 'src/shared/react-hook-form/hooks';
+import { format } from 'date-fns';
+import { convertToDate } from '../../../shared/utils';
 
 const validationSchema = yup.object().shape({
   date: yup
@@ -36,7 +38,7 @@ const validationSchema = yup.object().shape({
     .max(50, 'Description must be less than 50 characters'),
 });
 
-const DayForm = ({ onSubmit, defaultValues }) => {
+const DayForm = ({ onSubmit, defaultValues, date }) => {
   const {
     handleSubmit,
     control,
@@ -44,7 +46,10 @@ const DayForm = ({ onSubmit, defaultValues }) => {
     reset,
   } = useForm({
     defaultValues: {
-      date: defaultValues?.date || '',
+      date:
+        defaultValues?.date ||
+        format(convertToDate(Number(date)), 'yyyy-MM-dd') ||
+        '',
       startTime: defaultValues?.startTime || '',
       endTime: defaultValues?.endTime || '',
       description: defaultValues?.description || '',
@@ -114,6 +119,7 @@ const DayForm = ({ onSubmit, defaultValues }) => {
 DayForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   defaultValues: PropTypes.object,
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default DayForm;

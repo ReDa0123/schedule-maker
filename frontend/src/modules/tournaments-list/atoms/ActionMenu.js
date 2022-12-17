@@ -13,7 +13,7 @@ const ActionMenu = ({ tournamentId }) => (
           as={ActionButton}
           aria-label="Options"
           rightIcon={isOpen ? <ArrowUpIcon /> : <ArrowDownIcon />}
-          colorScheme="green"
+          colorScheme="blue"
         >
           Actions
         </MenuButton>
@@ -28,7 +28,7 @@ const ActionMenu = ({ tournamentId }) => (
               to={route.tournamentCreator({ id: tournamentId })}
               w="100%"
             >
-              Edit Tournament
+              Edit Tournament Parameters
             </RouterLink>
           </MenuItem>
           <MenuItem>

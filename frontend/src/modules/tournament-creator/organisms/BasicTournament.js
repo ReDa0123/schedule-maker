@@ -1,4 +1,4 @@
-import { Heading, useToast } from 'src/shared/design-system';
+import { useToast } from 'src/shared/design-system';
 import { gql, useMutation } from '@apollo/client';
 import { useCallback, useMemo } from 'react';
 import { convertValuesForSending } from '../../tournaments-list/utils';
@@ -6,6 +6,7 @@ import { BasicTournamentForm } from './';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { convertToDate } from 'src/shared/utils';
+import { FormSection } from '../atoms';
 
 const EDIT_TOURNAMENT_MUTATION = gql`
   mutation editTournament(
@@ -75,12 +76,9 @@ const BasicTournament = ({ tournament }) => {
   );
 
   return (
-    <>
-      <Heading as="h3" size="md" marginY={4}>
-        Tournament info
-      </Heading>
+    <FormSection title="Tournament info">
       <BasicTournamentForm onSubmit={onSubmit} defaultValues={defaultValues} />
-    </>
+    </FormSection>
   );
 };
 
