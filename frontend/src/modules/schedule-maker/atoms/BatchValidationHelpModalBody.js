@@ -1,7 +1,8 @@
-import { Box, Text } from 'src/shared/design-system';
+import { Box, Text, useToast, WithTooltip } from 'src/shared/design-system';
 import { ListItem, UnorderedList } from '@chakra-ui/react';
 import { tournamentStyles } from '../constants';
 import PropTypes from 'prop-types';
+import { CopyIcon } from '@chakra-ui/icons';
 
 const ColumnSection = ({ header, children }) => (
   <Box marginY={4}>
@@ -11,6 +12,32 @@ const ColumnSection = ({ header, children }) => (
     {children}
   </Box>
 );
+
+const CopyText = ({ text }) => {
+  const { toastFn } = useToast();
+  return (
+    <WithTooltip label="Copy to clipboard">
+      <CopyIcon
+        onClick={async () => {
+          try {
+            await navigator.clipboard.writeText(text);
+            toastFn({
+              status: 'success',
+              title: 'Copied to clipboard',
+            });
+          } catch (err) {
+            toastFn({
+              status: 'error',
+              title: 'Failed to copy to clipboard',
+            });
+          }
+        }}
+        cursor="pointer"
+        ml={2}
+      />
+    </WithTooltip>
+  );
+};
 
 const BatchValidationHelpModalBody = ({ sports }) => (
   <Box>
@@ -30,34 +57,40 @@ const BatchValidationHelpModalBody = ({ sports }) => (
       </Text>
     </ColumnSection>
     <ColumnSection header="Style">
-      <Text>
+      <Box>
         The style of the block. It must be one of the following:
         <UnorderedList>
           {tournamentStyles.map((style) => (
-            <ListItem key={style}>{style}</ListItem>
+            <ListItem key={style}>
+              <Text as="span">{style}</Text>
+              <CopyText text={style} />
+            </ListItem>
           ))}
         </UnorderedList>
-      </Text>
+      </Box>
     </ColumnSection>
     <ColumnSection header="Sport">
-      <Text>
+      <Box>
         The sport of the block. It must be one of the sports in this tournament:
         <UnorderedList>
           {sports.map(({ name, sportId }) => (
-            <ListItem key={sportId}>{name}</ListItem>
+            <ListItem key={sportId}>
+              <Text as="span">{name}</Text>
+              <CopyText text={name} />
+            </ListItem>
           ))}
         </UnorderedList>
-      </Text>
+      </Box>
     </ColumnSection>
     <ColumnSection header="Sex">
-      <Text>
+      <Box>
         The sex of the participants in the block. It must be empty or one of the
         following:
         <UnorderedList>
           <ListItem>M</ListItem>
           <ListItem>F</ListItem>
         </UnorderedList>
-      </Text>
+      </Box>
     </ColumnSection>
     <ColumnSection header="Age">
       <Text>
@@ -79,6 +112,10 @@ const BatchValidationHelpModalBody = ({ sports }) => (
     </ColumnSection>
   </Box>
 );
+
+CopyText.propTypes = {
+  text: PropTypes.string.isRequired,
+};
 
 ColumnSection.propTypes = {
   header: PropTypes.string.isRequired,
