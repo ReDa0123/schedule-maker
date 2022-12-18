@@ -4,7 +4,6 @@ import {
   ApolloClient,
   ApolloProvider,
   InMemoryCache,
-  createHttpLink,
   ApolloLink,
   from,
 } from '@apollo/client';
@@ -14,6 +13,7 @@ import { useAuth } from 'src/modules/auth';
 import { config } from 'src/config';
 import { route } from 'src/Routes';
 import PropTypes from 'prop-types';
+import { createUploadLink } from 'apollo-upload-client';
 
 const UNAUTHENTICATED_CODE = 'UNAUTHENTICATED';
 
@@ -27,10 +27,6 @@ const hasUnauthenticatedErrorCode = (errors) => {
 const hasNetworkStatusCode = (error, code) => {
   return error && error.statusCode === code;
 };
-
-const httpLink = createHttpLink({
-  uri: config.GRAPHQL_API,
-});
 
 function EnhancedApolloProvider({ children }) {
   const navigate = useNavigate();
@@ -61,8 +57,12 @@ function EnhancedApolloProvider({ children }) {
     }
   });
 
+  const uploadLink = createUploadLink({
+    uri: config.GRAPHQL_API,
+  });
+
   const client = new ApolloClient({
-    link: from([logoutLink, authLink, httpLink]),
+    link: from([logoutLink, authLink, uploadLink]),
     cache: new InMemoryCache(),
     defaultOptions: {
       watchQuery: {

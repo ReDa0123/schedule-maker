@@ -107,9 +107,11 @@ const BlockForm = ({ onSubmit, defaultValues }) => {
   });
   return (
     <>
-      <Heading fontSize={24} mb={4}>
-        Block creation
-      </Heading>
+      {!defaultValues?.startTime && (
+        <Heading fontSize={20} mb={4}>
+          Add block manually
+        </Heading>
+      )}
       <Grid
         templateColumns={{
           base: '1fr',

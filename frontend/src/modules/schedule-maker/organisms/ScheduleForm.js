@@ -1,9 +1,9 @@
 import { Form } from 'src/shared/react-hook-form/organisms';
 import { FieldArrayContext } from '../contexts';
-import { Flex, ContentBox, Button } from 'src/shared/design-system';
+import { Flex, ContentBox, Button, Text } from 'src/shared/design-system';
 import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
 import { ScheduleDays, Versions } from './';
-import { BlockForm, NotAssignedBlocks } from '../molecules';
+import { BatchUpload, BlockForm, NotAssignedBlocks } from '../molecules';
 import { SCHEDULE_FORM_NAME } from '../constants';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 import PropTypes from 'prop-types';
@@ -15,6 +15,13 @@ import { RouterLink } from 'src/shared/navigation';
 import { route } from 'src/Routes';
 import { isNilOrEmpty } from 'ramda-extension';
 import BlockWarningContext from '../contexts/BlockWarningContext';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+} from '@chakra-ui/react';
 
 const ScheduleFormContent = () => {
   const { append } = useFieldArrayProps();
@@ -42,11 +49,33 @@ const ScheduleFormContent = () => {
           }}
           position="absolute"
           right="0"
-          top="16px"
+          top="-28px"
         >
           <Button>Edit Tournament Parameters</Button>
         </RouterLink>
-        <BlockForm onSubmit={onBlockFormSubmit} defaultValues={defaultValues} />
+        <Accordion defaultIndex={[0]} allowMultiple mt={4}>
+          <AccordionItem>
+            <AccordionButton>
+              <Text
+                fontWeight={700}
+                fontSize={24}
+                as="span"
+                flex="1"
+                textAlign="left"
+              >
+                Sport Blocks
+              </Text>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              <BlockForm
+                onSubmit={onBlockFormSubmit}
+                defaultValues={defaultValues}
+              />
+              <BatchUpload />
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
       </ContentBox>
       <NotAssignedBlocks />
       <ContentBox minW="70%">

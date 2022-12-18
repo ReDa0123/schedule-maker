@@ -25,6 +25,11 @@ export const typeDef = /* GraphQL */ `
       blocks: [BlockInput!]!
       tournamentId: Int!
     ): String!
+    batchUploadBlocks(
+      file: Upload!
+      tournamentId: Int!
+      versionId: Int
+    ): [Error!]!
   }
 
   type Block {
@@ -35,5 +40,10 @@ export const typeDef = /* GraphQL */ `
 
   input BlockInput {
     ${blockDef}
+  }
+    
+  type Error {
+    severity: String!
+    message: String!
   }
 `;

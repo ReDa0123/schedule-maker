@@ -16,6 +16,8 @@ import SetMainVersionButton from './SetMainVersionButton';
 import DisplayChangeButtons from './DisplayChangeButtons';
 import AgendaColumn from './AgendaColumn';
 import NotAssignedBlocksButton from './NotAssignedBlocksButton';
+import BatchUpload from './BatchUpload';
+import BatchValidationHelp from './BatchValidationHelp';
 
 export {
   BlockForm,
@@ -36,4 +38,6 @@ export {
   DisplayChangeButtons,
   AgendaColumn,
   NotAssignedBlocksButton,
+  BatchUpload,
+  BatchValidationHelp,
 };

@@ -10,6 +10,7 @@ import {
   typeDef as Tournament,
   resolvers as tournamentResolvers,
 } from './tournament/';
+import GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 
 // based on - https://www.apollographql.com/blog/backend/schema-design/modularizing-your-graphql-schema-code/
 const Query = /* GraphQL */ `
@@ -24,12 +25,19 @@ const Mutation = /* GraphQL */ `
   }
 `;
 
-const resolvers = {};
+const Upload = /* GraphQL */ `
+  scalar Upload
+`;
+
+const resolvers = {
+  Upload: GraphQLUpload,
+};
 
 export const schema = makeExecutableSchema({
   typeDefs: [
     Query,
     Mutation,
+    Upload,
     User,
     Area,
     Day,
