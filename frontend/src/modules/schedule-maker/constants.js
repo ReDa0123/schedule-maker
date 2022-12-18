@@ -36,3 +36,16 @@ export const BLOCK_DND_NAME = 'block';
 export const SCHEDULE_AGENDA_DISPLAY = 'agenda';
 
 export const SCHEDULE_DETAILED_DISPLAY = 'detailed';
+
+export const BLOCK_COLORS = [
+  'blue',
+  'pink',
+  'green',
+  'yellow',
+  'purple',
+  'orange',
+  'red',
+  'teal',
+  'cyan',
+  'gray',
+];

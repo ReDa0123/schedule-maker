@@ -25,8 +25,14 @@ const PersonsTag = ({ numberOfPersons, sex, ...props }) => {
       ? labelsSingle[sexType]
       : labelsPlural[sexType];
   }, [sex, numberOfPersons]);
+
+  const color = useMemo(
+    () => (sex === SEXES.M ? 'blue' : sex === SEXES.F ? 'pink' : 'green'),
+    [sex]
+  );
+
   return (
-    <Tag size="md" bg="blue.500" color="orange.100" {...props}>
+    <Tag size="md" bg={`${color}.500`} color="orange.100" {...props}>
       {`${numberOfPersons} ${label}`}
     </Tag>
   );

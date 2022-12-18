@@ -8,6 +8,7 @@ import {
 import { Box, Flex, WithTooltip } from 'src/shared/design-system';
 import { useDrag } from 'react-dnd';
 import {
+  BLOCK_COLORS,
   BLOCK_DND_NAME,
   BLOCK_OFFSET,
   BLOCK_SCALE,
@@ -42,6 +43,10 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
   const warning = useBlockWarning(index);
   const sportsName = useMemo(
     () => sports.find(propEq('sportId', value.sportId))?.name,
+    [sports, value]
+  );
+  const sportIndex = useMemo(
+    () => sports.findIndex(propEq('sportId', value.sportId)),
     [sports, value]
   );
   const blockDuration = calculateDuration(value, buffer);
@@ -84,7 +89,9 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
           borderWidth={2}
           borderColor={warning ? 'yellow.500' : 'blue.500'}
           p={2}
-          bg="orange.100"
+          bg={`${BLOCK_COLORS[sportIndex % BLOCK_COLORS.length]}.${
+            (Math.floor(sportIndex / BLOCK_COLORS.length) + 1) * 100
+          }`}
           position="relative"
           zIndex={20}
           ref={detailMode ? null : drag}
@@ -151,7 +158,7 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
             <TimeTag time={roundToDecimal(blockDuration, 2)} />
             <PersonsTag numberOfPersons={value.persons} sex={value.sex} />
           </Flex>
-          <Box color="blue.500" fontWeight="500">
+          <Box color="blue.600" fontWeight="500">
             {(blockDuration >= 10 || !isDetailedDisplay) && (
               <Box
                 overflow="hidden"
