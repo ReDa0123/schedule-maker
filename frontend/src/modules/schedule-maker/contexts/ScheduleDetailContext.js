@@ -47,7 +47,7 @@ const ScheduleDetailContext = ({ children }) => {
     () =>
       allBlocks.filter(
         allPass([
-          propSatisfies(isNotNil, 'startTime'),
+          propSatisfies(isNotNil, 'areaId'),
           propEqOrIsEmptyOrNil('versionId', version),
         ])
       ),

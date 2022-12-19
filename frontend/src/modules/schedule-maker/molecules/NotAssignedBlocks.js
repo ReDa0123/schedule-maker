@@ -21,9 +21,10 @@ const NotAssignedBlocks = () => {
     drop: ({ onChange, value }) => {
       onChange({
         ...value,
-        arenaId: null,
+        areaId: null,
         dayId: null,
         startTime: null,
+        orderIndex: null,
       });
     },
     collect: (monitor) => ({
@@ -39,7 +40,7 @@ const NotAssignedBlocks = () => {
           propEq('blockId', field.blockId)
         );
         return (
-          !correspondingValue?.startTime &&
+          !correspondingValue?.areaId &&
           correspondingValue?.versionId === selectedVersion && (
             <Controller
               key={field.id}

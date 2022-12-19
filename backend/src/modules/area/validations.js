@@ -23,5 +23,5 @@ export const validateArea = async ({
     throw new Error('You are not authorized to edit this tournament');
   }
 
-  await validationSchema.validate(areas);
+  areas && (await validationSchema.validate(areas));
 };

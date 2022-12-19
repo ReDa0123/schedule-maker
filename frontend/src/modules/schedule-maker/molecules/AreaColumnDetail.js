@@ -11,13 +11,17 @@ import { namePropCapitalize } from 'src/shared/utils';
 import { AgendaColumn } from './';
 
 const AreaColumnDetail = ({ area, startTime, endTime, dayId }) => {
-  const { areaId } = area;
+  const { areaId, flexible } = area;
+  const { displayMode } = useScheduleDisplayMode();
+  const isDetailedDisplay = displayMode === SCHEDULE_DETAILED_DISPLAY;
+
   const blocksInArea = useDetailBlocksInArea({
     dayId,
     areaId,
     startTime,
+    isDetailedDisplay,
+    flexible,
   });
-  const { displayMode } = useScheduleDisplayMode();
 
   const timeslots = useAreaColumn({ startTime, endTime });
   return (
@@ -30,7 +34,7 @@ const AreaColumnDetail = ({ area, startTime, endTime, dayId }) => {
       <Box h={`${TABLE_TOP_PADDING}px`} textAlign="center" fontWeight="500">
         {namePropCapitalize(area)}
       </Box>
-      {displayMode === SCHEDULE_DETAILED_DISPLAY ? (
+      {isDetailedDisplay && !flexible ? (
         <>
           {blocksInArea}
           <Box>

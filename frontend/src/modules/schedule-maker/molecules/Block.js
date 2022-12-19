@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import {
-  calculateDuration,
   calculateEndTime,
   minutesToTime,
   roundToDecimal,
@@ -14,19 +13,15 @@ import {
   BLOCK_SCALE,
   MINUTES_IN_BLOCK,
 } from '../constants';
-import { PersonsTag, TimeTag, ResetBlockButton } from '../atoms';
+import { PersonsTag, TimeTag, ResetBlockButton, BlockText } from '../atoms';
 import { DeleteBlockButton, EditBlockButton } from './';
-import {
-  useBlockWarning,
-  useFieldArrayProps,
-  useTournamentSchedule,
-} from '../hooks';
-import { useMemo } from 'react';
-import { propEq } from 'ramda';
+import { useBlockDrop, useBlockInfo } from '../hooks';
+import { useRef } from 'react';
 import { RiErrorWarningFill as WarningIcon } from 'react-icons/ri';
 import { isNilOrEmpty } from 'ramda-extension';
 
 const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
+  const blockRef = useRef(null);
   const [{ isDragging }, drag, preview] = useDrag({
     type: BLOCK_DND_NAME,
     item: { onChange, value },
@@ -34,37 +29,21 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
       isDragging: !!monitor.isDragging(),
     }),
   });
+
+  const [{ isOver }, drop] = useBlockDrop(index, value, isDetailedDisplay);
+  drag(drop(blockRef));
+
   const {
-    sports,
+    sportsName,
+    buffer,
     detailMode,
-    tournament: { buffer },
-  } = useTournamentSchedule();
-  const fieldArrayProps = useFieldArrayProps();
-  const warning = useBlockWarning(index);
-  const sportsName = useMemo(
-    () => sports.find(propEq('sportId', value.sportId))?.name,
-    [sports, value]
-  );
-  const sportIndex = useMemo(
-    () => sports.findIndex(propEq('sportId', value.sportId)),
-    [sports, value]
-  );
-  const blockDuration = calculateDuration(value, buffer);
-
-  const infoRow1 = useMemo(
-    () => `${sportsName} - ${value.age}`,
-    [sportsName, value.age]
-  );
-
-  const infoRow2 = useMemo(
-    () =>
-      `${value.category ?? ''}${
-        value.customParameter
-          ? `${value.category ? ' - ' : ''}${value.customParameter}`
-          : ''
-      }`,
-    [value.category, value.customParameter]
-  );
+    fieldArrayProps,
+    warning,
+    sportIndex,
+    blockDuration,
+    infoRow1,
+    infoRow2,
+  } = useBlockInfo(index, value);
 
   return (
     <>
@@ -94,14 +73,25 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
           }`}
           position="relative"
           zIndex={20}
-          ref={detailMode ? null : drag}
+          ref={detailMode ? null : blockRef}
           opacity={isDragging ? 0.4 : 1}
           flexShrink={0}
           borderRadius="md"
           boxShadow="lg"
           cursor={detailMode ? 'default' : 'grab'}
           pointerEvents={isDragging ? 'none' : 'all'}
+          mt={isOver ? 200 : 0}
           {...props}
+          css={{
+            '&:after': {
+              content: '""',
+              position: 'absolute',
+              top: isOver ? -210 : -10,
+              left: 0,
+              width: '100%',
+              height: isOver ? 210 : 10,
+            },
+          }}
         >
           {warning && (
             <>
@@ -136,9 +126,10 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
                   resetBlock={() =>
                     onChange({
                       ...value,
-                      arenaId: null,
+                      areaId: null,
                       dayId: null,
                       startTime: null,
+                      orderIndex: null,
                     })
                   }
                 />
@@ -160,22 +151,10 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
           </Flex>
           <Box color="blue.600" fontWeight="500">
             {(blockDuration >= 10 || !isDetailedDisplay) && (
-              <Box
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-              >
-                {infoRow1}
-              </Box>
+              <BlockText>{infoRow1}</BlockText>
             )}
             {(blockDuration >= 15 || !isDetailedDisplay) && (
-              <Box
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-              >
-                {infoRow2}
-              </Box>
+              <BlockText>{infoRow2}</BlockText>
             )}
           </Box>
           {!isDetailedDisplay && value.startTime && (

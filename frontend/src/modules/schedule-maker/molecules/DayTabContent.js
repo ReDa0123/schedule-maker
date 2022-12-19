@@ -3,10 +3,11 @@ import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import { always } from 'ramda';
+import { BLOCK_DND_NAME } from '../constants';
 
 const DayTabContent = ({ description, date, setIndex, index }) => {
   const [, drop] = useDrop({
-    accept: 'block',
+    accept: BLOCK_DND_NAME,
     hover: () => setIndex(index),
     canDrop: always(false),
   });

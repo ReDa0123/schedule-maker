@@ -1,24 +1,69 @@
 import PropTypes from 'prop-types';
-import { Box } from 'src/shared/design-system';
-import { Timeslot } from '../organisms';
+import {
+  Box,
+  Text,
+  Flex,
+  WithTooltip,
+  useToast,
+} from 'src/shared/design-system';
+import { FlexibleColumn, Timeslot } from '../organisms';
 import {
   useAreaColumn,
   useEditBlocksInArea,
   useScheduleDisplayMode,
+  useTournamentSchedule,
 } from '../hooks';
 import { SCHEDULE_DETAILED_DISPLAY, TABLE_TOP_PADDING } from '../constants';
 import { namePropCapitalize } from 'src/shared/utils';
 import { AgendaColumn } from './';
+import { Switch } from '@chakra-ui/react';
+import { gql, useMutation } from '@apollo/client';
+import { useCallback, useState } from 'react';
+
+const TOGGLE_FLEXIBLE = gql`
+  mutation ToggleFlexibleArea($areaId: Int!, $tournamentId: Int!) {
+    toggleFlexibleArea(areaId: $areaId, tournamentId: $tournamentId)
+  }
+`;
 
 const AreaColumnEdit = ({ area, startTime, endTime, dayId }) => {
-  const { areaId } = area;
-  const { blocksInArea, startTimesInThisDayAndArena } = useEditBlocksInArea({
-    dayId,
-    areaId,
-    startTime,
-  });
+  const { areaId, flexible } = area;
+  const [isFlexible, setIsFlexible] = useState(flexible);
+  const {
+    tournament: { tournamentId },
+    refetch,
+  } = useTournamentSchedule();
+  const { toastFn } = useToast();
+  const { blocksInArea, startTimesInThisDayAndArena, areaContainsSomeBlocks } =
+    useEditBlocksInArea({
+      dayId,
+      areaId,
+      startTime,
+    });
   const timeslots = useAreaColumn({ startTime, endTime });
   const { displayMode } = useScheduleDisplayMode();
+
+  const [toggleFlexible, { loading }] = useMutation(TOGGLE_FLEXIBLE, {
+    variables: { areaId: Number(areaId), tournamentId: Number(tournamentId) },
+    onCompleted: ({ toggleFlexibleArea: description }) => {
+      toastFn({
+        description,
+        status: 'success',
+      });
+      refetch();
+    },
+    onError: ({ message }) => {
+      toastFn({
+        description: message,
+        status: 'error',
+      });
+    },
+  });
+
+  const onToggle = useCallback(async () => {
+    setIsFlexible((prev) => !prev);
+    await toggleFlexible();
+  }, [toggleFlexible]);
 
   return (
     <Box
@@ -27,26 +72,48 @@ const AreaColumnEdit = ({ area, startTime, endTime, dayId }) => {
       borderRightWidth="2px"
       position="relative"
     >
-      <Box h={`${TABLE_TOP_PADDING}px`} textAlign="center" fontWeight="500">
-        {namePropCapitalize(area)}
-      </Box>
+      <Flex
+        h={`${TABLE_TOP_PADDING}px`}
+        justifyContent="center"
+        alignItems="center"
+        gap={4}
+      >
+        <Text fontWeight="500">{namePropCapitalize(area)}</Text>
+        <WithTooltip
+          label="Is flexible?"
+          tooltipProps={{
+            shouldWrapChildren: true,
+          }}
+        >
+          <Switch
+            id="toggle-flexible"
+            disabled={loading || areaContainsSomeBlocks}
+            isChecked={isFlexible}
+            onChange={onToggle}
+          />
+        </WithTooltip>
+      </Flex>
 
       {displayMode === SCHEDULE_DETAILED_DISPLAY ? (
-        <>
-          {blocksInArea}
-          <Box>
-            {timeslots.map((timeslot) => (
-              <Timeslot
-                key={timeslot}
-                timeslot={timeslot}
-                dayId={dayId}
-                areaId={areaId}
-                dayEnd={endTime}
-                startTimesInThisDayAndArena={startTimesInThisDayAndArena}
-              />
-            ))}
-          </Box>
-        </>
+        !flexible ? (
+          <>
+            {blocksInArea}
+            <Box>
+              {timeslots.map((timeslot) => (
+                <Timeslot
+                  key={timeslot}
+                  timeslot={timeslot}
+                  dayId={dayId}
+                  areaId={areaId}
+                  dayEnd={endTime}
+                  startTimesInThisDayAndArena={startTimesInThisDayAndArena}
+                />
+              ))}
+            </Box>
+          </>
+        ) : (
+          <FlexibleColumn areaId={areaId} dayId={dayId} />
+        )
       ) : (
         <AgendaColumn>{blocksInArea}</AgendaColumn>
       )}

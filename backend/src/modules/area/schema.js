@@ -8,12 +8,14 @@ export const typeDef = /* GraphQL */ `
 
   type Mutation {
     saveAreas(areas: [String!]!, tournamentId: Int!): String!
+    toggleFlexibleArea(areaId: Int!, tournamentId: Int!): String!
   }
 
   type Area {
     areaId: Int!
     name: String!
     tournamentId: Int!
+    flexible: Boolean!
   }
 
   type AreasWithAreasOfTournament {

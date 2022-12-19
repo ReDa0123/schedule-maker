@@ -11,6 +11,7 @@ const blockDef = `
   customParameter: String
   versionId: Int
   matchDuration: Int!
+  orderIndex: Int
 `;
 
 export const typeDef = /* GraphQL */ `

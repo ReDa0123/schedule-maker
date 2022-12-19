@@ -3,10 +3,11 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { NotAssignedBlocksTag } from '../atoms';
 import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
+import { BLOCK_DND_NAME } from '../constants';
 
 const NotAssignedBlocksButton = ({ numberOfBlocks, setOpen, open }) => {
   const [, drop] = useDrop({
-    accept: 'block',
+    accept: BLOCK_DND_NAME,
     canDrop: () => false,
     hover: () => setOpen(true),
   });

@@ -35,3 +35,34 @@ export const saveAreas = async (
 
   return 'Areas saved successfully';
 };
+
+export const toggleFlexibleArea = async (
+  _,
+  { areaId, tournamentId },
+  { dbConnection, auth }
+) => {
+  await validateArea({
+    auth,
+    dbConnection,
+    tournamentId,
+    areaId,
+  });
+
+  const areas = await dbConnection.query(
+    `SELECT flexible FROM tournament_area WHERE areaId = ? AND tournamentId = ?`,
+    [areaId, tournamentId]
+  );
+
+  const area = areas[0];
+
+  if (!area) {
+    throw new Error('Area not found');
+  }
+
+  await dbConnection.query(
+    `UPDATE tournament_area SET flexible = ? WHERE areaId = ? AND tournamentId = ?`,
+    [!area.flexible, areaId, tournamentId]
+  );
+
+  return 'Area flexibility changed successfully';
+};

@@ -5,6 +5,7 @@ import NotAssignedBlocksTag from './NotAssignedBlocksTag';
 import SoftErrorsList from './SoftErrorsList';
 import BatchError from './BatchError';
 import BatchValidationHelpModalBody from './BatchValidationHelpModalBody';
+import BlockText from './BlockText';
 
 export {
   TimeTag,
@@ -14,4 +15,5 @@ export {
   SoftErrorsList,
   BatchError,
   BatchValidationHelpModalBody,
+  BlockText,
 };

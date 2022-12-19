@@ -35,4 +35,5 @@ export const getBlockValidationSchema = ({
       .oneOf([...versionIds, null])
       .nullable(true),
     matchDuration: yup.number().integer().positive().required(),
+    orderIndex: yup.number().integer().min(0).nullable(true),
   });

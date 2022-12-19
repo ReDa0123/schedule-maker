@@ -36,6 +36,7 @@ export const convertBlocksForSending = mapplySpec({
   customParameter: nilIfEmptyProp('customParameter'),
   versionId: convertPropToNumberIfNotNil('versionId'),
   matchDuration: convertPropToNumberIfNotNil('matchDuration'),
+  orderIndex: convertPropToNumberIfNotNil('orderIndex'),
 });
 
 export const propUniqAndConvertToLabelValueObj = (propName) =>

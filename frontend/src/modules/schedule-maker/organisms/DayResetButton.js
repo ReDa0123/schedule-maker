@@ -22,6 +22,7 @@ const DayResetButton = ({ dayId }) => {
           dayId: null,
           startTime: null,
           areaId: null,
+          orderIndex: null,
         });
       }
     });

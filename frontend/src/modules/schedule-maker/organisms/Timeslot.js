@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useIsInViewport } from '../../../shared/hooks';
 import { Box } from 'src/shared/design-system';
-import { BLOCK_SCALE } from '../constants';
+import { BLOCK_DND_NAME, BLOCK_SCALE } from '../constants';
 import { useTournamentSchedule } from '../hooks';
 import { calculateEndTime } from '../utils/blocks';
 import { between } from 'ramda-extension';
@@ -23,8 +23,9 @@ const TimeslotDrop = ({
       onChange({
         ...value,
         areaId,
-        dayId: dayId,
+        dayId,
         startTime: timeslot,
+        orderIndex: null,
       });
     },
     [areaId, dayId, timeslot]
@@ -61,7 +62,7 @@ const TimeslotDrop = ({
   );
 
   const [{ isOver, canDrop }, drop] = useDrop({
-    accept: 'block',
+    accept: BLOCK_DND_NAME,
     drop: onDrop,
     collect,
     canDrop: canDropFn,

@@ -1,4 +1,4 @@
-import { useWatch, Controller } from 'react-hook-form';
+import { useWatch, Controller, useFormContext } from 'react-hook-form';
 import { useMemo } from 'react';
 import { allPass, filter, o, prop, propEq, sort } from 'ramda';
 import { calculateEndTime } from '../utils/blocks';
@@ -20,17 +20,25 @@ import {
 import { mapplySpec } from 'src/shared/utils';
 import { defaultToZero } from 'ramda-extension';
 
-export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
+const emptyArray = [];
+
+export const useEditBlocksInArea = ({
+  dayId,
+  areaId,
+  startTime,
+  orderBy = 'startTime',
+}) => {
   const {
     tournament: { buffer },
   } = useTournamentSchedule();
   const { fields } = useFieldArrayProps();
-  const values = useWatch({
-    name: SCHEDULE_FORM_NAME,
-    defaultValue: [],
-  });
+  const values =
+    useWatch({
+      name: SCHEDULE_FORM_NAME,
+    }) ?? emptyArray;
   const selectedVersion = useSelectedVersion();
   const { displayMode } = useScheduleDisplayMode();
+  const { watch } = useFormContext();
 
   const startTimesInThisDayAndArena = useMemo(
     () =>
@@ -58,16 +66,41 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
   const sortedValues = useMemo(
     () =>
       sort(
-        (a, b) => defaultToZero(a.startTime) - defaultToZero(b.startTime),
+        (a, b) => defaultToZero(a[orderBy]) - defaultToZero(b[orderBy]),
         values
       ),
-    [values]
+    [values, orderBy]
   );
 
   const isDetailedDisplay = displayMode === SCHEDULE_DETAILED_DISPLAY;
+  const isPositionedAbsolute = isDetailedDisplay && orderBy === 'startTime';
+
+  const areaContainsSomeBlocks = useMemo(
+    () => sortedValues.some(propEq('areaId', areaId)),
+    [sortedValues, areaId]
+  );
+
+  const lastOrderIndexInThisDayAndArena = useMemo(
+    () =>
+      sortedValues.reduce(
+        (
+          acc,
+          { orderIndex, dayId: currentDayId, areaId: currentAreaId, versionId }
+        ) =>
+          dayId === currentDayId &&
+          areaId === currentAreaId &&
+          selectedVersion === versionId
+            ? Math.max(acc, orderIndex)
+            : acc,
+        -1
+      ),
+    [sortedValues, areaId, dayId, selectedVersion]
+  );
 
   return {
     startTimesInThisDayAndArena,
+    areaContainsSomeBlocks,
+    lastOrderIndexInThisDayAndArena,
     blocksInArea: sortedValues.map((correspondingValue) => {
       const shouldDisplay = allPass([
         propEq('dayId', dayId),
@@ -82,11 +115,11 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
             render={({ field: { onChange, value } }) => (
               <Block
                 onChange={onChange}
-                value={value}
+                value={watch(`schedule.${indexes.get(value.blockId)}`)}
                 index={indexes.get(value.blockId)}
-                position={isDetailedDisplay ? 'absolute' : 'relative'}
+                position={isPositionedAbsolute ? 'absolute' : 'relative'}
                 top={
-                  isDetailedDisplay
+                  isPositionedAbsolute
                     ? `${
                         ((correspondingValue?.startTime - startTime) *
                           BLOCK_SCALE) /
@@ -96,8 +129,10 @@ export const useEditBlocksInArea = ({ dayId, areaId, startTime }) => {
                       }px`
                     : undefined
                 }
-                left={isDetailedDisplay ? '50%' : undefined}
-                transform={isDetailedDisplay ? 'translateX(-50%)' : undefined}
+                left={isPositionedAbsolute ? '50%' : undefined}
+                transform={
+                  isPositionedAbsolute ? 'translateX(-50%)' : undefined
+                }
                 isDetailedDisplay={isDetailedDisplay}
               />
             )}

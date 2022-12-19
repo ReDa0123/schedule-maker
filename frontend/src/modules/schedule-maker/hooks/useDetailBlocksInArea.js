@@ -3,28 +3,30 @@ import {
   BLOCK_OFFSET,
   BLOCK_SCALE,
   MINUTES_IN_BLOCK,
-  SCHEDULE_DETAILED_DISPLAY,
   TABLE_TOP_PADDING,
 } from '../constants';
 import { Block } from '../molecules';
-import { useScheduleDisplayMode } from './';
 
-export const useDetailBlocksInArea = ({ areaId, dayId, startTime }) => {
+export const useDetailBlocksInArea = ({
+  areaId,
+  dayId,
+  startTime,
+  isDetailedDisplay,
+  flexible,
+}) => {
+  const absolutePosition = isDetailedDisplay && !flexible;
   const { filteredBlocks: blocks } = useScheduleDetail();
   const blocksInArea = blocks.filter(
     (block) => block.areaId === areaId && block.dayId === dayId
   );
-  const { displayMode } = useScheduleDisplayMode();
-  const isDetailedDisplay = displayMode === SCHEDULE_DETAILED_DISPLAY;
-
   return blocksInArea.map((block) => (
     <Block
       key={block.blockId}
       value={block}
       pointerEvents="none"
-      position={isDetailedDisplay ? 'absolute' : 'relative'}
+      position={absolutePosition ? 'absolute' : 'relative'}
       top={
-        isDetailedDisplay
+        absolutePosition
           ? `${
               ((block.startTime - startTime) * BLOCK_SCALE) / MINUTES_IN_BLOCK +
               TABLE_TOP_PADDING +
@@ -32,8 +34,8 @@ export const useDetailBlocksInArea = ({ areaId, dayId, startTime }) => {
             }px`
           : undefined
       }
-      left={isDetailedDisplay ? '50%' : undefined}
-      transform={isDetailedDisplay ? 'translateX(-50%)' : undefined}
+      left={absolutePosition ? '50%' : undefined}
+      transform={absolutePosition ? 'translateX(-50%)' : undefined}
       isDetailedDisplay={isDetailedDisplay}
     />
   ));

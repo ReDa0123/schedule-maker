@@ -7,6 +7,8 @@ import { useFieldArrayProps } from './useFieldArrayProps';
 import { useSelectedVersion } from './useSelectedVersion';
 import { useBlockWarning } from './useBlockWarning';
 import { useScheduleDisplayMode } from './useScheduleDisplayMode';
+import { useBlockDrop } from './useBlockDrop';
+import { useBlockInfo } from './useBlockInfo';
 
 export {
   useEditBlocksInArea,
@@ -18,4 +20,6 @@ export {
   useSelectedVersion,
   useBlockWarning,
   useScheduleDisplayMode,
+  useBlockDrop,
+  useBlockInfo,
 };

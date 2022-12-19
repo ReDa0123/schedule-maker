@@ -8,6 +8,7 @@ import Timeslot from './Timeslot';
 import EditBlockModal from './EditBlockModal';
 import AddDayModal from './AddDayModal';
 import Versions from './Versions';
+import FlexibleColumn from './FlexibleColumn';
 
 export {
   DayResetButton,
@@ -20,4 +21,5 @@ export {
   Timeslot,
   AddDayModal,
   Versions,
+  FlexibleColumn,
 };

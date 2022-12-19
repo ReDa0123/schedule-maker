@@ -44,6 +44,7 @@ const BlockWarningContext = ({ children }) => {
         const endTime2 = calculateEndTime(values[j], buffer);
         if (
           isNotNil(startTime) &&
+          isNotNil(startTime2) &&
           (between(startTime, endTime - 0.01, startTime2) ||
             between(startTime2, endTime2 - 0.01, startTime)) &&
           age === age2 &&

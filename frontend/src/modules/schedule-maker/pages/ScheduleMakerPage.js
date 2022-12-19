@@ -25,6 +25,7 @@ const GET_TOURNAMENT_QUERY = gql`
       areas {
         areaId
         name
+        flexible
       }
       days {
         dayId
@@ -48,6 +49,7 @@ const GET_TOURNAMENT_QUERY = gql`
         sportId
         versionId
         matchDuration
+        orderIndex
       }
       versions {
         versionId
