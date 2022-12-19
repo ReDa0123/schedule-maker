@@ -127,6 +127,7 @@ export const batchUploadBlocks = async (
       customParameter: customParam ? customParam : null,
       versionId,
       matchDuration: durationInSecs,
+      orderIndex: null,
     };
 
     try {
@@ -150,13 +151,12 @@ export const batchUploadBlocks = async (
     errors.length === 0 ||
     errors.every((error) => error.severity === 'warn')
   ) {
-    console.log('blocks');
     blocks.map(async (blockArr) =>
       dbConnection.query(
         `INSERT INTO block (
     startTime, persons, style, category, sex, 
-    dayId, areaId, sportId, age, customParameter, versionId, matchDuration, tournamentId
-  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+    dayId, areaId, sportId, age, customParameter, versionId, matchDuration, orderIndex, tournamentId
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         blockArr
       )
     );

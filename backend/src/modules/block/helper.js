@@ -27,7 +27,7 @@ export const errorMessages = {
     `Style in row ${row} must be one of the following styles: ${STYLES.join(
       ', '
     )}`,
-  sport: (row) =>
+  sportId: (row) =>
     `Sport in row ${row} must be one of the sports in the tournament`,
   sex: (row) => `Sex in row ${row} must be empty or one of the following: M, F`,
   age: (row) => `Age in row ${row} must be a string of max 50 characters`,
