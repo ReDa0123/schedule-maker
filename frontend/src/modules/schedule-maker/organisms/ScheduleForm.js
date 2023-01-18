@@ -1,6 +1,12 @@
 import { Form } from 'src/shared/react-hook-form/organisms';
 import { FieldArrayContext } from '../contexts';
-import { Flex, ContentBox, Button, Text } from 'src/shared/design-system';
+import {
+  Flex,
+  ContentBox,
+  Button,
+  Text,
+  WithTooltip,
+} from 'src/shared/design-system';
 import { useFieldArrayProps, useTournamentSchedule } from '../hooks';
 import { ScheduleDays, Versions } from './';
 import { BatchUpload, BlockForm, NotAssignedBlocks } from '../molecules';
@@ -21,7 +27,9 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Icon,
 } from '@chakra-ui/react';
+import { AiOutlineSave } from 'react-icons/ai';
 
 const ScheduleFormContent = () => {
   const { append } = useFieldArrayProps();
@@ -53,6 +61,36 @@ const ScheduleFormContent = () => {
         >
           <Button>Edit Tournament Parameters</Button>
         </RouterLink>
+        <FormSubmitButton
+          minW="60px"
+          w="60px"
+          height="60px"
+          borderRadius="50%"
+          boxShadow="0px 0px 10px rgba(0, 0, 0, 0.7)"
+          bg="green.500"
+          _hover={{
+            bg: 'green.600',
+          }}
+          containerProps={{
+            marginX: 'auto',
+            mt: '16px',
+            position: 'fixed',
+            right: '45px',
+            top: '45px',
+            zIndex: '100',
+          }}
+        >
+          <WithTooltip label={'Save'}>
+            <span
+              style={{
+                height: '2rem',
+                display: 'block',
+              }}
+            >
+              <Icon as={AiOutlineSave} boxSize="2rem" />
+            </span>
+          </WithTooltip>
+        </FormSubmitButton>
         <Accordion defaultIndex={[0]} allowMultiple mt={4}>
           <AccordionItem>
             <AccordionButton>
