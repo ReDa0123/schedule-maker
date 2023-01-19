@@ -39,6 +39,7 @@ const AreaColumnEdit = ({ area, startTime, endTime, dayId }) => {
       dayId,
       areaId,
       startTime,
+      orderBy: isFlexible ? 'orderIndex' : 'startTime',
     });
   const timeslots = useAreaColumn({ startTime, endTime });
   const { displayMode } = useScheduleDisplayMode();
@@ -80,7 +81,11 @@ const AreaColumnEdit = ({ area, startTime, endTime, dayId }) => {
       >
         <Text fontWeight="500">{namePropCapitalize(area)}</Text>
         <WithTooltip
-          label="Is flexible?"
+          label={`Is flexible? ${
+            loading || areaContainsSomeBlocks
+              ? 'This switch is disabled because this area contains some blocks already (check other versions and days too).'
+              : ''
+          }`}
           tooltipProps={{
             shouldWrapChildren: true,
           }}
