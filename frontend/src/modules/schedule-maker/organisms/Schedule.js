@@ -14,7 +14,7 @@ import { RouterLink } from 'src/shared/navigation';
 import { route } from 'src/Routes';
 import { SCHEDULE_DETAILED_DISPLAY } from '../constants';
 
-const Schedule = ({ dayId, startTime, endTime }) => {
+const Schedule = ({ dayId, startTime, endTime, ...props }) => {
   const { displayMode } = useScheduleDisplayMode();
   const {
     areas,
@@ -26,7 +26,7 @@ const Schedule = ({ dayId, startTime, endTime }) => {
     [detailMode]
   );
   return (
-    <Box w="100%">
+    <Box w="100%" {...props}>
       <Flex
         w="100%"
         overflow="auto"

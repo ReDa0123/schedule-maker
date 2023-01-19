@@ -9,7 +9,7 @@ const ScheduleDetail = () => {
       <ContentBox>
         <BlockFilter />
       </ContentBox>
-      <ContentBox minW="70%">
+      <ContentBox minW="70%" maxW="95vw">
         <ScheduleDays />
       </ContentBox>
     </ScheduleDetailContext>

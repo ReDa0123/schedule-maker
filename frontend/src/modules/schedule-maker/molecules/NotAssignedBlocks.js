@@ -7,10 +7,11 @@ import { propEq } from 'ramda';
 import { Block, NotAssignedBlocksButton } from '../molecules';
 import { isNilOrEmpty } from 'ramda-extension';
 import { useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const WIDTH = 315;
 
-const NotAssignedBlocks = () => {
+const NotAssignedBlocks = ({ setLeftPadding }) => {
   const [open, setOpen] = useState(false);
   const { fields } = useFieldArrayProps();
   const values = useWatch({ name: SCHEDULE_FORM_NAME, defaultValue: [] });
@@ -67,11 +68,20 @@ const NotAssignedBlocks = () => {
         top="50%"
         left={`${WIDTH + 5}px`}
         transform={`translate(${open ? 0 : -(WIDTH + 5)}px, -50%)`}
-        transition="transform 500ms ease-out"
+        transition="transform 300ms ease-out"
         zIndex={1000}
       >
         <NotAssignedBlocksButton
-          setOpen={setOpen}
+          setOpen={(newValue) => {
+            if (typeof newValue === 'boolean') {
+              setOpen(newValue);
+              setLeftPadding(newValue ? WIDTH : 0);
+            } else {
+              const bool = newValue(open);
+              setOpen(bool);
+              setLeftPadding(bool ? WIDTH : 0);
+            }
+          }}
           numberOfBlocks={notAssignedBlocks.filter((e) => e).length}
           open={open}
         />
@@ -93,7 +103,7 @@ const NotAssignedBlocks = () => {
         w={`${WIDTH}px`}
         borderRadius="lg"
         transform={`translateX(${open ? 0 : -(WIDTH + 5)}px)`}
-        transition="transform 500ms ease-out"
+        transition="transform 300ms ease-out"
       >
         <Text
           fontWeight={600}
@@ -107,6 +117,10 @@ const NotAssignedBlocks = () => {
       </Flex>
     </>
   );
+};
+
+NotAssignedBlocks.propTypes = {
+  setLeftPadding: PropTypes.func.isRequired,
 };
 
 export default NotAssignedBlocks;

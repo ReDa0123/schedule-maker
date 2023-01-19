@@ -14,7 +14,7 @@ import { SCHEDULE_FORM_NAME } from '../constants';
 import { FormSubmitButton } from 'src/shared/react-hook-form/molecules';
 import PropTypes from 'prop-types';
 import { LoadingModal } from 'src/shared/design-system/molecules';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { assoc, last } from 'ramda';
 import uuid from 'react-uuid';
 import { RouterLink } from 'src/shared/navigation';
@@ -32,6 +32,7 @@ import {
 import { AiOutlineSave } from 'react-icons/ai';
 
 const ScheduleFormContent = () => {
+  const [leftPadding, setLeftPadding] = useState(0);
   const { append } = useFieldArrayProps();
   const {
     tournament: { tournamentId, preferredStyle },
@@ -115,10 +116,15 @@ const ScheduleFormContent = () => {
           </AccordionItem>
         </Accordion>
       </ContentBox>
-      <NotAssignedBlocks />
-      <ContentBox minW="70%">
+      <NotAssignedBlocks setLeftPadding={setLeftPadding} />
+      <ContentBox minW="70%" maxW="95vw">
         <Versions />
-        <ScheduleDays />
+        <ScheduleDays
+          position="relative"
+          left={`${leftPadding}px`}
+          w={`calc(100% - ${leftPadding}px)`}
+          transition="left 300ms ease-out, width 300ms ease-out"
+        />
         <FormSubmitButton
           minW="250px"
           containerProps={{ marginX: 'auto', mt: '16px' }}

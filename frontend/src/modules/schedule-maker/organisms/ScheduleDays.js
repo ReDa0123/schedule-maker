@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { route } from '../../../Routes';
 import DisplayChangeButtons from '../molecules/DisplayChangeButtons';
 
-const ScheduleDays = () => {
+const ScheduleDays = (props) => {
   const {
     days,
     detailMode,
@@ -28,7 +28,7 @@ const ScheduleDays = () => {
 
   return !isNilOrEmpty(days) ? (
     <>
-      <Flex w="100%" justifyContent="space-between">
+      <Flex w="100%" justifyContent="space-between" {...props}>
         {detailMode ? (
           <Heading fontSize={24} mb={4}>
             Days of the tournament
@@ -44,7 +44,12 @@ const ScheduleDays = () => {
         )}
         <DisplayChangeButtons />
       </Flex>
-      <Tabs index={activeIndex} onChange={setActiveIndex} overflow="auto">
+      <Tabs
+        index={activeIndex}
+        onChange={setActiveIndex}
+        overflow="auto"
+        {...props}
+      >
         <TabList>
           {days.map(({ dayId, date, description }, index) => (
             <DayTabContent
@@ -66,6 +71,7 @@ const ScheduleDays = () => {
         dayId={selectedDay.dayId}
         startTime={selectedDay.startTime}
         endTime={selectedDay.endTime}
+        {...props}
       />
     </>
   ) : (
