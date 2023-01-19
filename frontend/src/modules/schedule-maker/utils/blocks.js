@@ -1,7 +1,6 @@
-import { compose, pluck, prop, replace, uniq, values } from 'ramda';
+import { compose, pluck, prop, uniq, values } from 'ramda';
 import {
   convertPropToNumberIfNotNil,
-  convertTimeToMinutesString,
   convertValuesToLabelValueObj,
   mapplySpec,
   nilIfEmptyProp,
@@ -53,7 +52,3 @@ export const roundToDecimal = (number, decimalPlaces) =>
 
 export const blockDurationValueParser = (value) =>
   `${minutesToTime(value)} minutes`;
-
-export const blockDurationChangeParser = (value) => {
-  convertTimeToMinutesString(replace(' minutes', '', value));
-};

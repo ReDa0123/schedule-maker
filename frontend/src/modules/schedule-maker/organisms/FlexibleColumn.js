@@ -1,14 +1,14 @@
 import { useDrop } from 'react-dnd';
 import { BLOCK_DND_NAME } from '../constants';
-import { useEditBlocksInArea } from '../hooks';
 import { Flex } from 'src/shared/design-system';
 import PropTypes from 'prop-types';
 
-const FlexibleColumn = ({ dayId, areaId }) => {
-  const { blocksInArea, lastOrderIndexInThisDayAndArena } = useEditBlocksInArea(
-    { dayId, areaId, orderBy: 'orderIndex' }
-  );
-
+const FlexibleColumn = ({
+  dayId,
+  areaId,
+  blocksInArea,
+  lastOrderIndexInThisDayAndArena,
+}) => {
   const [{ isOver }, drop] = useDrop({
     accept: BLOCK_DND_NAME,
     drop: ({ onChange, value }) => {
@@ -53,6 +53,8 @@ const FlexibleColumn = ({ dayId, areaId }) => {
 FlexibleColumn.propTypes = {
   dayId: PropTypes.number.isRequired,
   areaId: PropTypes.number.isRequired,
+  blocksInArea: PropTypes.array.isRequired,
+  lastOrderIndexInThisDayAndArena: PropTypes.number.isRequired,
 };
 
 export default FlexibleColumn;

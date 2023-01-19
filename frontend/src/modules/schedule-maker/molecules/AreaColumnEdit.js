@@ -34,13 +34,17 @@ const AreaColumnEdit = ({ area, startTime, endTime, dayId }) => {
     refetch,
   } = useTournamentSchedule();
   const { toastFn } = useToast();
-  const { blocksInArea, startTimesInThisDayAndArena, areaContainsSomeBlocks } =
-    useEditBlocksInArea({
-      dayId,
-      areaId,
-      startTime,
-      orderBy: isFlexible ? 'orderIndex' : 'startTime',
-    });
+  const {
+    blocksInArea,
+    startTimesInThisDayAndArena,
+    areaContainsSomeBlocks,
+    lastOrderIndexInThisDayAndArena,
+  } = useEditBlocksInArea({
+    dayId,
+    areaId,
+    startTime,
+    orderBy: isFlexible ? 'orderIndex' : 'startTime',
+  });
   const timeslots = useAreaColumn({ startTime, endTime });
   const { displayMode } = useScheduleDisplayMode();
 
@@ -117,7 +121,12 @@ const AreaColumnEdit = ({ area, startTime, endTime, dayId }) => {
             </Box>
           </>
         ) : (
-          <FlexibleColumn areaId={areaId} dayId={dayId} />
+          <FlexibleColumn
+            areaId={areaId}
+            dayId={dayId}
+            lastOrderIndexInThisDayAndArena={lastOrderIndexInThisDayAndArena}
+            blocksInArea={blocksInArea}
+          />
         )
       ) : (
         <AgendaColumn>{blocksInArea}</AgendaColumn>
