@@ -63,10 +63,27 @@ export const createTournament = async (_, value, { dbConnection, auth }) => {
 
 export const editTournament = async (
   _,
-  { name, location, startDate, endDate, buffer, tournamentId, preferredStyle },
+  {
+    name,
+    location,
+    startDate,
+    endDate,
+    buffer,
+    tournamentId,
+    preferredStyle,
+    isPublic,
+  },
   { dbConnection, auth }
 ) => {
-  const value = { name, location, startDate, endDate, buffer, preferredStyle };
+  const value = {
+    name,
+    location,
+    startDate,
+    endDate,
+    buffer,
+    preferredStyle,
+    isPublic,
+  };
   const userId = Number(getUser(auth));
 
   await validateTournament({
@@ -77,7 +94,7 @@ export const editTournament = async (
   });
 
   await dbConnection.query(
-    `UPDATE tournament SET name = ?, location = ?, startDate = ?, endDate = ?,  userId = ?, buffer = ?, preferredStyle = ? WHERE tournamentId = ?;`,
+    `UPDATE tournament SET name = ?, location = ?, startDate = ?, endDate = ?,  userId = ?, buffer = ?, preferredStyle = ?, isPublic = ? WHERE tournamentId = ?;`,
     [
       name,
       location,
@@ -86,6 +103,7 @@ export const editTournament = async (
       userId,
       buffer,
       preferredStyle,
+      isPublic,
       tournamentId,
     ]
   );

@@ -1,6 +1,15 @@
-//TODO: Limit the number of tournaments returned
-export const tournaments = async (_, __, { dbConnection }) =>
-  await dbConnection.query(`SELECT * FROM tournament`);
+import getUser from '../user/helper';
+import { reject } from 'ramda';
+import { isNilOrEmpty } from 'ramda-extension';
+
+export const tournaments = async (_, __, { dbConnection, auth }) => {
+  const userId = getUser(auth);
+  const query = `isPublic = 1 ${userId ? 'OR userId = ?' : ''}`;
+  return await dbConnection.query(
+    `SELECT * FROM tournament WHERE ${query}`,
+    reject(isNilOrEmpty)([userId])
+  );
+};
 
 export const tournament = async (_, { tournamentId }, { dbConnection }) => {
   const tournaments = await dbConnection.query(

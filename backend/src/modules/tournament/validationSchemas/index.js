@@ -26,4 +26,5 @@ export const newTournamentValidationSchema = yup.object().shape({
       test: (value, ctx) =>
         isNaN(ctx.parent.startDate) ? true : value >= ctx.parent.startDate,
     }),
+  //TODO isPublic BE validation
 });

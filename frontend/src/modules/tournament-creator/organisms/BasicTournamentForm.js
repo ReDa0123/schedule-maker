@@ -4,6 +4,7 @@ import {
   FormInput,
   FormSelect,
   FormSubmitButton,
+  FormCheckbox,
 } from 'src/shared/react-hook-form/molecules';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
@@ -48,6 +49,7 @@ const validationSchema = yup.object().shape({
     .max(50)
     .oneOf([...tournamentStyles, '']),
   buffer: yup.mixed().oneOf([...bufferOptions, ...bufferOptionsNumber, '']),
+  //TODO isPublic FE validation
 });
 
 const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
@@ -61,6 +63,7 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
         endDate: defaultValues?.endDate || '',
         preferredStyle: defaultValues?.preferredStyle || '',
         buffer: defaultValues?.buffer || '0.0',
+        isPublic: defaultValues?.isPublic || false,
       }}
       resolver={yupResolver(validationSchema)}
       mode="onChange"
@@ -91,6 +94,12 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
               name="preferredStyle"
               label={'Preferred style'}
               options={convertValuesToLabelValueObj()(tournamentStyles)}
+            />
+            <FormCheckbox
+              name="isPublic"
+              label="Is public?"
+              isSwitch
+              formControlProps={{ gridColumn: '1/2' }}
             />
           </>
         )}

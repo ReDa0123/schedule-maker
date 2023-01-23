@@ -16,6 +16,7 @@ export const convertValuesForSending = applySpec({
   location: prop('location'),
   preferredStyle: nilIfEmptyProp('preferredStyle'),
   buffer: o(Number, prop('buffer')),
+  isPublic: prop('isPublic'),
 });
 
 export const CREATE_TOURNAMENT_MUTATION = gql`

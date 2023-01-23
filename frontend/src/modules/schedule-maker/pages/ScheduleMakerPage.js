@@ -18,6 +18,7 @@ const GET_TOURNAMENT_QUERY = gql`
       versionId
       preferredStyle
       buffer
+      isPublic
       sports {
         sportId
         name
