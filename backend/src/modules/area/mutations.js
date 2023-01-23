@@ -1,5 +1,6 @@
 import { validateArea } from './validations';
 import { getGroups, removeGroups, saveGroups } from '../commons/sportsAndAreas';
+import { resetBlocksOfTournament } from '../block/helper';
 
 export const saveAreas = async (
   _,
@@ -63,6 +64,8 @@ export const toggleFlexibleArea = async (
     `UPDATE tournament_area SET flexible = ? WHERE areaId = ? AND tournamentId = ?`,
     [!area.flexible, areaId, tournamentId]
   );
+
+  await resetBlocksOfTournament('areaId', areaId, dbConnection, tournamentId);
 
   return 'Area flexibility changed successfully';
 };

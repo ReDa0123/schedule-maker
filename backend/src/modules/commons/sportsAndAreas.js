@@ -9,7 +9,7 @@ import {
   trim,
   without,
 } from 'ramda';
-import { resetBlocks } from '../block/helper';
+import { resetBlocksOfTournament } from '../block/helper';
 
 const trimAndLowerCase = map(o(trim, toLower));
 const getNames = map(o(toLower, prop('name')));
@@ -74,7 +74,7 @@ export const removeGroups = async (
           );
         }
       } else {
-        await resetBlocks(idName, id, dbConnection);
+        await resetBlocksOfTournament(idName, id, dbConnection, tournamentId);
       }
       return await dbConnection.query(
         `DELETE FROM tournament_${tableName} WHERE tournamentId = ? AND ${idName} = ?`,

@@ -1,9 +1,14 @@
 import { STYLES } from '../constants';
 
-export const resetBlocks = async (column, value, dbConnection) =>
+export const resetBlocksOfTournament = async (
+  column,
+  value,
+  dbConnection,
+  tournamentId
+) =>
   await dbConnection.query(
-    `UPDATE block SET dayId = NULL, areaId = NULL, startTime = NULL WHERE ${column} = ?;`,
-    [value]
+    `UPDATE block SET dayId = NULL, areaId = NULL, startTime = NULL, orderIndex = NULL WHERE tournamentId = ? AND ${column} = ?;`,
+    [tournamentId, value]
   );
 
 export const streamToBuffer = (stream) =>
