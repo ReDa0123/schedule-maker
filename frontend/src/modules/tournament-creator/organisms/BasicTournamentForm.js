@@ -49,7 +49,6 @@ const validationSchema = yup.object().shape({
     .max(50)
     .oneOf([...tournamentStyles, '']),
   buffer: yup.mixed().oneOf([...bufferOptions, ...bufferOptionsNumber, '']),
-  //TODO isPublic FE validation
 });
 
 const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
@@ -99,7 +98,7 @@ const BasicTournamentForm = ({ onSubmit, defaultValues }) => {
               name="isPublic"
               label="Is public?"
               isSwitch
-              formControlProps={{ gridColumn: '1/2' }}
+              formControlProps={{ gridColumn: '1/3' }}
             />
           </>
         )}
