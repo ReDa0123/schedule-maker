@@ -121,7 +121,7 @@ const Block = ({ value, onChange, index, isDetailedDisplay, ...props }) => {
           )}
           {!detailMode && (
             <>
-              {value.startTime !== null && (
+              {value.areaId !== null && (
                 <ResetBlockButton
                   resetBlock={() =>
                     onChange({
