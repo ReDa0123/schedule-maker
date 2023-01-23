@@ -1,4 +1,4 @@
-import { Flex, Input, Select, Grid } from 'src/shared/design-system';
+import { Select, Grid } from 'src/shared/design-system';
 import PropTypes from 'prop-types';
 
 const SelectiveFiltering = ({ selectRef, setFilter, locations, ...props }) => {
@@ -23,12 +23,6 @@ const SelectiveFiltering = ({ selectRef, setFilter, locations, ...props }) => {
           </option>
         ))}
       </Select>
-
-      <Flex wrap="wrap" alignItems="center" gap={4}>
-        <Input placeholder="Select date" maxW="190px" type="date" />
-        -
-        <Input placeholder="Select date" maxW="190px" type="date" />
-      </Flex>
     </Grid>
   );
 };
