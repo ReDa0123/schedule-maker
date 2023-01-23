@@ -17,6 +17,7 @@ const EDIT_TOURNAMENT_MUTATION = gql`
     $endDate: String!
     $preferredStyle: String
     $buffer: Float
+    $isPublic: Boolean
   ) {
     editTournament(
       tournamentId: $tournamentId
@@ -26,6 +27,7 @@ const EDIT_TOURNAMENT_MUTATION = gql`
       endDate: $endDate
       buffer: $buffer
       preferredStyle: $preferredStyle
+      isPublic: $isPublic
     )
   }
 `;
@@ -71,6 +73,7 @@ const BasicTournament = ({ tournament }) => {
       endDate: format(convertToDate(Number(tournament.endDate)), 'yyyy-MM-dd'),
       preferredStyle: tournament.preferredStyle,
       buffer: tournament.buffer,
+      isPublic: tournament.isPublic,
     }),
     [tournament]
   );

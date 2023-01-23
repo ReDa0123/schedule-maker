@@ -13,6 +13,7 @@ const GET_TOURNAMENT_DETAILS = gql`
       userId
       buffer
       preferredStyle
+      isPublic
     }
   }
 `;

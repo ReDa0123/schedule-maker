@@ -19,6 +19,7 @@ export const typeDef = /* GraphQL */ `
       endDate: String!
       buffer: Float
       preferredStyle: String
+      isPublic: Boolean
     ): String!
     deleteTournament(tournamentId: Int!): String!
     setMainVersion(tournamentId: Int!, versionId: Int!): String!
@@ -48,5 +49,6 @@ export const typeDef = /* GraphQL */ `
     versions: [Version!]!
     versionId: Int
     buffer: Float
+    isPublic: Boolean
   }
 `;
