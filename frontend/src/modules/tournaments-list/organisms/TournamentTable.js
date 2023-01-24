@@ -48,7 +48,7 @@ const columns = [
   },
 ];
 
-function TournamentTable({ data, setFilter }) {
+function TournamentTable({ data, setFilter, showPagination }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -116,20 +116,22 @@ function TournamentTable({ data, setFilter }) {
           </Tbody>
         </Table>
       </TableContainer>
-      <Pagination
-        {...{
-          canPreviousPage,
-          canNextPage,
-          pageOptions,
-          pageCount,
-          gotoPage,
-          nextPage,
-          previousPage,
-          pageIndex,
-          pageSize,
-          setPageSize,
-        }}
-      />
+      {showPagination && (
+        <Pagination
+          {...{
+            canPreviousPage,
+            canNextPage,
+            pageOptions,
+            pageCount,
+            gotoPage,
+            nextPage,
+            previousPage,
+            pageIndex,
+            pageSize,
+            setPageSize,
+          }}
+        />
+      )}
     </>
   );
 }
@@ -137,6 +139,7 @@ function TournamentTable({ data, setFilter }) {
 TournamentTable.propTypes = {
   setFilter: PropTypes.func.isRequired,
   data: PropTypes.array.isRequired,
+  showPagination: PropTypes.bool,
 };
 
 export default TournamentTable;
