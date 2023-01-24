@@ -11,8 +11,9 @@ const TournamentFilter = ({
   setFilter,
   tournaments,
   rowsLength,
+  isListPage,
 }) => {
-  const selectRef = useRef('');
+  const selectRef = useRef(null);
   const locations = useMemo(
     () => o(uniq, pluck('location'))(tournaments),
     [tournaments]
@@ -20,14 +21,18 @@ const TournamentFilter = ({
 
   return (
     <Box mb="50px" mt="30px">
-      <TournamentListHeading>Filter</TournamentListHeading>
-      <SelectiveFiltering
-        mt={4}
-        mb={4}
-        selectRef={selectRef}
-        setFilter={setFilter}
-        locations={locations}
-      />
+      {isListPage && (
+        <>
+          <TournamentListHeading>Filter</TournamentListHeading>{' '}
+          <SelectiveFiltering
+            mt={4}
+            mb={4}
+            selectRef={selectRef}
+            setFilter={setFilter}
+            locations={locations}
+          />
+        </>
+      )}
       <TournamentListHeading mb={4}>
         {`Search${
           !isNilOrEmpty(filter)
@@ -39,7 +44,7 @@ const TournamentFilter = ({
         value={filter}
         onChange={(e) => {
           setFilter(e.target.value);
-          selectRef.current.value = '';
+          if (selectRef.current) selectRef.current.value = '';
         }}
         placeholder="Search by title or location"
         maxW="600px"
@@ -53,6 +58,7 @@ TournamentFilter.propTypes = {
   setFilter: PropTypes.any,
   tournaments: PropTypes.array,
   rowsLength: PropTypes.number,
+  isListPage: PropTypes.bool,
 };
 
 export default TournamentFilter;
