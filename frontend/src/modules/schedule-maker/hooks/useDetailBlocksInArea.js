@@ -23,7 +23,6 @@ export const useDetailBlocksInArea = ({
     <Block
       key={block.blockId}
       value={block}
-      pointerEvents="none"
       position={absolutePosition ? 'absolute' : 'relative'}
       top={
         absolutePosition
